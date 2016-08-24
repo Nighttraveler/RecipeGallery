@@ -1,0 +1,22 @@
+{% extends "menuchooser/base.html" %}
+
+{% block title %}
+  | Borrar Receta
+{% endblock %}
+
+{% block contenido %}
+<div class="container-fluid" id="CUD">
+  <h1>
+    Estas seguro de borrar {{receta.Titulo}}?
+  </h1>
+<form id="borrar-form" role="form" method="post">
+  {% csrf_token %}
+
+  <div class="center-buttons">
+  <button type="submit" class="btn btn-success" >Si </button>
+  <a href= "{% url 'menu:index' %}" role="button" class="btn btn-danger" >No</a>
+  </div>
+</form>
+
+</div>
+{% endblock %}

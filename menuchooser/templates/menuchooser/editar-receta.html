@@ -1,0 +1,34 @@
+{% extends "menuchooser/base.html" %}
+
+{% block title %}
+  | Editar Receta
+{% endblock %}
+
+
+{% block contenido %}
+<div class="container-fluid" id="CUD">
+  {% if form.errors %}
+    <p>
+      {{form.errors}}
+    </p>
+  {% endif %}
+
+  <form role='form' method="post"  enctype='multipart/form-data'>
+    <div class="right-buttons">
+      <a href= "{% url 'menu:index' %}" role="button" class="btn btn-danger" >Cancelar</a>
+      <button type="submit" class="btn btn-primary" >Guardar</button>
+
+    </div>
+    {% csrf_token %}
+
+    <div class="form-group">
+      <ul>
+
+        {{form.as_ul}}
+      </ul>
+    </div>
+</div>
+
+</form>
+
+{% endblock %}
