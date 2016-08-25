@@ -31,7 +31,7 @@ class IndexFoodView(View):
         else:
             self.recetas=MenuModel.objects.all().order_by('-pub_date')
 
-        per_page=12
+        per_page=16
         paginator = Paginator(self.recetas, per_page)
         page= request.GET.get('page')
 
