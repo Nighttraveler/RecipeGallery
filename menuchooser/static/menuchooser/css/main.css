@@ -17,7 +17,7 @@ footer {
 .pagination{
   text-align: center;
   width: 100%;
-  margin: 0;
+  margin: 0px;
 }
 
 /* Base style for tables */
@@ -31,6 +31,7 @@ footer {
   -moz-transition: -webkit-scale 2.2s ease-in 3.5s;
   -webkit-transition: -webkit-scale 2.2s ease-in 3.5s;
   text-align: center;
+  padding-top: 10px;
 }
 .col-md-3:hover {
   -webkit-transform: scale(1.1,1.1);

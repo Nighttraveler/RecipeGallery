@@ -76,7 +76,7 @@
         {% if query and not recetas %}
           <h2 style="margin-top: 60px;text-align:center;" >No se encontraron recetas con el termino de busqueda {{query}}</h2>
         {% else %}
-          <div  class="container">
+          <div  class="container-fluid">
 
             <div class="row" id="recetas">
               {% for receta in recetas  %}
@@ -149,14 +149,7 @@
 
         {% endif %}
 
-
-        {% endblock %}
-
-
-      </div>
-
-
-      <div class="pagination">
+        <div class="pagination">
           <ul class="pager">
             <li>
               {% if recetas.has_previous %}
@@ -164,7 +157,7 @@
               {% endif %}
             </li>
             <span >
-              Pagina {{ recetas.number }} of {{ recetas.paginator.num_pages }}.
+              Pagina {{ recetas.number }} de {{ recetas.paginator.num_pages }}
             </span>
             <li>
               {% if recetas.has_next %}
@@ -174,7 +167,14 @@
 
           </ul>
 
+        </div>
+
       </div>
+        {% endblock %}
+
+
+
+
       <footer class="footer" >
 
           <span>All rights reserved | <a href="https://about.me/ferr_velazquez" target="_blank">Fernando Velazquez</a> | 2016 </span>
