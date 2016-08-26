@@ -76,7 +76,7 @@
         {% if query and not recetas %}
           <h2 style="margin-top: 60px;text-align:center;" >No se encontraron recetas con el termino de busqueda {{query}}</h2>
         {% else %}
-          <div  class="container-fluid">
+          <div  class="container">
 
             <div class="row" id="recetas">
               {% for receta in recetas  %}
@@ -133,7 +133,14 @@
                       <div class="modal-footer">
                         <div class="center-buttons">
                           <a href=" {% url 'menu:editfood' receta.id %}" role="button" class="btn btn-primary">Editar</a>
-                          <a href=" {% url 'menu:deletefood' receta.id %}" role="button" class="btn btn-danger">Borrar</a>
+                          <button recepy-id={{receta.id}} role="button" class="btn btn-danger deletebutton">Borrar</button>
+                          <!-- OLD DELETE BUTTON
+                            <a href=" {% url 'menu:deletefood' receta.id %}" role="button" class="btn btn-danger">Borrar</a>
+                          -->
+                        </div>
+                        <div id="dr-{{receta.id}}" style="display:none">
+                          <h1>Hello Word!</h1>
+
                         </div>
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
 
@@ -149,7 +156,14 @@
 
         {% endif %}
 
-        <div class="pagination">
+
+        {% endblock %}
+
+
+      </div>
+
+
+      <div class="pagination">
           <ul class="pager">
             <li>
               {% if recetas.has_previous %}
@@ -157,7 +171,7 @@
               {% endif %}
             </li>
             <span >
-              Pagina {{ recetas.number }} de {{ recetas.paginator.num_pages }}
+              Pagina {{ recetas.number }} of {{ recetas.paginator.num_pages }}.
             </span>
             <li>
               {% if recetas.has_next %}
@@ -167,14 +181,7 @@
 
           </ul>
 
-        </div>
-
       </div>
-        {% endblock %}
-
-
-
-
       <footer class="footer" >
 
           <span>All rights reserved | <a href="https://about.me/ferr_velazquez" target="_blank">Fernando Velazquez</a> | 2016 </span>
@@ -191,7 +198,7 @@
 
         <script src= {% static "menuchooser/js/main.js" %} ></script>
 
-        <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+        <!-- Google Analytics: change UA-XXXXX-X to be your site's ID.
         <script>
             (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
             function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
@@ -199,6 +206,30 @@
             e.src='//www.google-analytics.com/analytics.js';
             r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
             ga('create','UA-XXXXX-X','auto');ga('send','pageview');
+        </script>
+        -->
+        <script type="text/javascript">
+          $(document).ready(function(){
+
+            $(".deletebutton").click(function(){
+
+              var recetaid= $(this).attr("recepy-id");
+              console.log(recetaid);
+
+              var page_delete =$.ajax({
+                url: "{% url 'menu:deletefood' 0 %}".replace('0', recetaid),
+                method:"GET",
+                success: function(data){
+                  $("#dr-"+recetaid).html(data);
+                }
+              });
+
+              $("#dr-"+recetaid).slideToggle();
+
+            });
+
+          });
+
         </script>
     </body>
 </html>
