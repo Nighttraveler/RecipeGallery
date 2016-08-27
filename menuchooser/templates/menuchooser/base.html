@@ -216,18 +216,20 @@
               var recetaid= $(this).attr("recepy-id");
               console.log(recetaid);
 
-              var page_delete =$.ajax({
+              $.ajax({
                 url: "{% url 'menu:deletefood' 0 %}".replace('0', recetaid),
                 method:"GET",
                 success: function(data){
+
                   $("#dr-"+recetaid).html(data);
                 }
               });
-
               $("#dr-"+recetaid).slideToggle();
-
             });
 
+            $("#no_borrar").click(function(){
+                $("#dr-"+recetaid).slideToggle();
+            });
           });
 
         </script>

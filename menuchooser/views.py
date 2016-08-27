@@ -19,6 +19,9 @@ class IndexFoodView(View):
     recetas= None
     query=None
 
+    def post(self,request):
+        return HttpResponseRedirect(reverse_lazy('menu:index'))
+
     def get(self, request):
         if request.GET.get('q'):
             q=request.GET['q']
@@ -31,7 +34,7 @@ class IndexFoodView(View):
         else:
             self.recetas=MenuModel.objects.all().order_by('-pub_date')
 
-        per_page=16
+        per_page=12
         paginator = Paginator(self.recetas, per_page)
         page= request.GET.get('page')
 
@@ -48,6 +51,8 @@ class IndexFoodView(View):
 
         return render(request, self.template_name, context)
 
+
+
 class TipoView(View):
 
     tipos = TipoModel.objects.all()
@@ -61,6 +66,8 @@ class TipoView(View):
         context=  {'recetas':self.recetas, 'tipos':self.tipos}
 
         return render(request, self.template_name, context)
+
+
 
 
 class AddFoodView(View):

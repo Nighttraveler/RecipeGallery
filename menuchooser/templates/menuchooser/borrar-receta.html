@@ -1,22 +1,35 @@
-{% extends "menuchooser/base.html" %}
 
-{% block title %}
-  | Borrar Receta
-{% endblock %}
 
-{% block contenido %}
-<div class="container-fluid" id="CUD">
-  <h1>
+
+  <h1 style="text-align:center;">
     Estas seguro de borrar {{receta.Titulo}}?
   </h1>
-<form id="borrar-form" role="form" method="post">
+<form id="borrar-form" role="form" method="post" action="">
   {% csrf_token %}
 
   <div class="center-buttons">
   <button type="submit" class="btn btn-success" >Si </button>
-  <a href= "{% url 'menu:index' %}" role="button" class="btn btn-danger" >No</a>
+  <a id="no_borrar" role="button" class="btn btn-danger" >No</a>
   </div>
 </form>
 
-</div>
-{% endblock %}
+
+<script type="text/javascript">
+  $(document).on('submit','#borrar-form',function(e){
+    e.preventDefault();
+
+      $.ajax({
+          type:"POST",
+          url: "{% url 'menu:deletefood' 0 %}".replace('0',{{receta.pk}}),
+          data:{
+            csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+          }
+      }).complete(function(){
+        //windows.location= {% url 'menu:index' %}
+          $("#recetas").load("{% url 'menu:index' %} #recetas");
+          console.log("borraste y 'recargaste'");
+
+
+      });
+  });
+</script>
