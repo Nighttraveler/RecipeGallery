@@ -8,9 +8,9 @@ body{
   background-color: #f7f7f7;
 }
 
-.full-container{
+#full-container{
   margin-top: 60px;
-  min-height: 550px;
+  min-height: 470px;
 }
 .thumbnail{
   background-color: #dfe3ee;
@@ -74,8 +74,9 @@ footer {
 /* buttons styles */
 
 .center-buttons{
-  margin: auto;
+
   text-align: center;
+  margin-bottom: 15px;
 }
 .right-buttons{
   float: right;

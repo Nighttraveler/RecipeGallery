@@ -1,9 +1,3 @@
-{% extends "menuchooser/base.html" %}
-
-{% block title %}
-  | Agregar Receta
-{% endblock %}
-
 {% block contenido %}
 <div class="container-fluid" id="CUD">
   {% if form.errors %}
@@ -12,20 +6,21 @@
     </p>
   {% endif %}
 
-  <form role='form' method="post"  enctype='multipart/form-data'>
-    <div class="right-buttons">
-      <a href= "{% url 'menu:index' %}" role="button" class="btn btn-danger" >Cancelar</a>
-      <button type="submit" class="btn btn-primary" >Guardar</button>
-
-    </div>
+  <form role='form' method="post"  enctype='multipart/form-data' action="{% url 'menu:addfood' %}" >
     {% csrf_token %}
     <div class="form-group">
       <ul>
 
         {{form.as_ul}}
       </ul>
+
     </div>
 
+    <div class="center-buttons">
+      <a href="#" id="no_agregar" role="button" class="btn btn-danger" ><span class="glyphicon glyphicon-remove"></span> Cancelar</a>
+      <button type="submit" class="btn btn-primary" >Guardar</button>
+
+    </div>
   </form>
 </div>
 {% endblock %}

@@ -13,8 +13,6 @@
         <title>Menu Chooser {% block title %} {% endblock %} </title>
         {{form.media}}
 
-
-
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -48,12 +46,12 @@
                   <ul class="dropdown-menu">
                     {% for tipo in tipos %}
 
-                    <li><a href="{% url 'menu:tipofood' tipo.pk %}" >{{tipo.Tipo}}</a></li>
+                    <li><a href="?tipo={{tipo.pk}}" >{{tipo.Tipo}}</a></li>
                     {% endfor %}
 
                   </ul>
                 </li>
-                <li><a href= {% url 'menu:addfood' %} ><span class="glyphicon glyphicon-plus"></span> Agregar Receta</a></li>
+                <li><a href="#" id="agregar_receta" ><span class="glyphicon glyphicon-plus"></span> Agregar Receta</a></li>
 
               </ul>
               <ul class="nav navbar-nav navbar-right">
@@ -69,19 +67,23 @@
           </div>
         </nav>
 
-        <div class="full-container">
+        <div id="agregarDiv" class="container-fluid" style="display:none;margin-top:60px;">
+          {% include "menuchooser/agregar-receta.html"  %}
+        </div>
+
+        <div class="container-fluid" id="full-container">
 
         {% block contenido %}
 
         {% if query and not recetas %}
           <h2 style="margin-top: 60px;text-align:center;" >No se encontraron recetas con el termino de busqueda {{query}}</h2>
         {% else %}
-          <div  class="container">
+          <div id="contenedor-recetas" class="container">
 
             <div class="row" id="recetas">
               {% for receta in recetas  %}
 
-                  <div class="col-md-3" data-toggle="modal" data-target="#modal_{{receta.pk}}">
+                  <div class="col-md-3" data-toggle="modal" data-backdrop="false" data-target="#modal_{{receta.pk}}">
                     <div class="thumbnail" >
 
                       {% if receta.Imagen %}
@@ -99,11 +101,11 @@
 
                 </div>
 
-                <!-- Modal {{receta}} -->
+                <!-- Modal {{receta.pk}} -->
                 <div id="modal_{{receta.pk}}" class="modal fade" role="dialog">
                   <div class="modal-dialog modal-lg">
 
-                    <!-- Modal {{receta}} content-->
+                    <!-- Modal {{receta.pk}} content-->
                     <div class="modal-content">
                       <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -118,7 +120,7 @@
                           <img  class="img-rounded img-responsive" src="{{receta.Imagen_URL}}"  alt="Imagen no disponible" />
                         {% endif %}
                         <hr>
-                        <h4><a href="{% url 'menu:tipofood' receta.Tipo.pk %}" >#{{receta.Tipo}}</a></h4>
+                        <h4><a href="?tipo={{receta.Tipo.pk }}" >#{{receta.Tipo}}</a></h4>
                         <hr>
                         <h3>Ingredientes:</h3>
 
@@ -134,15 +136,13 @@
                         <div class="center-buttons">
                           <a href=" {% url 'menu:editfood' receta.id %}" role="button" class="btn btn-primary">Editar</a>
                           <button recepy-id={{receta.id}} role="button" class="btn btn-danger deletebutton">Borrar</button>
-                          <!-- OLD DELETE BUTTON
-                            <a href=" {% url 'menu:deletefood' receta.id %}" role="button" class="btn btn-danger">Borrar</a>
-                          -->
+
                         </div>
                         <div id="dr-{{receta.id}}" style="display:none">
                           <h1>Hello Word!</h1>
 
                         </div>
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                        <button id="cerrar_modal" type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
 
                       </div>
                     </div>
@@ -160,28 +160,30 @@
         {% endblock %}
 
 
+
+      </div>
+
+      <div id="paginador" class="container">
+
+        <ul class="pager">
+          <li class="previous">
+            {% if recetas.has_previous %}
+                <a id="pagina_anterior" href="?page={{ recetas.previous_page_number }}">Anterior</a>
+            {% endif %}
+          </li>
+          <span id='pagnum' >
+            Pagina {{ recetas.number }} de {{ recetas.paginator.num_pages }}
+          </span>
+          <li class="next">
+            {% if recetas.has_next %}
+            <a id="pagina_siguiente" href="?page={{ recetas.next_page_number }}">Siguiente</a>
+            {% endif %}
+          </li>
+
+        </ul>
       </div>
 
 
-      <div class="pagination">
-          <ul class="pager">
-            <li>
-              {% if recetas.has_previous %}
-              <a href="?page={{ recetas.previous_page_number }}">Anterior</a>
-              {% endif %}
-            </li>
-            <span >
-              Pagina {{ recetas.number }} of {{ recetas.paginator.num_pages }}.
-            </span>
-            <li>
-              {% if recetas.has_next %}
-              <a href="?page={{ recetas.next_page_number }}">Siguiente</a>
-              {% endif %}
-            </li>
-
-          </ul>
-
-      </div>
       <footer class="footer" >
 
           <span>All rights reserved | <a href="https://about.me/ferr_velazquez" target="_blank">Fernando Velazquez</a> | 2016 </span>
@@ -209,28 +211,74 @@
         </script>
         -->
         <script type="text/javascript">
-          $(document).ready(function(){
+        $(document).on('click',".deletebutton",function(){
 
-            $(".deletebutton").click(function(){
+          var recetaid= $(this).attr("recepy-id");
+          console.log(recetaid);
 
-              var recetaid= $(this).attr("recepy-id");
-              console.log(recetaid);
+          $.ajax({
+            url: "{% url 'menu:deletefood' 0 %}".replace('0', recetaid),
+            method:"GET",
+            success: function(data){
+              $("#dr-"+recetaid).html(data);
+              $("#dr-"+recetaid).slideToggle('slow');
 
-              $.ajax({
-                url: "{% url 'menu:deletefood' 0 %}".replace('0', recetaid),
-                method:"GET",
-                success: function(data){
-
-                  $("#dr-"+recetaid).html(data);
-                }
-              });
-              $("#dr-"+recetaid).slideToggle();
-            });
-
-            $("#no_borrar").click(function(){
-                $("#dr-"+recetaid).slideToggle();
-            });
+            }
           });
+
+
+        });
+
+          $(document).on('click',"#no_borrar",function(){
+            var recetaid= $('.deletebutton').attr("recepy-id");
+            console.log(recetaid);
+            $("#dr-"+recetaid).slideToggle('slow');
+          });
+
+
+
+
+          $(document).on('click','#no_agregar',function(){
+            $("#agregarDiv").slideToggle();
+            $('#full-container').show();
+            $('#paginador').show();
+          });
+
+          $(document).on('click','#pagina_siguiente',function(event){
+              event.preventDefault()
+              var pag= $(this).attr('href');
+              console.log(pag);
+              $.ajax({
+                  url:pag,
+                  success:function(data){
+                    var content = $( data ).find( "#contenedor-recetas" );
+                    var contentPager = $( data).find('.pager');
+                    $( "#full-container" ).fadeOut();
+                    $( "#full-container" ).empty().append( content );
+                    $('#paginador').empty().append( contentPager);
+                    $( "#full-container" ).fadeIn("slow");
+                  }
+              });
+          });
+
+          $(document).on('click','#pagina_anterior',function(event){
+              event.preventDefault()
+              var pag= $(this).attr('href');
+              console.log(pag);
+              $.ajax({
+                  url:pag,
+                  success:function(data){
+                    var content = $( data ).find( "#contenedor-recetas" );
+                    var contentPager = $( data).find('.pager');
+                    $( "#full-container" ).fadeOut();
+                    $( "#full-container" ).empty().append( content );
+                    $('#paginador').empty().append( contentPager);
+                    $( "#full-container" ).fadeIn("slow");
+                  }
+              });
+          });
+
+
 
         </script>
     </body>

@@ -16,15 +16,12 @@ class IndexFoodView(View):
 
     template_name = 'menuchooser/base.html'
     tipos= TipoModel.objects.all()
+    form_class = MenuForm
     recetas= None
     query=None
-
-    def post(self,request):
-        return HttpResponseRedirect(reverse_lazy('menu:index'))
-
-    def get(self, request):
-        if request.GET.get('q'):
-            q=request.GET['q']
+    def buscar(self,r):
+        if r.GET.get('q'):
+            q=r.GET['q']
             self.query = q
             self.recetas= MenuModel.objects.filter(
                 Q(Titulo__icontains=q)|
@@ -32,12 +29,27 @@ class IndexFoodView(View):
                 Q(Receta__icontains=q)
                 )
         else:
-            self.recetas=MenuModel.objects.all().order_by('-pub_date')
+            self.recetas=MenuModel.objects.all()
+            
 
-        per_page=12
+    def filtrar_por(self,r):
+        if r.GET.get('tipo'):
+            tipo=r.GET['tipo']
+            self.recetas = MenuModel.objects.filter(Tipo=tipo)
+        else:
+            self.recetas=MenuModel.objects.all()
+
+    def post(self,request):
+        return HttpResponseRedirect(reverse_lazy('menu:index'))
+
+    def get(self, request):
+
+        self.buscar(request)
+        self.filtrar_por(request)
+
+        per_page=8
         paginator = Paginator(self.recetas, per_page)
         page= request.GET.get('page')
-
         try:
             receta_pag = paginator.page(page)
 
@@ -47,25 +59,10 @@ class IndexFoodView(View):
         except EmptyPage:
             receta_pag = paginator.page(paginator.num_pages)
 
-        context = {'recetas':receta_pag,'tipos':self.tipos,'query':self.query}
+        context = {'recetas':receta_pag,'tipos':self.tipos,'query':self.query,'form':self.form_class}
 
         return render(request, self.template_name, context)
 
-
-
-class TipoView(View):
-
-    tipos = TipoModel.objects.all()
-    recetas = None
-    template_name = 'menuchooser/base.html'
-
-    def get(self,request,pk):
-        tipo= get_object_or_404(TipoModel,pk=pk)
-        self.recetas = MenuModel.objects.filter(Tipo=tipo)
-
-        context=  {'recetas':self.recetas, 'tipos':self.tipos}
-
-        return render(request, self.template_name, context)
 
 
 
@@ -74,10 +71,10 @@ class AddFoodView(View):
 
     template_name = 'menuchooser/agregar-receta.html'
     form_class = MenuForm
-    tipos= TipoModel.objects.all()
+
 
     def get(self, request):
-        context = {'form': self.form_class , 'tipos':self.tipos}
+        context = {'form': self.form_class }
         return render(request, self.template_name,context)
 
     def post(self,request):

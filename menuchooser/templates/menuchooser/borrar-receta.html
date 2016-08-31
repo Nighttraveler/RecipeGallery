@@ -9,14 +9,14 @@
 
   <div class="center-buttons">
   <button type="submit" class="btn btn-success" >Si </button>
-  <a id="no_borrar" role="button" class="btn btn-danger" >No</a>
+  <a  role="button" class="btn btn-danger no_borrar" >No</a>
   </div>
 </form>
 
 
 <script type="text/javascript">
   $(document).on('submit','#borrar-form',function(e){
-    e.preventDefault();
+      e.preventDefault();
 
       $.ajax({
           type:"POST",
@@ -24,12 +24,20 @@
           data:{
             csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
           }
-      }).complete(function(){
-        //windows.location= {% url 'menu:index' %}
-          $("#recetas").load("{% url 'menu:index' %} #recetas");
-          console.log("borraste y 'recargaste'");
+      }).done(function( data ) {
+            var content = $( data ).find( "#contenedor-recetas" );
 
+            $( "#full-container" ).empty().append( content );
+            $("body").removeAttr("class");
+            $("body").removeAttr("style");
 
+        });
+  });
+
+  $(document).ready(function(){
+
+      $('.no_borrar').click(function(){
+        $("#dr-"+{{receta.pk}}).slideToggle();
       });
   });
 </script>
