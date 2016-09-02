@@ -6,11 +6,12 @@
 
 body{
   background-color: #f7f7f7;
+
 }
 
 #full-container{
-  margin-top: 60px;
-  min-height: 470px;
+
+
 }
 .thumbnail{
   background-color: #dfe3ee;
@@ -23,13 +24,11 @@ footer {
   text-align: center;
   color: white;
   padding: 1rem;
+  
+
 }
 
-.pagination{
-  text-align: center;
-  width: 100%;
-  margin: 0px;
-}
+
 
 /* Base style for tables */
 
@@ -53,7 +52,9 @@ footer {
 }
 
 
-
+#paginador{
+   padding-left: 33%;
+}
 
 /* Modal CSS style */
 
@@ -84,11 +85,3 @@ footer {
 
 
 /* Agregar/Editar/borrar receta  CSS style */
-
-#CUD {
-  min-height: 541px;
-}
-
-.wmd-panel{
-  background-color: #dfe3ee;
-}

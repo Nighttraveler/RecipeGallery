@@ -17,7 +17,7 @@ class IndexFoodView(View):
     template_name = 'menuchooser/base.html'
     tipos= TipoModel.objects.all()
     form_class = MenuForm
-    recetas= None
+    recetas= MenuModel.objects.all()
     query=None
     def buscar(self,r):
         if r.GET.get('q'):
@@ -28,24 +28,17 @@ class IndexFoodView(View):
                 Q(Ingredientes__icontains=q)|
                 Q(Receta__icontains=q)
                 )
-        else:
-            self.recetas=MenuModel.objects.all()
-            
 
     def filtrar_por(self,r):
         if r.GET.get('tipo'):
             tipo=r.GET['tipo']
             self.recetas = MenuModel.objects.filter(Tipo=tipo)
-        else:
-            self.recetas=MenuModel.objects.all()
 
-    def post(self,request):
-        return HttpResponseRedirect(reverse_lazy('menu:index'))
 
     def get(self, request):
 
-        self.buscar(request)
         self.filtrar_por(request)
+        self.buscar(request)
 
         per_page=8
         paginator = Paginator(self.recetas, per_page)

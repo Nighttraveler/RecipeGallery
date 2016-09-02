@@ -10,7 +10,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title>Menu Chooser {% block title %} {% endblock %} </title>
+        <title>Menu Chooser </title>
         {{form.media}}
 
         <meta name="description" content="">
@@ -28,7 +28,7 @@
         <!--[if lt IE 8]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
-        <nav class="navbar navbar-inverse navbar-fixed-top">
+        <nav class="navbar navbar-inverse">
           <div class="container-fluid">
             <div class="navbar-header">
               <a class="navbar-brand">¿Que Comemos?</a>
@@ -67,7 +67,7 @@
           </div>
         </nav>
 
-        <div id="agregarDiv" class="container-fluid" style="display:none;margin-top:60px;">
+        <div id="agregarDiv" class="container-fluid" style="display:none">
           {% include "menuchooser/agregar-receta.html"  %}
         </div>
 
@@ -165,20 +165,26 @@
 
       <div id="paginador" class="container">
 
-        <ul class="pager">
-          <li class="previous">
+        <ul class="pagination">
+
             {% if recetas.has_previous %}
-                <a id="pagina_anterior" href="?page={{ recetas.previous_page_number }}">Anterior</a>
+              <li >
+                <a id="pagina_anterior" href="?page={{ recetas.previous_page_number }}"> <span class="glyphicon glyphicon-chevron-left"></span></a>
+              </li>
+            {%else%}
+              <li class="disabled">
+                <a   href="#"><span class="glyphicon glyphicon-chevron-left"></span></a>
+              </li>
             {% endif %}
-          </li>
-          <span id='pagnum' >
-            Pagina {{ recetas.number }} de {{ recetas.paginator.num_pages }}
-          </span>
-          <li class="next">
-            {% if recetas.has_next %}
-            <a id="pagina_siguiente" href="?page={{ recetas.next_page_number }}">Siguiente</a>
-            {% endif %}
-          </li>
+
+                {% for pagina in recetas.paginator.page_range %}
+                  <li > <a class="page-activa" numpag={{pagina}} href="?page=">{{pagina}}</a></li>
+                {% endfor %}
+              <li >
+                {% if recetas.has_next %}
+                <a id="pagina_siguiente" href="?page={{ recetas.next_page_number }}"> <span class="glyphicon glyphicon-chevron-right"></span></a>
+                {% endif %}
+              </li>
 
         </ul>
       </div>
@@ -210,76 +216,6 @@
             ga('create','UA-XXXXX-X','auto');ga('send','pageview');
         </script>
         -->
-        <script type="text/javascript">
-        $(document).on('click',".deletebutton",function(){
 
-          var recetaid= $(this).attr("recepy-id");
-          console.log(recetaid);
-
-          $.ajax({
-            url: "{% url 'menu:deletefood' 0 %}".replace('0', recetaid),
-            method:"GET",
-            success: function(data){
-              $("#dr-"+recetaid).html(data);
-              $("#dr-"+recetaid).slideToggle('slow');
-
-            }
-          });
-
-
-        });
-
-          $(document).on('click',"#no_borrar",function(){
-            var recetaid= $('.deletebutton').attr("recepy-id");
-            console.log(recetaid);
-            $("#dr-"+recetaid).slideToggle('slow');
-          });
-
-
-
-
-          $(document).on('click','#no_agregar',function(){
-            $("#agregarDiv").slideToggle();
-            $('#full-container').show();
-            $('#paginador').show();
-          });
-
-          $(document).on('click','#pagina_siguiente',function(event){
-              event.preventDefault()
-              var pag= $(this).attr('href');
-              console.log(pag);
-              $.ajax({
-                  url:pag,
-                  success:function(data){
-                    var content = $( data ).find( "#contenedor-recetas" );
-                    var contentPager = $( data).find('.pager');
-                    $( "#full-container" ).fadeOut();
-                    $( "#full-container" ).empty().append( content );
-                    $('#paginador').empty().append( contentPager);
-                    $( "#full-container" ).fadeIn("slow");
-                  }
-              });
-          });
-
-          $(document).on('click','#pagina_anterior',function(event){
-              event.preventDefault()
-              var pag= $(this).attr('href');
-              console.log(pag);
-              $.ajax({
-                  url:pag,
-                  success:function(data){
-                    var content = $( data ).find( "#contenedor-recetas" );
-                    var contentPager = $( data).find('.pager');
-                    $( "#full-container" ).fadeOut();
-                    $( "#full-container" ).empty().append( content );
-                    $('#paginador').empty().append( contentPager);
-                    $( "#full-container" ).fadeIn("slow");
-                  }
-              });
-          });
-
-
-
-        </script>
     </body>
 </html>

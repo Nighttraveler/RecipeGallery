@@ -15,26 +15,29 @@
 
 
 <script type="text/javascript">
-  $(document).on('submit','#borrar-form',function(e){
-      e.preventDefault();
-
-      $.ajax({
-          type:"POST",
-          url: "{% url 'menu:deletefood' 0 %}".replace('0',{{receta.pk}}),
-          data:{
-            csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
-          }
-      }).done(function( data ) {
-            var content = $( data ).find( "#contenedor-recetas" );
-
-            $( "#full-container" ).empty().append( content );
-            $("body").removeAttr("class");
-            $("body").removeAttr("style");
-
-        });
-  });
 
   $(document).ready(function(){
+    var borrar_form= $('#borrar-form');
+    borrar_form.submit(function(e) {
+          e.preventDefault();
+
+          $.ajax({
+              type:"POST",
+              url: "{% url 'menu:deletefood' 0 %}".replace('0',{{receta.pk}}),
+              data:{
+                csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+              }
+          }).done(function( data ) {
+                var content = $( data ).find( "#contenedor-recetas" );
+                $( "#full-container" ).empty().append( content );
+                var contentPager = $( data).find('.pagination');
+
+                $('#paginador').empty().append( contentPager);
+                $("body").removeAttr("class");
+                $("body").removeAttr("style");
+
+            });
+      });
 
       $('.no_borrar').click(function(){
         $("#dr-"+{{receta.pk}}).slideToggle();
