@@ -41,7 +41,7 @@ class IndexFoodView(View):
         self.buscar(request)
 
         per_page=8
-        paginator = Paginator(self.recetas, per_page)
+        paginator = Paginator(self.recetas.order_by('-pub_date'), per_page)
         page= request.GET.get('page')
         try:
             receta_pag = paginator.page(page)

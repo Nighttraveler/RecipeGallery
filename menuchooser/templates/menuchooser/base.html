@@ -10,7 +10,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title>Menu Chooser </title>
+        <title>Recipe Gallery </title>
         {{form.media}}
 
         <meta name="description" content="">
@@ -21,6 +21,7 @@
 
         <link rel="stylesheet" href= {% static "menuchooser/css/bootstrap-theme.min.css" %} >
         <link rel="stylesheet" href= {% static "menuchooser/css/main.css" %} >
+        <link rel="shortcut icon" href= {% static "menuchooser/favicon.ico" %} >
 
         <script src= {% static "menuchooser/js/vendor/modernizr-2.8.3-respond-1.4.2.min.js" %} ></script>
     </head>
@@ -31,14 +32,14 @@
         <nav class="navbar navbar-inverse">
           <div class="container-fluid">
             <div class="navbar-header">
-              <a class="navbar-brand">¿Que Comemos?</a>
-              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+              <span class="navbar-brand"><span class="glyphicon glyphicon-heart-empty"></span> Recipe Gallery</span>
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navMenu">
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
               </button>
             </div>
-            <div class="collapse navbar-collapse" id="myNavbar">
+            <div class="collapse navbar-collapse" id="navMenu">
               <ul class="nav navbar-nav ">
                 <li ><a href= {% url 'menu:index' %} >Inicio</a></li>
                 <li class="dropdown">
@@ -57,7 +58,7 @@
               <ul class="nav navbar-nav navbar-right">
                 <li>
                   <form role="form" action="{% url 'menu:index' %}" class="navbar-form"    method="get" >
-                        <input placeholder="Titulo,Receta,Ingredientes"  class="input-medium search-query" name="q" value= {% if query %}"{{query}}"{% endif %} >
+                        <input placeholder="My Super Recipe"  class="input-medium search-query" name="q" value= {% if query %}"{{query}}"{% endif %} >
                         <button type="submit" ><span class="glyphicon glyphicon-search"></span> Buscar</button>
                   </form>
                 </li>
@@ -78,34 +79,34 @@
         {% if query and not recetas %}
           <h2 style="margin-top: 60px;text-align:center;" >No se encontraron recetas con el termino de busqueda {{query}}</h2>
         {% else %}
-          <div id="contenedor-recetas" class="container">
+          <div id="contenedor-recetas">
 
             <div class="row" id="recetas">
               {% for receta in recetas  %}
 
                   <div class="col-md-3" data-toggle="modal" data-backdrop="false" data-target="#modal_{{receta.pk}}">
-                    <div class="thumbnail" >
+                              <div class="thumbnail" >
 
-                      {% if receta.Imagen %}
-                        <img class="img-rounded img-responsive" src="{{MEDIA_URL}}{{receta.Imagen}}"   alt="Imagen no disponible" />
-                      {% else %}
-                        <img  class="img-rounded img-responsive" src="{{receta.Imagen_URL}}"  alt="Imagen no disponible" />
+                                {% if receta.Imagen %}
+                                  <img class="img-rounded img-responsive" src="{{MEDIA_URL}}{{receta.Imagen}}"   alt="Imagen no disponible" />
+                                {% else %}
+                                  <img  class="img-rounded img-responsive" src="{{receta.Imagen_URL}}"  alt="Imagen no disponible" />
 
-                      {% endif %}
-                    </div>
-                      <div class="caption">
+                                {% endif %}
+                              </div>
+                              <div class="caption">
 
-                        <h3> <a href="#"> {{receta.Titulo|capfirst}} </a></h3>
+                                <h3> <a href="#"> {{receta.Titulo|capfirst}} </a></h3>
 
-                      </div>
+                              </div>
 
                 </div>
 
-                <!-- Modal {{receta.pk}} -->
+                <!-- Modal   -->
                 <div id="modal_{{receta.pk}}" class="modal fade" role="dialog">
                   <div class="modal-dialog modal-lg">
 
-                    <!-- Modal {{receta.pk}} content-->
+                    <!-- Modal   content-->
                     <div class="modal-content">
                       <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -163,7 +164,7 @@
 
       </div>
 
-      <div id="paginador" class="container">
+      <div id="paginador" class="container text-center">
 
         <ul class="pagination">
 
@@ -190,11 +191,13 @@
       </div>
 
 
-      <footer class="footer" >
+
+
+    <!--  <footer class="footer" >
 
           <span>All rights reserved | <a href="https://about.me/ferr_velazquez" target="_blank">Fernando Velazquez</a> | 2016 </span>
 
-      </footer>
+      </footer> -->
 
 
 

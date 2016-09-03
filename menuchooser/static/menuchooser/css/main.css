@@ -20,11 +20,12 @@ body{
 }
 
 footer {
+
   background-color: #101010;
   text-align: center;
   color: white;
   padding: 1rem;
-  
+
 
 }
 
@@ -38,22 +39,23 @@ footer {
 }
 
 .col-md-3{
-  -moz-transition: -webkit-scale 2.2s ease-in 3.5s;
-  -webkit-transition: -webkit-scale 2.2s ease-in 3.5s;
+
   text-align: center;
   padding-top: 10px;
 
 
 }
 .col-md-3:hover {
-  -webkit-transform: scale(1.1,1.1);
-  -moz-transform: scale(1.1,1.1);
   text-decoration: underline;
+  opacity: 0.7;
 }
 
+.navbar li:hover{
+  background-color: black;
+}
 
-#paginador{
-   padding-left: 33%;
+.navbar{
+  border-radius: 0px;
 }
 
 /* Modal CSS style */

@@ -1,4 +1,22 @@
 $(document).ready(function(){
+
+  function cambiar_pag(event,i) {
+        event.preventDefault()
+        var pag= $(i).attr('href');
+        console.log(pag);
+        $.ajax({
+            url:pag,
+            success:function(data){
+              var content = $( data ).find( "#contenedor-recetas" );
+              var contentPager = $( data).find('.pagination');
+
+              $( "#full-container" ).fadeTo('fast',0.5);
+              $( "#full-container" ).empty().append( content );
+              $('#paginador').empty().append( contentPager);
+              $( "#full-container" ).fadeTo('fast',1);
+            }
+        });
+  }
   // PRESS BORRAR
   $(document).on('click',".deletebutton",function(){
 
@@ -45,23 +63,7 @@ $(document).ready(function(){
     $('#paginador').show();
   });
 
-  function cambiar_pag(event,i) {
-        event.preventDefault()
-        var pag= $(i).attr('href');
-        console.log(pag);
-        $.ajax({
-            url:pag,
-            success:function(data){
-              var content = $( data ).find( "#contenedor-recetas" );
-              var contentPager = $( data).find('.pagination');
 
-              $( "#full-container" ).fadeTo('fast',0.5);
-              $( "#full-container" ).empty().append( content );
-              $('#paginador').empty().append( contentPager);
-              $( "#full-container" ).fadeTo('fast',1);
-            }
-        });
-  }
 
   $(document).on('click','.page-activa',function(event){
     event.preventDefault();
@@ -100,24 +102,19 @@ $(document).ready(function(){
       type:form_r.attr('method'),
       url:form_r.attr('action'),
       data: form_r.serialize(),
-      success: function(data){
-        var content = $( data ).find( "#contenedor-recetas" );
-        $( "#full-container" ).empty().append( content );
-        var contentPager = $( data).find('.pager');
-        $('#paginador').empty().append( contentPager);
-
-        $("#agregarDiv").slideToggle();
-        $('#full-container').show();
-        $('#paginador').show();
-
-      },
       error: function(data){
         alert('la receta no se guardo CORRECTAMENTE');
+        console.log('la receta no se guardo CORRECTAMENTE');
       }
+    }).done( function(data){
+      var content = $(data).find( "#contenedor-recetas" );
+      var contentPager = $(data).find('.pagination');
+      $( "#full-container" ).empty().append( content );
+      $('#paginador').empty().append( contentPager);
+      $("#agregarDiv").slideToggle();
+      $('#full-container').show();
+      $('#paginador').show();
+
+      });
     });
-
-  });
-
-
-
 });
