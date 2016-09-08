@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     #third-party
     'pagedown',
     'markdown_deux',
+    'bootstrap_pagination',
 
 ]
 
@@ -56,6 +57,8 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'menu.urls'
+
+
 
 TEMPLATES = [
     {

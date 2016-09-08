@@ -1,25 +1,24 @@
 
-<div class="container" >
+
   {% if form.errors %}
     <p>
       {{form.errors}}
     </p>
   {% endif %}
 
-  <form id="form_r" role='form' method="post"  enctype='multipart/form-data' action="{% url 'menu:addfood' %}" >
+  <form id="form_r" role='form' method="post"   enctype='multipart/form-data' action="{% url 'menu:addfood' %}" >
     {% csrf_token %}
-    <div class="form-group">
-      <ul>
+    <div  >
 
-        {{form.as_ul}}
-      </ul>
+
+        {{form.as_p}}
+
 
     </div>
 
     <div class="center-buttons">
-      <a href="#" id="no_agregar" role="button" class="btn btn-danger" ><span class="glyphicon glyphicon-remove"></span>Cancelar</a>
-      <button type="submit" class="btn btn-primary" ><span class="glyphicon glyphicon-save"></span>Guardar</button>
+      <a href="#" id="no_agregar" role="button" class="btn btn-danger" ><span class="glyphicon glyphicon-remove"></span> Cancelar</a>
+      <button type="submit" class="btn btn-primary" ><span class="glyphicon glyphicon-save"></span> Guardar</button>
 
     </div>
   </form>
-</div>

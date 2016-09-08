@@ -5,31 +5,47 @@
    ========================================================================== */
 
 body{
-  background-color: #f7f7f7;
+  font-family: 'Indie Flower', cursive;
+  font-weight:bold;
+  font-size: 15px;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  min-height: 100vh;
+  background-image: url('sayagata.png');
+}
 
+.navbar{
+  width: 100%;
+  height: 25%;
 }
 
 #full-container{
+  min-height: 450px;
+  width: 100%;
+}
 
+.receta {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border: 1px solid #ccc;
+  background-color: white;
 
 }
-.thumbnail{
-  background-color: #dfe3ee;
-  box-shadow: 5px 5px 5px #888888;
 
-}
 
 footer {
-
+  width: 100%;
+  align-self: flex-end;
   background-color: #101010;
   text-align: center;
   color: white;
   padding: 1rem;
-
-
 }
 
-
+.nav-button:hover{
+  background-color: red;
+}
 
 /* Base style for tables */
 
@@ -39,51 +55,34 @@ footer {
 }
 
 .col-md-3{
-
   text-align: center;
   padding-top: 10px;
-
-
 }
+
 .col-md-3:hover {
   text-decoration: underline;
   opacity: 0.7;
 }
 
-.navbar li:hover{
-  background-color: black;
-}
-
-.navbar{
-  border-radius: 0px;
-}
 
 /* Modal CSS style */
 
 .modal img{
-  border: 2px solid black;
   margin: auto;
-  border-radius: 25px;
   width: inherit;
   height: inherit;
-
 }
+
 .modal-body p{
   font-weight: bold;
 }
-.modal h4{
+
+.modal h3{
   text-align: center;
 }
 /* buttons styles */
 
 .center-buttons{
-
   text-align: center;
   margin-bottom: 15px;
 }
-.right-buttons{
-  float: right;
-}
-
-
-/* Agregar/Editar/borrar receta  CSS style */

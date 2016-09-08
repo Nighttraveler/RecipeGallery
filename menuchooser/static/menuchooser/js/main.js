@@ -41,13 +41,15 @@ $(document).ready(function(){
 
       if ($("#agregarDiv").is(':hidden')){
         $('#full-container').hide();
+        $('footer').hide();
         console.log("esta a la vista");
         $('#paginador').hide();
-        $("#agregarDiv").slideToggle('slow');
+        $("#agregarDiv").slideToggle();
       }else {
         $('#full-container').show();
         console.log("esta a la escondido");
         $('#paginador').show();
+        $('footer').show();
         $("#agregarDiv").slideToggle('slow');
 
       }

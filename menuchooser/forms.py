@@ -11,8 +11,7 @@ class MenuForm(forms.ModelForm):
         model = MenuModel
         fields = [ 'Titulo','Tipo','Imagen','Imagen_URL', 'Ingredientes', 'Receta'  ]
         widgets = {
-            'Imagen_URL': forms.URLInput(attrs={'placeholder':'Solo ingrese una URL si no posee imagen local',
-                                                'style':'width:50%',
+            'Imagen_URL': forms.URLInput(attrs={'placeholder':'URL alternativa',
                                                 'class':'form-control',
                                                 }),
             'Imagen': forms.ClearableFileInput(),
