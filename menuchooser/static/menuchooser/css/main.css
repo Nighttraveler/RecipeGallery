@@ -2,24 +2,46 @@
 
 /* ==========================================================================
    Author's custom styles
+   background-image: url('../sayagata.png');
    ========================================================================== */
 
 body{
-  font-family: 'Indie Flower', cursive;
-  font-weight:bold;
-  font-size: 15px;
+  font-family: 'Oswald', sans-serif;
   margin: 0;
   padding: 0;
   display: flex;
   flex-wrap: wrap;
   min-height: 100vh;
-  background-image: url('sayagata.png');
+  background-color: rgb(30 ,136,229);
+
+
 }
 
 .navbar{
   width: 100%;
-  height: 25%;
+  border: 0px;
+  border-radius: 0px;
 }
+
+
+
+@media only screen and (max-width: 600px) {
+
+  .wmd-panel{
+    margin-left: 0;
+    margin-right: 0;
+    min-width: 300px;
+
+  }
+
+}
+
+#form_r{
+  background: white;
+  padding: 50px;
+  margin-bottom: 50px;
+}
+
 
 #full-container{
   min-height: 450px;
@@ -28,24 +50,27 @@ body{
 
 .receta {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  border: 1px solid #ccc;
-  background-color: white;
-
+  background-color: #e1f5fe;
+  border-radius: 10px;
 }
 
 
 footer {
+  
   width: 100%;
   align-self: flex-end;
-  background-color: #101010;
+  background-color: rgb(21, 101, 192);
   text-align: center;
   color: white;
   padding: 1rem;
+
 }
 
-.nav-button:hover{
-  background-color: red;
+footer a {
+  color : white;
 }
+
+
 
 /* Base style for tables */
 

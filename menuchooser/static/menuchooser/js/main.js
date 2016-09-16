@@ -1,22 +1,6 @@
 $(document).ready(function(){
 
-  function cambiar_pag(event,i) {
-        event.preventDefault()
-        var pag= $(i).attr('href');
-        console.log(pag);
-        $.ajax({
-            url:pag,
-            success:function(data){
-              var content = $( data ).find( "#contenedor-recetas" );
-              var contentPager = $( data).find('.pagination');
 
-              $( "#full-container" ).fadeTo('fast',0.5);
-              $( "#full-container" ).empty().append( content );
-              $('#paginador').empty().append( contentPager);
-              $( "#full-container" ).fadeTo('fast',1);
-            }
-        });
-  }
   // PRESS BORRAR
   $(document).on('click',".deletebutton",function(){
 
@@ -35,8 +19,6 @@ $(document).ready(function(){
   });
 
   // PRESS AGREGAR RECETA
-//  $(document).ready(function(){
-
     $("#agregar_receta").click(function (){
 
       if ($("#agregarDiv").is(':hidden')){
@@ -56,45 +38,15 @@ $(document).ready(function(){
     });
 
 
-//  });
+
 
   // PRESSS CANCELAR EN EL FORM AGREGAR RECETA
   $(document).on('click','#no_agregar',function(){
     $("#agregarDiv").slideToggle();
+    $('footer').show();
     $('#full-container').show();
     $('#paginador').show();
   });
-
-
-
-  $(document).on('click','.page-activa',function(event){
-    event.preventDefault();
-    var pag= $(this).attr('href')+$(this).attr('numpag');
-
-    $.ajax({
-        url:pag,
-        success:function(data){
-
-          var content = $( data ).find( "#contenedor-recetas" );
-          var contentPager = $( data).find('.pagination');
-          $( "#full-container" ).fadeTo('fast',0.5);
-          $('#paginador').empty().append( contentPager);
-          $( "#full-container" ).empty().append( content );
-          $( "#full-container" ).fadeTo('fast',1);
-        }
-    });
-  });
-  // PAGINA ANTERIOR
-  $(document).on('click','#pagina_siguiente',  function(event){
-    var i = '#pagina_siguiente';
-    cambiar_pag(event,i);
-  });
-  //PAGINA SIGUIENTE
-  $(document).on('click','#pagina_anterior', function(event){
-    var i = '#pagina_anterior';
-    cambiar_pag(event,i);
-  });
-
 
   // SUBMIT EL FORM DE AGREGAR RECETAS
   var form_r= $('#form_r');
