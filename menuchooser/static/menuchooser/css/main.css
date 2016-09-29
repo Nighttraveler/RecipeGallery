@@ -2,7 +2,8 @@
 
 /* ==========================================================================
    Author's custom styles
-   background-image: url('../sayagata.png');
+
+   background-color: rgb(30 ,136,229);
    ========================================================================== */
 
 body{
@@ -12,18 +13,46 @@ body{
   display: flex;
   flex-wrap: wrap;
   min-height: 100vh;
-  background-color: rgb(30 ,136,229);
+
+  background-image: url('../sayagata.png');
+
+}
+
+#section1 {padding-top:50px;height:500px;color: #fff; background-color: #1E88E5;}
+#section2 {padding-top:50px;height:500px;color: #fff; background-color: #673ab7;}
+#section3 {padding-top:50px;height:500px;color: #fff; background-color: #ff9800;}
+#section41 {padding-top:50px;height:500px;color: #fff; background-color: #00bcd4;}
+#section42 {padding-top:50px;height:500px;color: #fff; background-color: #009688;}
 
 
+.affix {
+    top:0;
+    width: 100%;
+    z-index: 9999 !important;
+}
+.affix ~ .container-fluid {
+   position: relative;
+   top: 50px;
+}
+
+#last-r-Carousel{
+  width: 100%;
 }
 
 .navbar{
   width: 100%;
   border: 0px;
   border-radius: 0px;
+  margin-bottom: 0px;
 }
 
+.carousel-inner > .item > img,
+.carousel-inner > .item > a > img {
+    height: 650px;
+    margin: auto;
+    width: 70%;
 
+}
 
 @media only screen and (max-width: 600px) {
 
@@ -33,6 +62,14 @@ body{
     min-width: 300px;
 
   }
+  .carousel-inner > .item > img,
+  .carousel-inner > .item > a > img {
+      height: 250px !important;
+  }
+  .carousel-indicators {
+    display: none;
+  }
+
 
 }
 
@@ -42,6 +79,9 @@ body{
   margin-bottom: 50px;
 }
 
+.panel-heading .panel-footer{
+  background-color: rgb(21, 101, 192);
+}
 
 #full-container{
   min-height: 450px;
@@ -50,13 +90,13 @@ body{
 
 .receta {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  background-color: #e1f5fe;
+
   border-radius: 10px;
 }
 
 
-footer {
-  
+.footer {
+
   width: 100%;
   align-self: flex-end;
   background-color: rgb(21, 101, 192);
@@ -85,7 +125,6 @@ footer a {
 }
 
 .col-md-3:hover {
-  text-decoration: underline;
   opacity: 0.7;
 }
 

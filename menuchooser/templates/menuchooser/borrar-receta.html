@@ -29,10 +29,10 @@
               }
           }).done(function( data ) {
                 var content = $( data ).find( "#contenedor-recetas" );
+                var pcont = $(data).find(".pagination");
                 $( "#full-container" ).empty().append( content );
-                var contentPager = $( data).find('.pagination');
-
-                $('#paginador').empty().append( contentPager);
+                $('#paginador').empty().append(pcont);
+                
                 $("body").removeAttr("class");
                 $("body").removeAttr("style");
 

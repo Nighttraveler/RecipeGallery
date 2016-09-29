@@ -8,7 +8,7 @@
 
   <form id="form_r" role='form' method="post"   enctype='multipart/form-data' action="{% url 'menu:addfood' %}" >
     {% csrf_token %}
-    <div  >
+    <div class="form-group">
 
 
         {{form.as_p}}

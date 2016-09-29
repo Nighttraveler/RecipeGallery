@@ -31,62 +31,61 @@
 
         <script src= {% static "menuchooser/js/vendor/modernizr-2.8.3-respond-1.4.2.min.js" %} ></script>
     </head>
+    {% block body_set %}
     <body  >
+
+    {% endblock %}
         <!--[if lt IE 8]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
-        <nav class="navbar navbar-inverse">
-          <div class="container-fluid">
-            <div class="navbar-header">
-              <a href='/' class="navbar-brand"><span class="glyphicon glyphicon-heart"></span> Recipe Gallery</a>
-              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navMenu">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-              </button>
+        {% block contenido %}
+          <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+              <div class="navbar-header">
+                <a href="{% url 'menu:users' %}" class="navbar-brand"><span class="glyphicon glyphicon-heart"></span> Recipe Gallery</a>
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navMenu">
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+              </div>
+              <div class="collapse navbar-collapse" id="navMenu">
+                <ul class="nav navbar-nav ">
+                  <li  class="nav-button"><a href="#" id="agregar_receta" ><span class="glyphicon glyphicon-plus"></span> Agregar Receta</a></li>
+                  <li class="dropdown nav-button">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">Categorias <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                      {% for tipo in tipos %}
+                      <li><a href="{% url 'menu:tipofood' tipo.pk %}" >{{tipo.Tipo}}</a></li>
+                      {% endfor %}
+                    </ul>
+                  </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-left" role="search">
+
+                  <li>
+                    <form role="form" action="" class="navbar-form"    method="get" >
+                          <div class="form-group">
+                            <input class="form-control"  placeholder="Search" type='text'  name="q" value={% if query %}"{{query}}"{%else%}""{% endif %} >
+                          </div>
+                          <button class="btn btn-default" type="submit" ><span class="glyphicon glyphicon-search"></span> Buscar</button>
+                    </form>
+                  </li>
+
+                </ul>
+              </div>
             </div>
-            <div class="collapse navbar-collapse" id="navMenu">
-              <ul class="nav navbar-nav ">
-                <li class="dropdown nav-button">
-                  <a class="dropdown-toggle" data-toggle="dropdown" href="#">Categorias <span class="caret"></span></a>
-                  <ul class="dropdown-menu">
-                    {% for tipo in tipos %}
-                    <li><a  href="?tipo={{tipo.pk}}" >{{tipo.Tipo}}</a></li>
-                    {% endfor %}
-
-                  </ul>
-                </li>
-                <li  class="nav-button"><a href="#" id="agregar_receta" ><span class="glyphicon glyphicon-plus"></span> Agregar Receta</a></li>
-
-              </ul>
-              <ul class="nav navbar-nav navbar-left" role="search">
-                <li>
-                  <form role="form" action="{% url 'menu:index' %}" class="navbar-form"    method="get" >
-                        <div class="form-group">
-                          <input class="form-control"  placeholder="Search" type='text'  name="q" value={% if query %}"{{query}}"{%else%}""{% endif %} >
-                        </div>
-                        <button class="btn btn-default" type="submit" ><span class="glyphicon glyphicon-search"></span> Buscar</button>
-                  </form>
-                </li>
-
-              </ul>
-            </div>
-          </div>
-        </nav>
-          <div id="agregarDiv" class="container" style="display:none;width: 100%;">
-
-            {% include "menuchooser/agregar-receta.html"  %}
+          </nav>
 
 
-          </div>
+        <div id="agregarDiv" class="container" style="display:none;width: 100%;">
+          {% include "menuchooser/agregar-receta.html"  %}
+        </div>
 
 
 
 
         <div class="container-fluid" id="full-container">
-
-        {% block contenido %}
-
         {% if query and not recetas %}
           <h2 style="margin-top: 60px;text-align:center;color:white;opacity:0.50;" >No se encontraron recetas con el termino de busqueda {{query}}</h2>
         {% else %}
@@ -95,20 +94,28 @@
             <div class="row" id="recetas">
               {% for receta in recetas  %}
 
-                  <div class="col-md-3" data-toggle="modal" data-backdrop="false" data-target="#modal_{{receta.pk}}">
-                              <div class="receta">
+                  <div class="col-md-3" >
 
-                                  {% if receta.Imagen %}
-                                    <img class="img-circle" src="{{MEDIA_URL}}{{receta.Imagen}}"   alt="Imagen no disponible" />
-                                  {% else %}
-                                    <img  class="img-circle" src="{{receta.Imagen_URL}}"  alt="Imagen no disponible" />
+                              <div class="receta panel ">
+                              <div class="panel-heading text-center">
 
-                                  {% endif %}
-                                  <div class="caption">
+                                <h4>  {{receta.Titulo|capfirst}} </h4>
 
-                                    <h4> <a href="#"> {{receta.Titulo|capfirst}} </a></h4>
+                              </div>
+                              <div class="panel-body" data-toggle="modal" data-backdrop="false" data-target="#modal_{{receta.pk}}">
+                                {% if receta.Imagen %}
+                                <img class="img-circle" src="{{MEDIA_URL}}{{receta.Imagen}}"   alt="Imagen no disponible" />
+                                {% else %}
+                                <img  class="img-circle" src="{{receta.Imagen_URL}}"  alt="Imagen no disponible" />
 
-                                  </div>
+                                {% endif %}
+
+                              </div>
+                              <div class="panel-footer text-center">
+
+                                <h4>aca va el usuario </h4>
+
+                              </div>
                             </div>
 
                 </div>
@@ -169,7 +176,6 @@
         {% endif %}
 
 
-        {% endblock %}
 
 
 
@@ -178,41 +184,19 @@
 
       <div id="paginador" class="container-fluid text-center">
         {% bootstrap_paginate recetas show_first_last="true" first_label="<<" last_label=">>"  range=5 %}
-
-        <!--<ul class="pagination">
-
-          {% if recetas.has_previous %}
-          <li >
-            <a id="pagina_anterior" href="?page={{ recetas.previous_page_number }}"> <span class="glyphicon glyphicon-chevron-left"></span></a>
-          </li>
-          {%else%}
-          <li class="disabled">
-            <a   href="#"><span class="glyphicon glyphicon-chevron-left"></span></a>
-          </li>
-          {% endif %}
-
-          {% for pagina in recetas.paginator.page_range %}
-          <li > <a class="page-activa" numpag={{pagina}} href="?page=">{{pagina}}</a></li>
-          {% endfor %}
-          <li >
-            {% if recetas.has_next %}
-            <a id="pagina_siguiente" href="?page={{ recetas.next_page_number }}"> <span class="glyphicon glyphicon-chevron-right"></span></a>
-            {% endif %}
-          </li>
-
-        </ul> -->
       </div>
-
-
-
 
 
 
       <footer class="footer" >
 
-          <span>All rights reserved | <a href="https://about.me/ferr_velazquez" target="_blank">Fernando Velazquez</a> | 2016 </span>
+        <span>All rights reserved | <a href="https://about.me/ferr_velazquez" target="_blank">Fernando Velazquez</a> | 2016 </span>
 
       </footer>
+      {% endblock %}
+
+
+
 
 
 

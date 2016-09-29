@@ -8,12 +8,12 @@ class MenuForm(forms.ModelForm):
 
 
     class Meta:
-        model = MenuModel
-        fields = [ 'Titulo','Tipo','Imagen','Imagen_URL', 'Ingredientes', 'Receta'  ]
+        model   = MenuModel
+        fields  = [ 'Titulo','Tipo','Imagen','Imagen_URL', 'Ingredientes', 'Receta'  ]
         widgets = {
             'Imagen_URL': forms.URLInput(attrs={'placeholder':'URL alternativa',
                                                 'class':'form-control',
                                                 }),
-            'Imagen': forms.ClearableFileInput(),
+            'Titulo'    : forms.TextInput(attrs={'class':'form-control'}),
 
         }
