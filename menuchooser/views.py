@@ -26,11 +26,8 @@ class IndexFeedView(generic.ListView):
     tipos= TipoModel.objects.all()
     form_class = MenuForm
     model = MenuModel
-    recetas= MenuModel.objects.all()
+    queryset = MenuModel.objects.all()
     query=None
-
-    def filtrar_por(self, qs, tipo):
-        return qs.filter(Tipo=tipo)
 
     def buscar(self, qs, q ):
         return qs.filter(
@@ -40,16 +37,9 @@ class IndexFeedView(generic.ListView):
 
     def get_queryset(self, request):
 
-        #queryset = super(IndexFeedView, self).queryset()
+        recetas = super(IndexFeedView, self).get_queryset()
 
         query = request.GET.get('q')
-        tipo = request.GET.get('tipo')
-
-        recetas = self.recetas
-
-        if tipo:
-            print('+++++++++++++++++++++++ hubo tipo +++++++++++++++++')
-            recetas = self.filtrar_por(recetas, tipo)
 
         if query:
             recetas = self.buscar(recetas, query)
@@ -61,7 +51,7 @@ class IndexFeedView(generic.ListView):
         recetas = self.get_queryset(request)
 
 
-        per_page=28
+        per_page = 24
         paginator = Paginator(recetas.order_by('-pub_date'), per_page)
         page= request.GET.get('page')
         try:

@@ -1,53 +1,62 @@
 {% extends "menuchooser/base.html" %}
 
 {% block body_set %}
-<body data-spy="scroll" data-target=".navbar" data-offset="50" style="display:block;position:relative;"  >
+<body data-spy="scroll" data-target=".navbar" data-offset="50" style="display:block;position:relative; "  >
 {% endblock %}
 
 {% block contenido %}
+      <header class="jumbotron text-center">
 
+        <span class="glyphicon glyphicon-heart"></span>Recepy Gallery
+      </header>
 
-        <div class="well well-sm text-center" style="margin-bottom:0px;width:100%;">
-          Ultimas Recetas Agregadas
+      <!-- carousel -->
+      <div class="row">
+        <div class="col-md-8">
+                  <div class="well well-sm text-center" style="margin-bottom:0px;width:100%;">
+                    Ultimas Recetas Agregadas
+                  </div>
+
+                  <div id="last-r-Carousel" class="carousel slide" data-ride="carousel">
+                    <!-- Indicators -->
+                    <ol class="carousel-indicators">
+                      {% for r in recetas_recientes  %}
+                      <li data-target="#last-r-Carousel" data-slide-to="{{forloop.counter0}}" {% if forloop.first %} class="active"{% endif %}></li>
+                      {% endfor %}
+                    </ol>
+
+                    <!-- Wrapper for slides -->
+                    <div class="carousel-inner" role="listbox">
+
+                      {% for r in recetas_recientes  %}
+                      <div {% if forloop.first %} class="item active" {%else%} class="item" {% endif %}>
+                        {% if r.Imagen %}
+                        <img class="img-rounded" src="{{MEDIA_URL}}{{r.Imagen}}" alt="Imagen no disponible" />
+                        {% else %}
+                        <img  class="img-rounded" src="{{r.Imagen_URL}}" alt="Imagen no disponible" />
+                        {% endif %}
+                        <div class="carousel-caption">
+                          <h3>{{r.Titulo|capfirst}}</h3>
+                        </div>
+                      </div>
+                      {% endfor %}
+                    </div>
+
+                    <!-- Left and right controls -->
+                    <a class="left carousel-control" href="#last-r-Carousel" role="button" data-slide="prev">
+                      <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                      <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="right carousel-control" href="#last-r-Carousel" role="button" data-slide="next">
+                      <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                      <span class="sr-only">Next</span>
+                    </a>
+                  </div>
         </div>
 
-        <div id="last-r-Carousel" class="carousel slide" data-ride="carousel">
-          <!-- Indicators -->
-          <ol class="carousel-indicators">
-            {% for r in recetas_recientes  %}
-            <li data-target="#last-r-Carousel" data-slide-to="{{forloop.counter0}}" {% if forloop.first %} class="active"{% endif %}></li>
-            {% endfor %}
-          </ol>
+      </div>
 
-          <!-- Wrapper for slides -->
-          <div class="carousel-inner" role="listbox">
-
-            {% for r in recetas_recientes  %}
-            <div {% if forloop.first %} class="item active" {%else%} class="item" {% endif %}>
-              {% if r.Imagen %}
-              <img class="img-rounded" src="{{MEDIA_URL}}{{r.Imagen}}"/>
-              {% else %}
-              <img  class="img-rounded" src="{{r.Imagen_URL}}"/>
-              {% endif %}
-              <div class="carousel-caption">
-                <h3>{{r.Titulo|capfirst}}</h3>
-              </div>
-            </div>
-            {% endfor %}
-          </div>
-
-          <!-- Left and right controls -->
-          <a class="left carousel-control" href="#last-r-Carousel" role="button" data-slide="prev">
-            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-          </a>
-          <a class="right carousel-control" href="#last-r-Carousel" role="button" data-slide="next">
-            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-          </a>
-        </div>
-
-
+      <!-- navbar affix  -->
       <nav class="navbar navbar-inverse" data-spy="affix" data-offset-top="750">
         <div class="container-fluid">
           <div class="navbar-header">

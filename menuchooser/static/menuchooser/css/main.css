@@ -13,6 +13,7 @@ body{
   display: flex;
   flex-wrap: wrap;
   min-height: 100vh;
+   
 
   background-image: url('../sayagata.png');
 
@@ -46,12 +47,23 @@ body{
   margin-bottom: 0px;
 }
 
+.jumbotron {
+  margin-bottom: 0
+}
+.carousel-inner{
+  background-color: black;
+}
 .carousel-inner > .item > img,
 .carousel-inner > .item > a > img {
-    height: 650px;
+    height: 500px;
     margin: auto;
-    width: 70%;
+    width: auto;
 
+
+}
+
+.panel-heading{
+  co
 }
 
 @media only screen and (max-width: 600px) {
@@ -79,20 +91,33 @@ body{
   margin-bottom: 50px;
 }
 
-.panel-heading .panel-footer{
-  background-color: rgb(21, 101, 192);
-}
+
+
 
 #full-container{
   min-height: 450px;
   width: 100%;
 }
 
-.receta {
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  .receta {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 
-  border-radius: 10px;
-}
+    border-radius: 10px;
+  }
+
+
+  #grid[data-columns]::before {
+  	content: '4 .column.size-1of3';
+  }
+
+  /* These are the classes that are going to be applied: */
+.column {
+   float: left;
+ }
+.size-1of3 {
+   width: 24%;
+   margin: 5px;
+   }
 
 
 .footer {
@@ -114,17 +139,12 @@ footer a {
 
 /* Base style for tables */
 
-.col-md-3 img{
-  width: auto;
-  height: 150px;
+
+.panel-body img{
+  width: 100%;
 }
 
-.col-md-3{
-  text-align: center;
-  padding-top: 10px;
-}
-
-.col-md-3:hover {
+.panel-body:hover {
   opacity: 0.7;
 }
 
