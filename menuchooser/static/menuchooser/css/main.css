@@ -13,7 +13,7 @@ body{
   display: flex;
   flex-wrap: wrap;
   min-height: 100vh;
-   
+
 
   background-image: url('../sayagata.png');
 
@@ -138,7 +138,9 @@ footer a {
 
 
 /* Base style for tables */
-
+.panel-heading a{
+  color: white;
+}
 
 .panel-body img{
   width: 100%;

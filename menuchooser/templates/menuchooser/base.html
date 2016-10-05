@@ -38,46 +38,49 @@
         <!--[if lt IE 8]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
-        {% block contenido %}
-          <nav class="navbar navbar-inverse">
-            <div class="container-fluid">
-              <div class="navbar-header">
-                <a href="{% url 'menu:users' %}" class="navbar-brand"><span class="glyphicon glyphicon-heart"></span> Recipe Gallery</a>
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navMenu">
-                  <span class="icon-bar"></span>
-                  <span class="icon-bar"></span>
-                  <span class="icon-bar"></span>
-                </button>
-              </div>
-              <div class="collapse navbar-collapse" id="navMenu">
-                <ul class="nav navbar-nav ">
-                  <li  class="nav-button"><a href="#" id="agregar_receta" ><span class="glyphicon glyphicon-plus"></span> Agregar Receta</a></li>
-                  <li class="dropdown nav-button">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">Categorias <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                      {% for tipo in tipos %}
-                      <li><a href="{% url 'menu:tipofood' tipo.pk %}" >{{tipo.Tipo}}</a></li>
-                      {% endfor %}
-                    </ul>
-                  </li>
-                </ul>
-                <ul class="nav navbar-nav navbar-left" role="search">
-
-                  <li>
-                    <form role="form" action="" class="navbar-form"    method="get" >
-                          <div class="form-group">
-                            <input class="form-control"  placeholder="Search" type='text'  name="q" value={% if query %}"{{query}}"{%else%}""{% endif %} >
-                          </div>
-                          <button class="btn btn-default" type="submit" ><span class="glyphicon glyphicon-search"></span> Buscar</button>
-                    </form>
-                  </li>
-
-                </ul>
-              </div>
+        {% block navbar %}
+        <nav class="navbar navbar-inverse">
+          <div class="container-fluid">
+            <div class="navbar-header">
+              <a href="{% url 'menu:users' %}" class="navbar-brand"><span class="glyphicon glyphicon-heart"></span> Recipe Gallery</a>
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navMenu">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
             </div>
-          </nav>
+            <div class="collapse navbar-collapse" id="navMenu">
+              <ul class="nav navbar-nav ">
+                <li  class="nav-button"><a href="#" id="agregar_receta" ><span class="glyphicon glyphicon-plus"></span> Agregar Receta</a></li>
+                <li class="dropdown nav-button">
+                  <a class="dropdown-toggle" data-toggle="dropdown" href="#">Categorias <span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                    {% for tipo in tipos %}
+                    <li><a href="{% url 'menu:tipofood' tipo.pk %}" >{{tipo.Tipo}}</a></li>
+                    {% endfor %}
+                  </ul>
+                </li>
+              </ul>
+              <ul class="nav navbar-nav navbar-left" role="search">
+
+                <li>
+                  <form role="form" action="" class="navbar-form"    method="get" >
+                    <div class="form-group">
+                      <input class="form-control"  placeholder="Search" type='text'  name="q" value={% if query %}"{{query}}"{%else%}""{% endif %} >
+                    </div>
+                    <button class="btn btn-default" type="submit" ><span class="glyphicon glyphicon-search"></span> Buscar</button>
+                  </form>
+                </li>
+
+              </ul>
+            </div>
+          </div>
+        </nav>
+
+        {% endblock %}
 
 
+        {% block contenido %}
         <div id="agregarDiv" class="container" style="display:none;width: 100%;">
           {% include "menuchooser/agregar-receta.html"  %}
         </div>
@@ -99,7 +102,7 @@
 
                               <div class="receta panel  panel-primary">
                               <div class="panel-heading text-center">
-                                   {{receta.Titulo|capfirst}}
+                                  <a href='{% url 'menu:detailfood' receta.pk %}' >{{receta.Titulo|capfirst}}</a>
                               </div>
                               <div class="panel-body" data-toggle="modal" data-backdrop="false" data-target="#modal_{{receta.pk}}">
                                 {% if receta.Imagen %}

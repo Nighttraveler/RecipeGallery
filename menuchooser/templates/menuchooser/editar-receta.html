@@ -19,6 +19,7 @@
       <script src= {% static "menuchooser/js/vendor/modernizr-2.8.3-respond-1.4.2.min.js" %} ></script>
   </head>
   <body>
+    {% block navbar %}
     <nav class="navbar navbar-inverse">
       <div class="container-fluid">
         <div class="navbar-header">
@@ -40,23 +41,14 @@
 
               </ul>
             </li>
-            <li  class="nav-button"><a href="#" id="agregar_receta" ><span class="glyphicon glyphicon-plus"></span> Agregar Receta</a></li>
-
+           
           </ul>
-          <ul class="nav navbar-nav navbar-left" role="search">
-            <li>
-              <form role="form" action="{% url 'menu:users' %}" class="navbar-form"    method="get" >
-                    <div class="form-group">
-                      <input class="form-control"  placeholder="Search" type='text'  name="q" value={% if query %}"{{query}}"{%else%}""{% endif %} >
-                    </div>
-                    <button class="btn btn-default" type="submit" ><span class="glyphicon glyphicon-search"></span> Buscar</button>
-              </form>
-            </li>
 
-          </ul>
         </div>
       </div>
     </nav>
+
+    {% endblock %}
 
     <div class="container" >
       {% if form.errors %}

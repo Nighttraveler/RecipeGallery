@@ -20,6 +20,7 @@ class HomePageView(generic.TemplateView):
         context={'recetas_recientes':self.recetas_recientes}
         return render(request, self.template_name, context)
 
+
 class IndexFeedView(generic.ListView):
 
     template_name = 'menuchooser/base.html'
@@ -107,7 +108,6 @@ class TipoView(View):
         return render(request, self.template_name, context)
 
 
-
 class AddFoodView(View):
 
     template_name = 'menuchooser/agregar-receta.html'
@@ -136,11 +136,18 @@ class EditFoodView(generic.UpdateView):
     success_url = reverse_lazy('menu:users')
 
 
-
-
 class DeleteFoodView(generic.DeleteView):
 
     context_object_name = 'receta'
     model = MenuModel
     template_name = 'menuchooser/borrar-receta.html'
     success_url = reverse_lazy('menu:users')
+
+class FoodDetailView(generic.DetailView):
+    model = MenuModel
+    context_object_name = 'receta'
+    template_name = 'menuchooser/detalle-receta.html'
+
+    def get_context_data(self, **kargs):
+        context = super(FoodDetailView, self).get_context_data(**kargs)
+        return context

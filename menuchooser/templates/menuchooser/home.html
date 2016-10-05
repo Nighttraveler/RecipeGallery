@@ -9,6 +9,9 @@
 
         <span class="glyphicon glyphicon-heart"></span>Recepy Gallery
       </header>
+      {% block navbar %}
+
+      {% endblock %}
 
       <!-- carousel -->
       <div class="row">
@@ -36,7 +39,7 @@
                         <img  class="img-rounded" src="{{r.Imagen_URL}}" alt="Imagen no disponible" />
                         {% endif %}
                         <div class="carousel-caption">
-                          <h3>{{r.Titulo|capfirst}}</h3>
+                          <h3><a href='{% url 'menu:detailfood' r.pk %}' >{{r.Titulo|capfirst}}</a></h3>
                         </div>
                       </div>
                       {% endfor %}
@@ -55,6 +58,8 @@
         </div>
 
       </div>
+
+
 
       <!-- navbar affix  -->
       <nav class="navbar navbar-inverse" data-spy="affix" data-offset-top="750">
