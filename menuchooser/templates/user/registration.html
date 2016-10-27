@@ -1,0 +1,9 @@
+
+
+<form role="form"   action= {% url 'menu:register' %} method="post">
+  {% csrf_token %}
+  <div class="form_group">
+    {{form.as_p}}
+  </div>
+  <button type="submit" class="btn btn-primary btn-block" >Submit</button>
+</form>

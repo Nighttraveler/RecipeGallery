@@ -10,21 +10,14 @@ body{
   font-family: 'Oswald', sans-serif;
   margin: 0;
   padding: 0;
-  display: flex;
-  flex-wrap: wrap;
   min-height: 100vh;
-
-
   background-image: url('../sayagata.png');
-
 }
 
-#section1 {padding-top:50px;height:500px;color: #fff; background-color: #1E88E5;}
-#section2 {padding-top:50px;height:500px;color: #fff; background-color: #673ab7;}
-#section3 {padding-top:50px;height:500px;color: #fff; background-color: #ff9800;}
-#section41 {padding-top:50px;height:500px;color: #fff; background-color: #00bcd4;}
-#section42 {padding-top:50px;height:500px;color: #fff; background-color: #009688;}
-
+.nopadding {
+   padding: 0 !important;
+   margin: 0 !important;
+}
 
 .affix {
     top:0;
@@ -32,13 +25,17 @@ body{
     z-index: 9999 !important;
 }
 .affix ~ .container-fluid {
-   position: relative;
-   top: 50px;
-}
+    position: relative;
+    top: 50px;
+ }
 
-#last-r-Carousel{
-  width: 100%;
-}
+ #section1 {padding-top:50px;height:500px;color: #fff; background-color: #1E88E5;}
+ #section2 {padding-top:50px;height:500px;color: #fff; background-color: #673ab7;}
+ #section3 {padding-top:50px;height:500px;color: #fff; background-color: #ff9800;}
+ #section41 {padding-top:50px;height:500px;color: #fff; background-color: #00bcd4;}
+ #section42 {padding-top:50px;height:500px;color: #fff; background-color: #009688;}
+
+
 
 .navbar{
   width: 100%;
@@ -47,9 +44,7 @@ body{
   margin-bottom: 0px;
 }
 
-.jumbotron {
-  margin-bottom: 0
-}
+
 .carousel-inner{
   background-color: black;
 }
@@ -58,13 +53,9 @@ body{
     height: 500px;
     margin: auto;
     width: auto;
-
-
 }
 
-.panel-heading{
-  co
-}
+
 
 @media only screen and (max-width: 600px) {
 
@@ -72,65 +63,72 @@ body{
     margin-left: 0;
     margin-right: 0;
     min-width: 300px;
-
   }
+
   .carousel-inner > .item > img,
   .carousel-inner > .item > a > img {
       height: 250px !important;
   }
+
   .carousel-indicators {
     display: none;
+  }
+
+  #grid[data-columns]::before {
+    content: '2 .column.size-1of2';
+  }
+
+}
+@media only screen and (min-width: 601px) {
+
+  #grid[data-columns]::before {
+    content: '4 .column.size-1of4';
   }
 
 
 }
 
-#form_r{
-  background: white;
-  padding: 50px;
-  margin-bottom: 50px;
+/* These are SALVATTORE classes that are going to be applied: */
+.column {
+ float: left;
+}
+.size-1of4 {
+ width: 24%;
+ margin: 5px;
+}
+.size-1of2{
+width: 47%;
+margin: 5px;
 }
 
 
 
+.white-form{
+  background: white;
+  padding: 50px;
+  margin-bottom: 50px;
+  margin-top: 25px;
+}
 
 #full-container{
   min-height: 450px;
   width: 100%;
 }
 
-  .receta {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+.receta {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 
-    border-radius: 10px;
-  }
-
-
-  #grid[data-columns]::before {
-  	content: '4 .column.size-1of3';
-  }
-
-  /* These are the classes that are going to be applied: */
-.column {
-   float: left;
- }
-.size-1of3 {
-   width: 24%;
-   margin: 5px;
-   }
-
+  border-radius: 10px;
+}
 
 .footer {
-
   width: 100%;
-  align-self: flex-end;
+
   background-color: rgb(21, 101, 192);
   text-align: center;
   color: white;
   padding: 1rem;
-
 }
-
 footer a {
   color : white;
 }

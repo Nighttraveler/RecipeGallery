@@ -1,0 +1,18 @@
+{% extends "menuchooser/base.html" %}
+
+
+
+
+{% block contenido %}
+
+  <h1>{{usuario.get_username}}!</h1>
+  <h2>{{usuario.get_short_name}}</h2>
+  <h3>{{usuario.last_name}}</h3>
+  <h4>{{usuario.email}}</h4>
+
+  <form class="" action="index.html" method="post">
+    {% csrf_token %}
+    {{form}}
+    <button type="submit" name="button">submit</button>
+  </form>
+{% endblock %}

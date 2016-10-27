@@ -20,6 +20,7 @@
     var borrar_form= $('#borrar-form');
     borrar_form.submit(function(e) {
           e.preventDefault();
+          var $data_columns =($('#grid').attr('data-columns'));
 
           $.ajax({
               type:"POST",
@@ -28,11 +29,12 @@
                 csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
               }
           }).done(function( data ) {
-                var content = $( data ).find( "#contenedor-recetas" );
+                var content = $( data ).find( "#recepy-grid" );
                 var pcont = $(data).find(".pagination");
                 $( "#full-container" ).empty().append( content );
                 $('#paginador').empty().append(pcont);
-                
+
+                salvattore.recreateColumns(document.querySelector('#grid'));
                 $("body").removeAttr("class");
                 $("body").removeAttr("style");
 

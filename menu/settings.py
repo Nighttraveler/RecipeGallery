@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    #my app
     'menuchooser.apps.MenuchooserConfig',
 
     #third-party
@@ -109,7 +111,8 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
+#LOGIN OPTIONS
+LOGIN_REDIRECT_URL = 'menu:feed'
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
 

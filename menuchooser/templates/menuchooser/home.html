@@ -1,74 +1,76 @@
 {% extends "menuchooser/base.html" %}
 
 {% block body_set %}
-<body data-spy="scroll" data-target=".navbar" data-offset="50" style="display:block;position:relative; "  >
+  <body data-spy="scroll" data-target=".navbar" data-offset="50">
+
+
+{% endblock %}
+{% block navbar %}
+
 {% endblock %}
 
+
+
 {% block contenido %}
-      <header class="jumbotron text-center">
 
-        <span class="glyphicon glyphicon-heart"></span>Recepy Gallery
-      </header>
-      {% block navbar %}
+<!-- Modal -->
+<div class="modal fade" id="myModal" role="dialog">
+  <div class="modal-dialog modal-lg">
 
-      {% endblock %}
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header" style="padding:35px 50px;">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4><span class="glyphicon glyphicon-lock"></span> Login</h4>
+      </div>
+      <div class="modal-body" style="padding:40px 50px;">
+        <ul class="nav nav-tabs">
+            <li class="active"><a data-toggle="tab" href="#login">Login</a></li>
+            <li><a data-toggle="tab" href="#sign-up">Sign Up</a></li>
+        </ul>
+        <div class="tab-content">
+          <div id="login" class="tab-pane fade in active">
+            <div id="login-form">
 
-      <!-- carousel -->
-      <div class="row">
-        <div class="col-md-8">
-                  <div class="well well-sm text-center" style="margin-bottom:0px;width:100%;">
-                    Ultimas Recetas Agregadas
-                  </div>
+            </div>
+          </div>
+          <div id="sign-up" class="tab-pane fade">
+            <div id="signup-form">
 
-                  <div id="last-r-Carousel" class="carousel slide" data-ride="carousel">
-                    <!-- Indicators -->
-                    <ol class="carousel-indicators">
-                      {% for r in recetas_recientes  %}
-                      <li data-target="#last-r-Carousel" data-slide-to="{{forloop.counter0}}" {% if forloop.first %} class="active"{% endif %}></li>
-                      {% endfor %}
-                    </ol>
+            </div>
+          </div>
 
-                    <!-- Wrapper for slides -->
-                    <div class="carousel-inner" role="listbox">
 
-                      {% for r in recetas_recientes  %}
-                      <div {% if forloop.first %} class="item active" {%else%} class="item" {% endif %}>
-                        {% if r.Imagen %}
-                        <img class="img-rounded" src="{{MEDIA_URL}}{{r.Imagen}}" alt="Imagen no disponible" />
-                        {% else %}
-                        <img  class="img-rounded" src="{{r.Imagen_URL}}" alt="Imagen no disponible" />
-                        {% endif %}
-                        <div class="carousel-caption">
-                          <h3><a href='{% url 'menu:detailfood' r.pk %}' >{{r.Titulo|capfirst}}</a></h3>
-                        </div>
-                      </div>
-                      {% endfor %}
-                    </div>
-
-                    <!-- Left and right controls -->
-                    <a class="left carousel-control" href="#last-r-Carousel" role="button" data-slide="prev">
-                      <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-                      <span class="sr-only">Previous</span>
-                    </a>
-                    <a class="right carousel-control" href="#last-r-Carousel" role="button" data-slide="next">
-                      <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                      <span class="sr-only">Next</span>
-                    </a>
-                  </div>
         </div>
 
       </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-danger btn-default pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
+        <p>Not a member? <a href="#">Sign Up</a></p>
+        <p>Forgot <a href="#">Password?</a></p>
+      </div>
+    </div>
+
+  </div>
+</div>
 
 
 
+
+<div >
+      <header class="text-center">
+        <h3>
+          <span class="glyphicon glyphicon-heart"></span>Recepy Gallery
+        </h3>
+      </header>
       <!-- navbar affix  -->
-      <nav class="navbar navbar-inverse" data-spy="affix" data-offset-top="750">
+      <nav class="navbar navbar-inverse" data-spy="affix" data-offset-top="550" >
         <div class="container-fluid">
           <div class="navbar-header">
-              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand" href="#"><span class="glyphicon glyphicon-heart"></span> Recipe Gallery</a>
           </div>
@@ -78,7 +80,7 @@
                 <li><a href="#section1">Section 1</a></li>
                 <li><a href="#section2">Section 2</a></li>
                 <li><a href="#section3">Section 3</a></li>
-                <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="tryit_173.htm#">Section 4 <span class="caret"></span></a>
+                <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" >Section 4 <span class="caret"></span></a>
                   <ul class="dropdown-menu">
                     <li><a href="#section41">Section 4-1</a></li>
                     <li><a href="#section42">Section 4-2</a></li>
@@ -86,13 +88,80 @@
                 </li>
               </ul>
               <ul class="nav navbar-nav navbar-right">
-                <li><a href="{% url 'menu:users' %}" ><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-                <li><a href="{% url 'menu:users' %}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                {% if request.user.is_authenticated %}
+                <li>  <a href="#">{{request.user.username}}  </a> </li>
+                <li> <a href= {% url 'menu:logout' %}  ><span class="glyphicon glyphicon-log-out"></span>Log Out</a> </li>
+                {% else %}
+                <li><a id='modal-user'  data-toggle="modal" data-target="#myModal" data-backdrop="false"   ><span class="glyphicon glyphicon-user"></span> Sign Up  |   <span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+
+                {% endif %}
               </ul>
             </div>
           </div>
         </div>
       </nav>
+
+
+      <div class="row" style="margin:0px!important;">
+          <div class="col-md-8 nopadding">
+            <div class="well well-sm text-center" style="margin-bottom:0px;width:100%;">
+              Ultimas Recetas Agregadas
+            </div>
+
+            <!-- carousel -->
+            <div id="last-r-Carousel" class="carousel slide" data-ride="carousel">
+              <!-- Indicators -->
+              <ol class="carousel-indicators">
+                {% for r in recetas_recientes  %}
+                <li data-target="#last-r-Carousel" data-slide-to="{{forloop.counter0}}" {% if forloop.first %} class="active"{% endif %}></li>
+                {% endfor %}
+              </ol>
+
+              <!-- Wrapper for slides -->
+              <div class="carousel-inner" role="listbox">
+
+                {% for r in recetas_recientes  %}
+                <div {% if forloop.first %} class="item active" {%else%} class="item" {% endif %}>
+                  {% if r.Imagen %}
+                  <img class="img-rounded" src="{{MEDIA_URL}}{{r.Imagen}}" alt="Imagen no disponible" />
+                  {% else %}
+                  <img  class="img-rounded" src="{{r.Imagen_URL}}" alt="Imagen no disponible" />
+                  {% endif %}
+                  <div class="carousel-caption">
+                    <h3><a href='{% url 'menu:detailfood' r.pk %}' >{{r.Titulo|capfirst}}</a></h3>
+                  </div>
+                </div>
+                {% endfor %}
+              </div>
+
+              <!-- Left and right controls -->
+              <a class="left carousel-control" href="#last-r-Carousel" role="button" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+              </a>
+              <a class="right carousel-control" href="#last-r-Carousel" role="button" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+              </a>
+            </div>
+          </div>
+          <div  class="col-md-4 nopadding" style="background-color:white;">
+            <div class="container-fluid">
+              <h2>top ten recepy's</h2>
+              <table class="table table-striped">
+                <tbody>
+                  {% for r in recetas_recientes  %}
+                  <tr>
+                    <td>
+                      {{r.Titulo}}
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
 
       <div id="section1" class="container-fluid">
         <h1>Section 1</h1>
@@ -119,5 +188,10 @@
         <p>Try to scroll this section and look at the navigation bar while scrolling! Try to scroll this section and look at the navigation bar while scrolling!</p>
         <p>Try to scroll this section and look at the navigation bar while scrolling! Try to scroll this section and look at the navigation bar while scrolling!</p>
       </div>
+
+</div>
+
+{% endblock %}
+{% block footer %}
 
 {% endblock %}

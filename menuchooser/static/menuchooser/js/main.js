@@ -1,12 +1,28 @@
 $(document).ready(function(){
 
+  //LOAD LOGIN AND SIGN UP form
+  $(document).on('click','#modal-user',function(){
+    console.log('fer');
+    var div_login= $('#login-form')
+    var div_signup= $('#signup-form')
+    $.ajax({
+      url:'/accounts/login/',
+      success:function(data){
+        div_login.html(data);
+      }
+    });
+    $.ajax({
+      url:'/accounts/register/',
+      success:function(data){
+        div_signup.html(data);
+      }
+    });
+  });
 
   // PRESS BORRAR
   $(document).on('click',".deletebutton",function(){
 
     var recetaid= $(this).attr("recepy-id");
-    console.log(recetaid);
-
     $.ajax({
       url: "/delete/"+recetaid,
       method:"GET",
@@ -24,12 +40,12 @@ $(document).ready(function(){
       if ($("#agregarDiv").is(':hidden')){
         $('#full-container').hide();
         $('footer').hide();
-        console.log("esta a la vista");
+
         $('#paginador').hide();
         $("#agregarDiv").slideToggle();
       }else {
         $('#full-container').show();
-        console.log("esta a la escondido");
+
         $('#paginador').show();
         $('footer').show();
         $("#agregarDiv").slideToggle('slow');
@@ -40,7 +56,7 @@ $(document).ready(function(){
 
 
 
-  // PRESSS CANCELAR EN EL FORM AGREGAR RECETA
+  // PRESS CANCELAR EN EL FORM AGREGAR RECETA
   $(document).on('click','#no_agregar',function(){
     $("#agregarDiv").slideToggle();
     $('footer').show();
@@ -61,10 +77,16 @@ $(document).ready(function(){
         console.log('la receta no se guardo CORRECTAMENTE');
       }
     }).done( function(data){
-      var content = $(data).find( "#contenedor-recetas" );
-      var contentPager = $(data).find('.pagination');
+      var content = $( data ).find( "#recepy-grid" );
+
+      console.log(content);
+      var pcont = $(data).find(".pagination");
       $( "#full-container" ).empty().append( content );
-      $('#paginador').empty().append( contentPager);
+
+
+
+      $('#paginador').empty().append(pcont);
+      salvattore.recreateColumns(document.querySelector('#grid'));
       $("#agregarDiv").slideToggle();
       $('#full-container').show();
       $('#paginador').show();

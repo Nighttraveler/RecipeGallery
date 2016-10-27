@@ -1,0 +1,118 @@
+{% extends "menuchooser/base.html" %}
+{% load markdown_deux_tags %}
+{% load bootstrap_pagination %}
+
+{% block body_set %}
+<body style="display: flex;flex-wrap: wrap;" >
+{% endblock %}
+
+{% block contenido %}
+<div id="agregarDiv" class="container" style="display:none;width: 100%;">
+  {% include "menuchooser/agregar-receta.html"  %}
+</div>
+
+<div class="container-fluid" id="full-container">
+{% if query and not recetas %}
+  <div class="white-form">
+    <h2 style="text-align:center;" >No se encontraron recetas con el termino de busqueda {{query}}</h2>
+
+  </div>
+{% else %}
+  <div id="recepy-grid">
+
+    <div class="container-fluid"  id="grid" data-columns="4" >
+
+      {% for receta in recetas  %}
+
+          <div >
+
+                      <div class="receta panel  panel-primary">
+                      <div class="panel-heading text-center">
+                          <a href='{% url 'menu:detailfood' receta.pk %}' >{{receta.Titulo|capfirst}}</a>
+                      </div>
+                      <div class="panel-body" data-toggle="modal" data-backdrop="false" data-target="#modal_{{receta.pk}}">
+                        {% if receta.Imagen %}
+                        <img class="img-circle" src="{{MEDIA_URL}}{{receta.Imagen}}"   alt="Imagen no disponible" />
+                        {% else %}
+                        <img  class="img-circle" src="{{receta.Imagen_URL}}"  alt="Imagen no disponible" />
+
+                        {% endif %}
+
+                      </div>
+                      <div class="panel-footer text-center">
+
+                      <a href="#">aca va el usuario </a>
+                      </div>
+                    </div>
+
+                    <!-- Modal   -->
+                    <div id="modal_{{receta.pk}}" class="modal fade" role="dialog">
+                      <div class="modal-dialog modal-lg">
+
+                        <!-- Modal   content-->
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+                            <h2 class="modal-title"><a href='{% url 'menu:detailfood' receta.pk %}' >{{receta.Titulo|capfirst}}</a></h2>
+                          </div>
+                          <div class="modal-body">
+
+                            {% if receta.Imagen %}
+                            <img class="img-rounded img-responsive" src="{{MEDIA_URL}}{{receta.Imagen}}"  alt="Imagen no disponible" />
+                            {% else %}
+                            <img  class="img-rounded img-responsive" src="{{receta.Imagen_URL}}"  alt="Imagen no disponible" />
+                            {% endif %}
+                            <hr>
+                            <h3><a href="{% url 'menu:tipofood' receta.Tipo.pk %}" >#{{receta.Tipo}}</a></h3>
+                            <hr>
+                            <h3>Ingredientes:</h3>
+
+                            {{receta.Ingredientes|markdown}}
+
+                            <hr>
+                            <h3>Procedimiento:</h3>
+
+                            {{receta.Receta|markdown}}
+
+                          </div>
+                          <div class="modal-footer">
+                            <div class="center-buttons">
+                              <a href=" {% url 'menu:editfood' receta.id %}" role="button" class="btn btn-primary">Editar</a>
+                              <button recepy-id={{receta.id}} role="button" class="btn btn-danger deletebutton">Borrar</button>
+
+                            </div>
+                            <div id="dr-{{receta.id}}" style="display:none">
+                              <h1>Hello Word!</h1>
+
+                            </div>
+                            <button id="cerrar_modal" type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+        </div>
+
+      {% endfor %}
+    </div>
+
+  </div>
+
+{% endif %}
+
+
+
+
+
+</div>
+
+
+<div id="paginador" class="container-fluid text-center">
+{% bootstrap_paginate recetas show_first_last="true" first_label="<<" last_label=">>"  range=5 %}
+</div>
+
+
+
+{% endblock %}

@@ -8,10 +8,16 @@
     <title>{{receta.Titulo|capfirst}}</title>
   </head>
   <body>
+
+    {% block navbar %}
+
+    {% endblock %}
+
+
     {% block contenido %}
-    <div id="form_r" class="container text-center"  >
+    <div  class="container text-center white-form"  >
       <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-8 text-center">
           <h1>{{receta.Titulo|capfirst}}</h1>
           {% if receta.Imagen %}
           <img class="img-rounded img-responsive" src="{{MEDIA_URL}}{{receta.Imagen}}"  alt="Imagen no disponible" />
@@ -31,7 +37,8 @@
           {{receta.Receta|markdown}}
 
         </div>
-        <div class="col-md-4" style="background-color:black;">
+        <div class="col-md-4">
+          <a href="/">Back </a>
 
 
         </div>
