@@ -2,7 +2,7 @@ $(document).ready(function(){
 
   //LOAD LOGIN AND SIGN UP form
   $(document).on('click','#modal-user',function(){
-    console.log('fer');
+
     var div_login= $('#login-form')
     var div_signup= $('#signup-form')
     $.ajax({
@@ -18,6 +18,20 @@ $(document).ready(function(){
       }
     });
   });
+
+var log_sign= $('#log_sign');
+log_sign.submit(function(e){
+  e.preventDefault();
+  console.log('asdfasdfsdf');
+  $.ajax({
+    type:log_sign.attr('method'),
+    url:log_sign.attr('action'),
+    data: log_sign.serialize(),
+    error: function(data){
+      alert('error en login or signup');
+    }
+  });
+});
 
   // PRESS BORRAR
   $(document).on('click',".deletebutton",function(){
@@ -68,6 +82,7 @@ $(document).ready(function(){
   var form_r= $('#form_r');
   form_r.submit(function(e) {
     e.preventDefault();
+
     $.ajax({
       type:form_r.attr('method'),
       url:form_r.attr('action'),
@@ -82,9 +97,6 @@ $(document).ready(function(){
       console.log(content);
       var pcont = $(data).find(".pagination");
       $( "#full-container" ).empty().append( content );
-
-
-
       $('#paginador').empty().append(pcont);
       salvattore.recreateColumns(document.querySelector('#grid'));
       $("#agregarDiv").slideToggle();

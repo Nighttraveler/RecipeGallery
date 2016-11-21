@@ -12,12 +12,14 @@ class MenuForm(forms.ModelForm):
 
     class Meta:
         model   = MenuModel
-        fields  = [ 'Titulo','Tipo','Imagen','Imagen_URL', 'Ingredientes', 'Receta'  ]
+        fields  = [ 'Titulo','Tipo','publica','Imagen','Imagen_URL', 'Ingredientes', 'Receta','owner'  ]
         widgets = {
             'Imagen_URL': forms.URLInput(attrs={'placeholder':'URL alternativa',
                                                 'class':'form-control',
                                                 }),
             'Titulo'    : forms.TextInput(attrs={'class':'form-control'}),
+            'owner'     : forms.TextInput(attrs={'type':'hidden',
+                                                })
 
         }
 

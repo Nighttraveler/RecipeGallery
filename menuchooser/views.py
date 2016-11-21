@@ -15,10 +15,13 @@ from forms import MenuForm, myUserCreationForm
 
 
 
-# Create your views here.
+##################################################################################################################
+#Recipe views
+##################################################################################################################
+
 
 class HomePageView(generic.TemplateView):
-    recetas_recientes = MenuModel.objects.all().order_by('-pub_date')[:5]
+    recetas_recientes = MenuModel.objects.filter(publica=True).order_by('-pub_date')[:5]
     template_name = 'menuchooser/home.html'
 
     def get(self,request):
@@ -62,7 +65,7 @@ class IndexFeedView(generic.ListView):
         recetas = self.get_queryset(request)
 
         per_page = 24
-        paginator = Paginator(recetas.order_by('-pub_date'), per_page)
+        paginator = Paginator(recetas.filter(publica=True).order_by('-pub_date'), per_page)
         page= request.GET.get('page')
         try:
             receta_pag = paginator.page(page)
@@ -129,6 +132,8 @@ class AddFoodView(View):
 
     def post(self,request):
         f = self.form_class(request.POST, request.FILES)
+        f.owner = request.user.id
+        print(f.is_valid())
         if f.is_valid():
             f.clean()
             f.save()
@@ -160,12 +165,27 @@ class FoodDetailView(generic.DetailView):
 
 
 
-### USER views
-class UserProfileView(generic.DetailView):
+#################################################################################################################
+#USER views
+#################################################################################################################
+
+class UserProfileView(generic.DetailView, generic.FormView):
     model = User
     context_object_name = 'usuario'
     template_name = 'user/user-profile.html'
-    
+    form_class = MenuForm
+
+    def get_context_data(self, **kwargs):
+        context = super(UserProfileView, self).get_context_data(**kwargs)
+        if (self.request.user==kwargs['object']):
+            context['r'] = MenuModel.objects.filter(owner=kwargs['object']).order_by('-pub_date')
+            print(context['r'])
+            print('privadas')
+        else:
+            context['r'] = MenuModel.objects.filter(owner=kwargs['object'],publica=True).order_by('-pub_date')
+            print(context['r'])
+        return context
+
 
 
 

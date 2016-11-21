@@ -2,17 +2,81 @@
 
 
 
-
 {% block contenido %}
+<div id="agregarDiv" class="container" style="display:none;width: 100%;">
+  {% include "menuchooser/agregar-receta.html"  %}
+</div>
+<div class="container-fluid">
+  <div class="row">
 
-  <h1>{{usuario.get_username}}!</h1>
-  <h2>{{usuario.get_short_name}}</h2>
-  <h3>{{usuario.last_name}}</h3>
-  <h4>{{usuario.email}}</h4>
+      <div class="col-md-3" style="background-color:white">
 
-  <form class="" action="index.html" method="post">
-    {% csrf_token %}
-    {{form}}
-    <button type="submit" name="button">submit</button>
-  </form>
+        <h1>{{usuario.get_username|capfirst}}</h1>
+        <p id="user" usuario='{{usuario.pk}}'>Nombre: {{usuario.get_short_name}}</p>
+        <p>Apellido: {{usuario.last_name}}</p>
+        <p>Email: {{usuario.email}}</p>
+
+      </div>
+
+      <div class="col-md-9" style="background-color:white">
+        <div id="recetario" class="row" style="margin-top:10px">
+            {% if request.user == usuario %}
+                  {% for receta in r %}
+                  <div class="col-sm-3">
+                    <div class="panel panel-primary">
+                      <div class="panel-heading">
+                        <a href="{% url 'menu:detailfood' receta.pk %}" >{{receta.Titulo}}</a>
+                        <a href=" {% url 'menu:editfood' receta.id %}" role="button" class="btn btn-warning btn-sm">Editar</a>
+                        <!-- Trigger the modal with a button -->
+                        <button recepy-id={{receta.id}} type="button" class="btn btn-danger btn-sm deletebutton" data-toggle="modal" data-backdrop="false"  data-target="#myModal{{receta.id }}">Borrar</button>
+                        <!-- Modal -->
+                        <div id="myModal{{receta.id }}" class="modal fade" role="dialog">
+                          <div class="modal-dialog">
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+                              </div>
+                              <div class="modal-body" style="color:black">
+                                <div id="dr-{{receta.id}}" style="display:none" >
+
+                                </div>
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                              </div>
+                            </div>
+
+                          </div>
+                        </div>
+
+
+                      </div>
+                    </div>
+                  </div>
+                  {% endfor %}
+            {%else%}
+                    <h3 class="text-center">Recetas Publicas</h3>
+                    {% for receta in r %}
+                      {% if receta.publica %}
+                      <div class="col-sm-3">
+
+                        <div class="panel panel-primary">
+                          <div class="panel-heading"><a href="{% url 'menu:detailfood' receta.pk %}" >{{receta.Titulo}}</a></div>
+
+                        </div>
+                      </div>
+                      {% endif %}
+                    {% endfor %}
+
+
+
+            {% endif %}
+
+        </div>
+      </div>
+
+  </div>
+</div>
 {% endblock %}

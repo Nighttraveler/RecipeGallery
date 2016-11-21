@@ -48,7 +48,7 @@
           </div>
 
           <div class="center-buttons">
-            <a href="{% url 'menu:feed' %}" role="button" class="btn btn-danger" >Cancelar</a>
+            <a href="{{ request.META.HTTP_REFERER }}" role="button" class="btn btn-danger" >Cancelar</a>
             <button type="submit" class="btn btn-primary" >Guardar</button>
           </div>
         </form>

@@ -23,7 +23,7 @@
     <div class="container-fluid"  id="grid" data-columns="4" >
 
       {% for receta in recetas  %}
-
+          {% if receta.publica  %}
           <div >
 
                       <div class="receta panel  panel-primary">
@@ -41,7 +41,7 @@
                       </div>
                       <div class="panel-footer text-center">
 
-                      <a href="#">aca va el usuario </a>
+                      <a href="{% url 'menu:userprofile' receta.owner.id %}" >{{receta.owner.username}}</a>
                       </div>
                     </div>
 
@@ -77,11 +77,14 @@
 
                           </div>
                           <div class="modal-footer">
+                            {% if request.user == receta.owner %}
                             <div class="center-buttons">
                               <a href=" {% url 'menu:editfood' receta.id %}" role="button" class="btn btn-primary">Editar</a>
                               <button recepy-id={{receta.id}} role="button" class="btn btn-danger deletebutton">Borrar</button>
 
                             </div>
+
+                            {% endif %}
                             <div id="dr-{{receta.id}}" style="display:none">
                               <h1>Hello Word!</h1>
 
@@ -94,7 +97,7 @@
                       </div>
                     </div>
         </div>
-
+        {% endif %}
       {% endfor %}
     </div>
 

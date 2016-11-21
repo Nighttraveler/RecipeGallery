@@ -20,7 +20,8 @@
     var borrar_form= $('#borrar-form');
     borrar_form.submit(function(e) {
           e.preventDefault();
-          var $data_columns =($('#grid').attr('data-columns'));
+          p= $('#user').attr('usuario');
+          console.log(p);
 
           $.ajax({
               type:"POST",
@@ -29,6 +30,7 @@
                 csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
               }
           }).done(function( data ) {
+
                 var content = $( data ).find( "#recepy-grid" );
                 var pcont = $(data).find(".pagination");
                 $( "#full-container" ).empty().append( content );
@@ -37,6 +39,11 @@
                 salvattore.recreateColumns(document.querySelector('#grid'));
                 $("body").removeAttr("class");
                 $("body").removeAttr("style");
+
+                $.get( "/accounts/profile/"+p, function( data ) {
+                   var c= $(data).find('.col-md-9');
+                   $('.col-md-9').replaceWith(c);
+                });
 
             });
       });

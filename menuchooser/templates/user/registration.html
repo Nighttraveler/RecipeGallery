@@ -1,6 +1,6 @@
 
 
-<form role="form"   action= {% url 'menu:register' %} method="post">
+<form role="form" class="log_sign" action= {% url 'menu:register' %} method="post">
   {% csrf_token %}
   <div class="form_group">
     {{form.as_p}}

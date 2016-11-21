@@ -1,5 +1,5 @@
 from __future__ import unicode_literals
-
+from django.contrib.auth.models import User
 from django.db import models
 from django.core.files.storage import FileSystemStorage
 from menu.settings import BASE_DIR
@@ -21,6 +21,8 @@ class MenuModel(models.Model):
     Imagen_URL= models.URLField(blank=True)
     pub_date= models.DateTimeField( auto_now=True)
     Tipo = models.ForeignKey(TipoModel, on_delete=models.CASCADE, default=1)
+    publica = models.BooleanField( default=False)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __unicode__(self):
         return self.Titulo

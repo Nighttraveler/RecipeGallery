@@ -3,8 +3,6 @@ from django.contrib.auth import views as auth_views
 from django.core.urlresolvers import reverse_lazy
 from django.contrib.auth.decorators import login_required
 
-
-
 from . import views
 from . import forms
 
