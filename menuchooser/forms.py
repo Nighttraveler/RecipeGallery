@@ -2,7 +2,7 @@ from django import forms
 from pagedown.widgets import PagedownWidget
 from models import MenuModel
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserCreationForm
+ 
 
 
 class MenuForm(forms.ModelForm):
@@ -22,17 +22,3 @@ class MenuForm(forms.ModelForm):
                                                 })
 
         }
-
-
-class myUserCreationForm(UserCreationForm):
-
-    class Meta:
-        model=User
-        fields = ('username','email', 'password1', 'password2')
-
-    def __init__(self, *args, **kwargs):
-        super(myUserCreationForm, self).__init__(*args, **kwargs)
-        self.fields['username'].widget.attrs['class'] = 'form-control'
-        self.fields['password1'].widget.attrs['class'] = 'form-control'
-        self.fields['password2'].widget.attrs['class'] = 'form-control'
-        self.fields['email'].widget.attrs['class'] = 'form-control'

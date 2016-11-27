@@ -1,9 +1,25 @@
+{% extends "menuchooser/base.html" %}
+
+{% block navbar %}
+
+{% endblock %}
+{% block contenido %}
+
+<div class=" jumbotron text-center ">
+  <h1 >
+    <a style="color:#b2dbfb" href="{% url 'menu:index' %}"><span class="glyphicon glyphicon-heart"></span>Recipe Gallery</a> 
+  </h1>
+</div>
+<div class="container">
+  <form role="form"     action={% url 'menu:login' %} method="post">
+    {% csrf_token %}
+    <div class="form_group">
+      {{form.as_p}}
+    </div>
+    <button type="submit" class="btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Login</button>
+  </form>
+
+</div>
 
 
-<form role="form" class="log_sign"  id="log_sign"   action={% url 'menu:login' %} method="post">
-  {% csrf_token %}
-  <div class="form_group">
-    {{form.as_p}}
-  </div>
-  <button type="submit" class="btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Login</button>
-</form>
+{% endblock %}

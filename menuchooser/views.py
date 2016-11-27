@@ -7,11 +7,13 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate
 
+from django.contrib.auth.forms import UserCreationForm
+
 from django.contrib.auth.forms import UserChangeForm
 
 
 from  models import MenuModel,TipoModel
-from forms import MenuForm, myUserCreationForm
+from forms import MenuForm#, myUserCreationForm
 
 
 
@@ -76,7 +78,8 @@ class IndexFeedView(generic.ListView):
         except EmptyPage:
             receta_pag = paginator.page(paginator.num_pages)
 
-        context = {'recetas':receta_pag,'tipos':self.tipos,'query':self.query,'form':self.form_class}
+        context = {'recetas':receta_pag,'tipos':self.tipos,
+                    'query':self.query,'form':self.form_class}
 
         return render(request, self.template_name, context)
 
@@ -178,11 +181,14 @@ class UserProfileView(generic.DetailView, generic.FormView):
     def get_context_data(self, **kwargs):
         context = super(UserProfileView, self).get_context_data(**kwargs)
         if (self.request.user==kwargs['object']):
-            context['r'] = MenuModel.objects.filter(owner=kwargs['object']).order_by('-pub_date')
+            context['r'] = MenuModel.objects.filter(owner=kwargs['object']
+                            ).order_by('-pub_date')
             print(context['r'])
             print('privadas')
         else:
-            context['r'] = MenuModel.objects.filter(owner=kwargs['object'],publica=True).order_by('-pub_date')
+            context['r'] = MenuModel.objects.filter(owner=kwargs['object'],
+                                        publica=True).order_by('-pub_date'
+                                        )
             print(context['r'])
         return context
 
@@ -191,16 +197,6 @@ class UserProfileView(generic.DetailView, generic.FormView):
 
 class SignUpView(generic.CreateView):
     template_name ='user/registration.html'
-    form_class = myUserCreationForm
-
-    def post(self,request):
-        form = self.form_class(request.POST)
-        if form.is_valid():
-            form.clean()
-            form.save()
-            new_user = authenticate(username=form.cleaned_data['username'],
-                                    password=form.cleaned_data['password1'])
-            login(request, new_user)
-            return HttpResponseRedirect(reverse_lazy('menu:index'))
-
-        return render(request, self.template_name, {'form':self.form_class})
+    form_class = UserCreationForm
+    success_url = reverse_lazy('menu:login')
+ 

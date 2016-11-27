@@ -17,7 +17,7 @@ class MenuModel(models.Model):
     Titulo = models.CharField(max_length=50)
     Ingredientes = models.TextField()
     Receta = models.TextField()
-    Imagen= models.ImageField(storage=upload_location, blank=True)
+    Imagen= models.ImageField(upload_to=upload_location, blank=True)
     Imagen_URL= models.URLField(blank=True)
     pub_date= models.DateTimeField( auto_now=True)
     Tipo = models.ForeignKey(TipoModel, on_delete=models.CASCADE, default=1)

@@ -1,7 +1,7 @@
 $(document).ready(function(){
 
   //LOAD LOGIN AND SIGN UP form
-  $(document).on('click','#modal-user',function(){
+  /*$(document).on('click','#modal-user',function(){
 
     var div_login= $('#login-form')
     var div_signup= $('#signup-form')
@@ -19,20 +19,8 @@ $(document).ready(function(){
     });
   });
 
-var log_sign= $('#log_sign');
-log_sign.submit(function(e){
-  e.preventDefault();
-  console.log('asdfasdfsdf');
-  $.ajax({
-    type:log_sign.attr('method'),
-    url:log_sign.attr('action'),
-    data: log_sign.serialize(),
-    error: function(data){
-      alert('error en login or signup');
-    }
-  });
-});
-
+  */
+  
   // PRESS BORRAR
   $(document).on('click',".deletebutton",function(){
 

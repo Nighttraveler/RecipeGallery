@@ -24,11 +24,14 @@
                   {% for receta in r %}
                   <div class="col-sm-3">
                     <div class="panel panel-primary">
-                      <div class="panel-heading">
+                      <div class="panel-heading text-center">
                         <a href="{% url 'menu:detailfood' receta.pk %}" >{{receta.Titulo}}</a>
-                        <a href=" {% url 'menu:editfood' receta.id %}" role="button" class="btn btn-warning btn-sm">Editar</a>
-                        <!-- Trigger the modal with a button -->
-                        <button recepy-id={{receta.id}} type="button" class="btn btn-danger btn-sm deletebutton" data-toggle="modal" data-backdrop="false"  data-target="#myModal{{receta.id }}">Borrar</button>
+                        <div  >
+                          <a href=" {% url 'menu:editfood' receta.id %}" role="button" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-edit"></span>Editar</a>
+                          <!-- Trigger the modal with a button -->
+                          <button recepy-id={{receta.id}} type="button" class="btn btn-danger btn-sm deletebutton" data-toggle="modal" data-backdrop="false"  data-target="#myModal{{receta.id }}"><span class="glyphicon glyphicon-remove"></span>Borrar</button>
+
+                        </div>
                         <!-- Modal -->
                         <div id="myModal{{receta.id }}" class="modal fade" role="dialog">
                           <div class="modal-dialog">

@@ -16,7 +16,7 @@ urlpatterns = [
     url ('^accounts/logout', auth_views.logout, {'next_page':reverse_lazy('menu:index')},name='logout' ),
 
     url(r'^accounts/profile/(?P<pk>\d+)/$',login_required(views.UserProfileView.as_view()), name='userprofile'),
-    url(r'^dashboard/',login_required(views.IndexFeedView.as_view()), name='feed' ),
+    url(r'^dashboard/',views.IndexFeedView.as_view(), name='feed' ),
 
 
     url('^accounts/', include('django.contrib.auth.urls')),#por alguna razon va despues de lo login,logout etc

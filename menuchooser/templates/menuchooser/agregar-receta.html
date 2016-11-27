@@ -9,7 +9,7 @@
   <form class='white-form' id="form_r" role='form' method="post"   enctype='multipart/form-data' action="{% url 'menu:addfood' %}" >
     {% csrf_token %}
     <div class="form-group">
-      
+
         {{form.as_p}}
         <input id="id_owner" name="owner" value="{{request.user.pk}}" type="hidden">
 

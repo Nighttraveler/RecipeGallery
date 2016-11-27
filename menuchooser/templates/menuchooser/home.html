@@ -4,107 +4,61 @@
   <body data-spy="scroll" data-target=".navbar" data-offset="50">
 {% endblock %}
 
-
 {% block navbar %}
+<!-- navbar affix  -->
+<nav class="navbar navbar-inverse" data-spy="affix" data-offset-top="550" >
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#"><span class="glyphicon glyphicon-heart"></span> Recipe Gallery</a>
+    </div>
+    <div>
+      <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav">
+          <li><a href="#section1">Que cocinar?</a></li>
+          <li><a href="#section2">Section 2</a></li>
+          <li><a href="#section3">About Us</a></li>
+
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          {% if request.user.is_authenticated %}
+          <li>  <a href="#">{{request.user.username}}  </a> </li>
+          <li> <a href= {% url 'menu:logout' %}  ><span class="glyphicon glyphicon-log-out"></span>Log Out</a> </li>
+          {% else %}
+          <li><a href="{% url 'menu:register' %}" > <span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+          <li></a><a href="{% url 'menu:login' %}"> <span class="glyphicon glyphicon-log-in"></span>Login</a></li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>
 
 {% endblock %}
 
 
 
+
+
+
+
 {% block contenido %}
-
-<!-- Modal -->
-<div class="modal fade" id="myModal" role="dialog">
-  <div class="modal-dialog modal-lg">
-
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header" style="padding:35px 50px;">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4><span class="glyphicon glyphicon-lock"></span> Login</h4>
-      </div>
-      <div class="modal-body" style="padding:40px 50px;">
-        <ul class="nav nav-tabs">
-            <li class="active"><a data-toggle="tab" href="#login">Login</a></li>
-            <li><a data-toggle="tab" href="#sign-up">Sign Up</a></li>
-        </ul>
-        <div class="tab-content">
-          <div id="login" class="tab-pane fade in active">
-            <div id="login-form">
-
-            </div>
-          </div>
-          <div id="sign-up" class="tab-pane fade">
-            <div id="signup-form">
-
-            </div>
-          </div>
-
-
-        </div>
-
-      </div>
-      <div class="modal-footer">
-        <button type="submit" class="btn btn-danger btn-default pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
-        <p>Not a member? <a href="#">Sign Up</a></p>
-        <p>Forgot <a href="#">Password?</a></p>
-      </div>
-    </div>
-
-  </div>
-</div>
-
-
 
 
 <div >
-      <header class="text-center">
-        <h3>
-          <span class="glyphicon glyphicon-heart"></span>Recepy Gallery
-        </h3>
-      </header>
-      <!-- navbar affix  -->
-      <nav class="navbar navbar-inverse" data-spy="affix" data-offset-top="550" >
-        <div class="container-fluid">
-          <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#"><span class="glyphicon glyphicon-heart"></span> Recipe Gallery</a>
-          </div>
-          <div>
-            <div class="collapse navbar-collapse" id="myNavbar">
-              <ul class="nav navbar-nav">
-                <li><a href="#section1">Section 1</a></li>
-                <li><a href="#section2">Section 2</a></li>
-                <li><a href="#section3">Section 3</a></li>
-                <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" >Section 4 <span class="caret"></span></a>
-                  <ul class="dropdown-menu">
-                    <li><a href="#section41">Section 4-1</a></li>
-                    <li><a href="#section42">Section 4-2</a></li>
-                  </ul>
-                </li>
-              </ul>
-              <ul class="nav navbar-nav navbar-right">
-                {% if request.user.is_authenticated %}
-                <li>  <a href="#">{{request.user.username}}  </a> </li>
-                <li> <a href= {% url 'menu:logout' %}  ><span class="glyphicon glyphicon-log-out"></span>Log Out</a> </li>
-                {% else %}
-                <li><a id='modal-user'  data-toggle="modal" data-target="#myModal" data-backdrop="false"   ><span class="glyphicon glyphicon-user"></span> Sign Up  |   <span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-
-                {% endif %}
-              </ul>
-            </div>
-          </div>
-        </div>
-      </nav>
-
+      <div class=" jumbotron text-center ">
+        <h1 style="color:#b2dbfb">
+          <span class="glyphicon glyphicon-heart"></span>Recipe Gallery
+        </h1>
+      </div>
 
       <div class="row" style="margin:0px!important;">
           <div class="col-md-8 nopadding">
-            <div class="well well-sm text-center" style="margin-bottom:0px;width:100%;">
+            <div class="text-center" style="margin-bottom:0px;width:100%;">
               Ultimas Recetas Agregadas
             </div>
 
@@ -147,7 +101,7 @@
           </div>
           <div  class="col-md-4 nopadding" style="background-color:white;">
             <div class="container-fluid">
-              <h2>top ten recepy's</h2>
+              <h2>top ten Recipe's</h2>
               <table class="table table-striped">
                 <tbody>
                   {% for r in recetas_recientes  %}
@@ -164,9 +118,50 @@
         </div>
 
       <div id="section1" class="container-fluid">
-        <h1>Section 1</h1>
-        <p>Try to scroll this section and look at the navigation bar while scrolling! Try to scroll this section and look at the navigation bar while scrolling!</p>
-        <p>Try to scroll this section and look at the navigation bar while scrolling! Try to scroll this section and look at the navigation bar while scrolling!</p>
+        <h3>¿Que cocinar?</h3> <p>La pregunta de todos los dias que ya no te haras nunca mas.</p>
+        <div class="row">
+          <div class="categorias container">
+            <div class="col-md-4 text-center">
+              <p>
+                cat 1
+              </p>
+
+            </div>
+            <div class="col-md-4 text-center">
+              <p>
+                cat 2
+              </p>
+
+            </div>
+            <div class="col-md-4 text-center">
+              <p>
+                cat 3
+              </p>
+
+            </div>
+            <div class="col-md-4 text-center">
+              <p>
+                cat 4
+              </p>
+
+            </div>
+            <div class="col-md-4 text-center">
+              <p>
+                cat 5
+              </p>
+
+            </div>
+            <div class="col-md-4 text-center">
+              <p>
+                cat 6
+              </p>
+
+            </div>
+
+          </div>
+
+        </div>
+
       </div>
       <div id="section2" class="container-fluid">
         <h1>Section 2</h1>
@@ -178,16 +173,7 @@
         <p>Try to scroll this section and look at the navigation bar while scrolling! Try to scroll this section and look at the navigation bar while scrolling!</p>
         <p>Try to scroll this section and look at the navigation bar while scrolling! Try to scroll this section and look at the navigation bar while scrolling!</p>
       </div>
-      <div id="section41" class="container-fluid">
-        <h1>Section 4 Submenu 1</h1>
-        <p>Try to scroll this section and look at the navigation bar while scrolling! Try to scroll this section and look at the navigation bar while scrolling!</p>
-        <p>Try to scroll this section and look at the navigation bar while scrolling! Try to scroll this section and look at the navigation bar while scrolling!</p>
-      </div>
-      <div id="section42" class="container-fluid">
-        <h1>Section 4 Submenu 2</h1>
-        <p>Try to scroll this section and look at the navigation bar while scrolling! Try to scroll this section and look at the navigation bar while scrolling!</p>
-        <p>Try to scroll this section and look at the navigation bar while scrolling! Try to scroll this section and look at the navigation bar while scrolling!</p>
-      </div>
+
 
 </div>
 

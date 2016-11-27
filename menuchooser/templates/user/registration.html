@@ -1,9 +1,24 @@
+{% extends "menuchooser/base.html" %}
 
+{% block navbar %}
 
-<form role="form" class="log_sign" action= {% url 'menu:register' %} method="post">
-  {% csrf_token %}
-  <div class="form_group">
-    {{form.as_p}}
-  </div>
-  <button type="submit" class="btn btn-primary btn-block" >Submit</button>
-</form>
+{% endblock %}
+{% block contenido %}
+
+<div class=" jumbotron text-center ">
+  <h1 style="color:#b2dbfb">
+  <a style="color:#b2dbfb" href="{% url 'menu:index' %}"><span class="glyphicon glyphicon-heart"></span>Recipe Gallery</a> 
+  </h1>
+</div>
+<div class="container">
+  <form role="form" class="log_sign" action= {% url 'menu:register' %} method="post">
+    {% csrf_token %}
+    <div class="form_group">
+      {{form.as_p}}
+    </div>
+    <button type="submit" class="btn btn-primary btn-block" >Submit</button>
+  </form>
+
+</div>
+
+{% endblock %}
