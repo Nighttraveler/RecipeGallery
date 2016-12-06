@@ -11,15 +11,18 @@
   </h1>
 </div>
 <div class="container">
-  <div class="center-block" style="width:800px;">
-  <form role="form"  class="white-form "   action={% url 'menu:register' %} method="post">
-    {% csrf_token %}
+  <div class="center-block" style="width:500px;">
+    <form role="form"  class="white-form  center-block "   action={% url 'menu:login' %} method="post">
+      {% csrf_token %}
 
-  {% bootstrap_form form %}
+        {% bootstrap_form form %}
 
-    <button type="submit" class="btn btn-success center-block"><span class="glyphicon glyphicon-log-in"></span> Sign In</button>
-  </form>
+      <button type="submit" class="btn btn-success center-block"><span class="glyphicon glyphicon-off"></span> Login</button>
+    </form>
+
   </div>
+
 </div>
+
 
 {% endblock %}

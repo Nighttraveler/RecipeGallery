@@ -1,0 +1,17 @@
+{% extends "menuchooser/base.html" %}
+{% load bootstrap3 %}
+
+
+{% block contenido %}
+
+<div class="container center-block">
+  <form role="form" class="white-form "     action="" method="post">
+    {% csrf_token %}
+    <div class="form_group">
+        {% bootstrap_form form %}
+    </div>
+    <button type="submit" class="btn btn-success "><span class="glyphicon glyphicon-save"></span> Guardar Cambios</button>
+  </form>
+
+</div>
+{% endblock %}

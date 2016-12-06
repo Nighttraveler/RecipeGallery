@@ -19,6 +19,8 @@ body{
    margin: 0 !important;
 }
 
+
+
 .affix {
     top:0;
     width: 100%;
@@ -29,11 +31,46 @@ body{
     top: 50px;
  }
 
- #section1 {padding-top:50px;height:500px;color: #fff; background-color: #1E88E5;}
- #section2 {padding-top:50px;height:500px;color: #fff; background-color: #673ab7;}
- #section3 {padding-top:50px;height:500px;color: #fff; background-color: #ff9800;}
- #section41 {padding-top:50px;height:500px;color: #fff; background-color: #00bcd4;}
- #section42 {padding-top:50px;height:500px;color: #fff; background-color: #009688;}
+ .slideanim {visibility:hidden;}
+ .slide {
+     /* The name of the animation */
+     animation-name: slide;
+     -webkit-animation-name: slide;
+     /* The duration of the animation */
+     animation-duration: 1s;
+     -webkit-animation-duration: 1s;
+     /* Make the element visible */
+     visibility: visible;
+ }
+
+ /* Go from 0% to 100% opacity (see-through) and specify the percentage from when to slide in the element along the Y-axis */
+ @keyframes slide {
+     0% {
+         opacity: 0;
+         -webkit-transform: translateY(70%);
+     }
+     100% {
+         opacity: 0.8;
+         -webkit-transform: translateY(0%);
+     }
+ }
+ @-webkit-keyframes slide {
+     0% {
+         opacity: 0;
+         -webkit-transform: translateY(70%);
+     }
+     100% {
+         opacity: 0.8;
+         -webkit-transform: translateY(0%);
+     }
+ }
+
+
+
+ #queCocinar {padding-top:70px;height:1200px;color: #fff; background-color: #e95420;}
+ #tops {padding-top:50px;height:600px; background-color: white;}
+ #section3 {padding-top:50px;height:600px;color: #fff; background-color: #ff9800;}
+
 
 
 
@@ -42,6 +79,9 @@ body{
   border: 0px;
   border-radius: 0px;
   margin-bottom: 0px;
+  letter-spacing: 2px;
+  box-shadow: none;
+
 
 }
 
@@ -57,16 +97,29 @@ body{
 }
 
 .jumbotron{
-  background-color: #2196f3;
+  background-color: #e95420;
+  margin-bottom: 0px;
+  padding-bottom: 150px;
 
+}
+
+.wmd-panel{
+  margin-left: 0;
+  margin-right: 0;
+  min-width: 300px;
+  width: 100%;
 }
 
 @media only screen and (max-width: 600px) {
 
+  #queCocinar{
+    height: 2600px;
+  }
   .wmd-panel{
     margin-left: 0;
     margin-right: 0;
-    min-width: 300px;
+    min-width: 200px;
+    width: 100%;
   }
 
   .carousel-inner > .item > img,
@@ -101,8 +154,8 @@ body{
  margin: 5px;
 }
 .size-1of2{
-width: 47%;
-margin: 5px;
+width: 40%;
+margin: 15px;
 }
 
 
@@ -122,13 +175,13 @@ margin: 5px;
 .receta {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 
-  border-radius: 10px;
+
 }
 
 .footer {
   width: 100%;
 
-  background-color: rgb(21, 101, 192);
+  background-color: #e95420;
   text-align: center;
   color: white;
   padding: 1rem;
@@ -140,16 +193,57 @@ footer a {
 
 
 /* Base style for tables */
-.panel-heading a{
-  color: white;
+.recipe-title{
+  font-size: 15px;
+}
+.infofeed{
+  padding: 0;
+  margin: 0;
+  color: #a3a090;
+  font-size: 12px;
 }
 
-.panel-body img{
+.infofeed a{
+  color: #a3a090;
+
+}
+.panel-feed img{
   width: 100%;
 }
+.panel-feed{
+  -webkit-transition: all 0.5s ease; /* Safari and Chrome */
+  -moz-transition: all 0.5s ease; /* Firefox */
+  -ms-transition: all 0.5s ease; /* IE 9 */
+  -o-transition: all 0.5s ease; /* Opera */
+  transition: all 0.5s ease;
+  opacity: 0.8;
+}
+.panel-feed:hover {
+  opacity: 1;
+/*  -webkit-transform:scale(1.1);
+  -moz-transform:scale(1.1);
+  -ms-transform:scale(1.1);
+  -o-transform:scale(1.1);
+  transform:scale(1.1);
+  */
+}
 
-.panel-body:hover {
-  opacity: 0.7;
+.tipo-img{
+  -webkit-transition: all 0.5s ease; /* Safari and Chrome */
+  -moz-transition: all 0.5s ease; /* Firefox */
+  -ms-transition: all 0.5s ease; /* IE 9 */
+  -o-transition: all 0.5s ease; /* Opera */
+  transition: all 0.5s ease;
+  opacity: 0.8;
+
+}
+.tipo-img:hover{
+  opacity: 1;
+  -webkit-transform:scale(1.1); /* Safari and Chrome */
+  -moz-transform:scale(1.1); /* Firefox */
+  -ms-transform:scale(1.1); /* IE 9 */
+  -o-transform:scale(1.1); /* Opera */
+  transform:scale(1.1);
 }
 
 

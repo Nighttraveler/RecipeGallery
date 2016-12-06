@@ -1,36 +1,9 @@
 {% extends "menuchooser/base.html" %}
+{% load bootstrap3 %}
+
 {% load static %}
 
-{% block navbar %}
-    <nav class="navbar navbar-inverse">
-      <div class="container-fluid">
-        <div class="navbar-header">
-          <a href="{% url 'menu:feed' %}" class="navbar-brand"><span class="glyphicon glyphicon-heart"></span> Recipe Gallery</a>
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navMenu">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-        </div>
-        <div class="collapse navbar-collapse" id="navMenu">
-          <ul class="nav navbar-nav ">
-            <li class="dropdown nav-button">
-              <a class="dropdown-toggle" data-toggle="dropdown" href="#">Categorias <span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                {% for tipo in tipos %}
-                <li><a  href="?tipo={{tipo.pk}}" >{{tipo.Tipo}}</a></li>
-                {% endfor %}
 
-              </ul>
-            </li>
-
-          </ul>
-
-        </div>
-      </div>
-    </nav>
-
-{% endblock %}
 
 {% block contenido %}
 
@@ -43,9 +16,7 @@
 
         <form class='white-form' role='form' method="post"  enctype='multipart/form-data' action=''>
           {% csrf_token %}
-          <div class="form-group">
-              {{form.as_p}}
-          </div>
+          {% bootstrap_form form %}
 
           <div class="center-buttons">
             <a href="{{ request.META.HTTP_REFERER }}" role="button" class="btn btn-danger" >Cancelar</a>

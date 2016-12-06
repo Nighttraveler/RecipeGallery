@@ -1,19 +1,15 @@
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.views import generic, View
-from django.core.urlresolvers import reverse_lazy
+from django.core.urlresolvers import reverse_lazy, reverse
 from django.db.models import Q
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate
-
 from django.contrib.auth.forms import UserCreationForm
 
-from django.contrib.auth.forms import UserChangeForm
-
-
 from  models import MenuModel,TipoModel
-from forms import MenuForm#, myUserCreationForm
+from forms import MenuForm , UpdateProfile
 
 
 
@@ -25,11 +21,13 @@ from forms import MenuForm#, myUserCreationForm
 class HomePageView(generic.TemplateView):
     recetas_recientes = MenuModel.objects.filter(publica=True).order_by('-pub_date')[:5]
     template_name = 'menuchooser/home.html'
+    tipos= TipoModel.objects.all().exclude(pk=1)
 
     def get(self,request):
         if request.user.is_authenticated():
             return HttpResponseRedirect(reverse_lazy('menu:feed'))
-        context={'recetas_recientes':self.recetas_recientes}
+        context={'recetas_recientes':self.recetas_recientes,
+                 'tipos':self.tipos}
         return render(request, self.template_name, context)
 
     def post(self, request):
@@ -163,11 +161,40 @@ class DeleteFoodView(generic.DeleteView):
 class FoodDetailView(generic.DetailView):
 
     model = MenuModel
-    context_object_name = 'receta'
+
     template_name = 'menuchooser/detalle-receta.html'
 
+    def get(self,request,pk ):
+        receta = get_object_or_404(MenuModel, pk=pk)
+        receta_id = receta.pk
+        liked = False
+        if request.session.get('has_liked_'+str(receta_id), liked):
+            liked = True
+            #print("liked {}_{}".format(liked, receta_id))
+        context = {'receta':receta, 'liked': liked}
+        return render(request ,self.template_name, context)
 
 
+def like_count_recipe(request):
+    liked = False
+    if request.method == 'GET':
+        recipe_id = request.GET['recipe_id']
+        recipe = MenuModel.objects.get(id=int(recipe_id))
+        if request.session.get('has_liked_'+recipe_id, liked):
+            print("unlike")
+            if recipe.likes > 0:
+                likes = recipe.likes - 1
+                try:
+                    del request.session['has_liked_'+recipe_id]
+                except KeyError:
+                    print("keyerror")
+        else:
+            print("like")
+            request.session['has_liked_'+recipe_id] = True
+            likes = recipe.likes + 1
+    recipe.likes = likes
+    recipe.save()
+    return HttpResponse(likes, liked)
 #################################################################################################################
 #USER views
 #################################################################################################################
@@ -183,20 +210,30 @@ class UserProfileView(generic.DetailView, generic.FormView):
         if (self.request.user==kwargs['object']):
             context['r'] = MenuModel.objects.filter(owner=kwargs['object']
                             ).order_by('-pub_date')
-            print(context['r'])
-            print('privadas')
+
+            #print('privadas '+context['r'])
         else:
             context['r'] = MenuModel.objects.filter(owner=kwargs['object'],
-                                        publica=True).order_by('-pub_date'
-                                        )
-            print(context['r'])
+                                        publica=True).order_by('-pub_date')
+            #print('publicas '+context['r'])
+
         return context
 
 
+class UserEditView(generic.UpdateView):
+    model = User
+    form_class = UpdateProfile
+    template_name = 'user/editar-usuario.html'
+
+
+    def get_success_url(self):
+        print(str(self.object.pk))
+
+        return reverse('menu:userprofile',kwargs={'pk':str(self.object.pk)})
+        #return reverse('menu:feed')
 
 
 class SignUpView(generic.CreateView):
     template_name ='user/registration.html'
     form_class = UserCreationForm
     success_url = reverse_lazy('menu:login')
- 

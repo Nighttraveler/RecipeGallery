@@ -1,83 +1,109 @@
 {% extends "menuchooser/base.html" %}
 
+{% block navbar_content %}
+<div class="collapse navbar-collapse" id="navMenu">
+      <ul class="nav navbar-nav navbar-right">
+        {% if request.user.is_authenticated %}
+        <li class="dropdown nav-button" >
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{request.user.get_username}} <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li>  <a href="{% url 'menu:userprofile' request.user.id %}" >Mi perfil </a> </li>
+                <li>  <a href="{% url 'menu:edituserprofile' request.user.id %}" >Ajustes </a> </li>
+                <li class="divider"></li>
+                <li> <a href={% url 'menu:logout' %}  ><span class="glyphicon glyphicon-log-out"></span>Log Out</a> </li>
+              </ul>
+        </li>
+            {% else %}
+            <li><a href="{% url 'menu:register' %}" ><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+            <li><a href="{% url 'menu:login' %}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+            {% endif %}
 
+      </ul>
+</div>
+{% endblock %}
 
 {% block contenido %}
 <div id="agregarDiv" class="container" style="display:none;width: 100%;">
   {% include "menuchooser/agregar-receta.html"  %}
 </div>
-<div class="container-fluid">
+<div class="container-fluid perfil">
   <div class="row">
 
-      <div class="col-md-3" style="background-color:white">
+      <div class="col-md-3" >
 
         <h1>{{usuario.get_username|capfirst}}</h1>
-        <p id="user" usuario='{{usuario.pk}}'>Nombre: {{usuario.get_short_name}}</p>
+        <p id="user" usuario="{{usuario.pk}}">Nombre: {{usuario.get_short_name}}</p>
         <p>Apellido: {{usuario.last_name}}</p>
         <p>Email: {{usuario.email}}</p>
 
       </div>
 
-      <div class="col-md-9" style="background-color:white">
-        <div id="recetario" class="row" style="margin-top:10px">
-            {% if request.user == usuario %}
-                  {% for receta in r %}
-                  <div class="col-sm-3">
-                    <div class="panel panel-primary">
-                      <div class="panel-heading text-center">
-                        <a href="{% url 'menu:detailfood' receta.pk %}" >{{receta.Titulo}}</a>
-                        <div  >
-                          <a href=" {% url 'menu:editfood' receta.id %}" role="button" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-edit"></span>Editar</a>
-                          <!-- Trigger the modal with a button -->
-                          <button recepy-id={{receta.id}} type="button" class="btn btn-danger btn-sm deletebutton" data-toggle="modal" data-backdrop="false"  data-target="#myModal{{receta.id }}"><span class="glyphicon glyphicon-remove"></span>Borrar</button>
+      <div class="col-md-9" >
 
-                        </div>
-                        <!-- Modal -->
-                        <div id="myModal{{receta.id }}" class="modal fade" role="dialog">
-                          <div class="modal-dialog">
-                            <!-- Modal content-->
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal">&times;</button>
 
-                              </div>
-                              <div class="modal-body" style="color:black">
-                                <div id="dr-{{receta.id}}" style="display:none" >
 
-                                </div>
-                              </div>
-                              <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                              </div>
+
+            <div id="recetario" class="row" style="margin-top:10px">
+              {% if request.user == usuario %}
+              {% for receta in r %}
+              <div class="col-sm-3">
+                <div class="panel panel-primary">
+                  <div class="panel-heading text-center">
+                    <a href="{% url 'menu:detailfood' receta.pk %}" >{{receta.Titulo}}</a>
+                    <div  >
+                      <a href=" {% url 'menu:editfood' receta.id %}" role="button" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-edit"></span>Editar</a>
+                      <!-- Trigger the modal with a button -->
+                      <button recepy-id={{receta.id}} type="button" class="btn btn-danger btn-sm deletebutton" data-toggle="modal" data-backdrop="false"  data-target="#myModal{{receta.id }}"><span class="glyphicon glyphicon-remove"></span>Borrar</button>
+
+                    </div>
+                    <!-- Modal -->
+                    <div id="myModal{{receta.id }}" class="modal fade" role="dialog">
+                      <div class="modal-dialog">
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+                          </div>
+                          <div class="modal-body" style="color:black">
+                            <div id="dr-{{receta.id}}" style="display:none" >
+
                             </div>
-
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                           </div>
                         </div>
 
-
                       </div>
                     </div>
+
+
                   </div>
-                  {% endfor %}
-            {%else%}
-                    <h3 class="text-center">Recetas Publicas</h3>
-                    {% for receta in r %}
-                      {% if receta.publica %}
-                      <div class="col-sm-3">
+                </div>
+              </div>
+              {% endfor %}
+              {%else%}
+              <h3 class="text-center">Recetas Publicas</h3>
+              {% for receta in r %}
+              {% if receta.publica %}
+              <div class="col-sm-3">
 
-                        <div class="panel panel-primary">
-                          <div class="panel-heading"><a href="{% url 'menu:detailfood' receta.pk %}" >{{receta.Titulo}}</a></div>
+                <div class="panel panel-primary">
+                  <div class="panel-heading"><a href="{% url 'menu:detailfood' receta.pk %}" >{{receta.Titulo}}</a></div>
 
-                        </div>
-                      </div>
-                      {% endif %}
-                    {% endfor %}
+                </div>
+              </div>
+              {% endif %}
+              {% endfor %}
+              {% endif %}
+
+            </div>
 
 
 
-            {% endif %}
 
-        </div>
+
       </div>
 
   </div>

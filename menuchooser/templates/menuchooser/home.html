@@ -4,24 +4,18 @@
   <body data-spy="scroll" data-target=".navbar" data-offset="50">
 {% endblock %}
 
-{% block navbar %}
+{% block nav_header %}
+<nav class="navbar navbar-default" data-spy="affix" data-offset-top="850" >
+
+{% endblock %}
 <!-- navbar affix  -->
-<nav class="navbar navbar-inverse" data-spy="affix" data-offset-top="550" >
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="#"><span class="glyphicon glyphicon-heart"></span> Recipe Gallery</a>
-    </div>
-    <div>
-      <div class="collapse navbar-collapse" id="myNavbar">
+
+      {% block navbar_content %}
+      <div class="collapse navbar-collapse" id="navMenu">
         <ul class="nav navbar-nav">
-          <li><a href="#section1">Que cocinar?</a></li>
-          <li><a href="#section2">Section 2</a></li>
-          <li><a href="#section3">About Us</a></li>
+          <li><a class='slow_scroll' href="#queCocinar">Que cocinar?</a></li>
+          <li><a class='slow_scroll'  href="#tops">Top's</a></li>
+          <li><a class='slow_scroll'  href="#section3">About Us</a></li>
 
         </ul>
         <ul class="nav navbar-nav navbar-right">
@@ -34,11 +28,11 @@
           {% endif %}
         </ul>
       </div>
+      {% endblock %}
     </div>
   </div>
 </nav>
 
-{% endblock %}
 
 
 
@@ -51,15 +45,17 @@
 
 <div >
       <div class=" jumbotron text-center ">
-        <h1 style="color:#b2dbfb">
+        <h1 style="color:white">
           <span class="glyphicon glyphicon-heart"></span>Recipe Gallery
         </h1>
       </div>
 
-      <div class="row" style="margin:0px!important;">
-          <div class="col-md-8 nopadding">
+      <div   style="margin:0px!important;">
+          <div  >
             <div class="text-center" style="margin-bottom:0px;width:100%;">
-              Ultimas Recetas Agregadas
+              <h3>
+                Ultimas Recetas Agregadas
+              </h3>
             </div>
 
             <!-- carousel -->
@@ -99,71 +95,39 @@
               </a>
             </div>
           </div>
-          <div  class="col-md-4 nopadding" style="background-color:white;">
-            <div class="container-fluid">
-              <h2>top ten Recipe's</h2>
-              <table class="table table-striped">
-                <tbody>
-                  {% for r in recetas_recientes  %}
-                  <tr>
-                    <td>
-                      {{r.Titulo}}
-                    </td>
-                  </tr>
-                  {% endfor %}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-
-      <div id="section1" class="container-fluid">
-        <h3>¿Que cocinar?</h3> <p>La pregunta de todos los dias que ya no te haras nunca mas.</p>
-        <div class="row">
-          <div class="categorias container">
-            <div class="col-md-4 text-center">
-              <p>
-                cat 1
-              </p>
-
-            </div>
-            <div class="col-md-4 text-center">
-              <p>
-                cat 2
-              </p>
-
-            </div>
-            <div class="col-md-4 text-center">
-              <p>
-                cat 3
-              </p>
-
-            </div>
-            <div class="col-md-4 text-center">
-              <p>
-                cat 4
-              </p>
-
-            </div>
-            <div class="col-md-4 text-center">
-              <p>
-                cat 5
-              </p>
-
-            </div>
-            <div class="col-md-4 text-center">
-              <p>
-                cat 6
-              </p>
-
-            </div>
-
-          </div>
 
         </div>
+
+      <div id="queCocinar" class="container-fluid text-center">
+        <h2>¿Que cocinar?</h2>
+        <h3>La pregunta de todos los dias que ya no te haras nunca mas.</h3>
+        <h4>Navega por nuestras secciones y encuentra exactamente lo que necesitas!</h4>
+            <div class="row">
+                  <div class="container">
+                        {% for t in tipos  %}
+
+                         <div class="col-md-4">
+                           <div class="tipo-img slideanim">
+
+
+                                <h3 ><a style="color:white" href="{% url 'menu:tipofood' t.pk %}">{{t.Tipo}} </a></h3>
+                                <a href="{% url 'menu:tipofood' t.pk %}">
+                                <img   class="img-rounded" src="{{MEDIA_URL}}{{t.Imagen}}" alt="{{r.Tipo}}" height="200" width="300" />
+                                </a>
+
+                            </div>
+
+
+                         </div>
+
+                        {% endfor %}
+
+
+                  </div>
+           </div>
 
       </div>
-      <div id="section2" class="container-fluid">
+      <div id="tops" class="container-fluid">
         <h1>Section 2</h1>
         <p>Try to scroll this section and look at the navigation bar while scrolling! Try to scroll this section and look at the navigation bar while scrolling!</p>
         <p>Try to scroll this section and look at the navigation bar while scrolling! Try to scroll this section and look at the navigation bar while scrolling!</p>
@@ -177,7 +141,6 @@
 
 </div>
 
-{% endblock %}
-{% block footer %}
+
 
 {% endblock %}

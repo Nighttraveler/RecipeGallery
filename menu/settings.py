@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'pagedown',
     'markdown_deux',
     'bootstrap_pagination',
+    'bootstrap3',
 
 ]
 
@@ -132,4 +133,4 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 MEDIA_URL = "/images/"
-MEDIA_ROOT= BASE_DIR+'/images/'
+MEDIA_ROOT= BASE_DIR+'/users/'

@@ -1,26 +1,52 @@
 $(document).ready(function(){
 
-  //LOAD LOGIN AND SIGN UP form
-  /*$(document).on('click','#modal-user',function(){
+    // Add smooth scrolling to all links in navbar + footer link
+    $(".slow_scroll").on('click', function(event) {
+            // Prevent default anchor click behavior
+            event.preventDefault();
 
-    var div_login= $('#login-form')
-    var div_signup= $('#signup-form')
-    $.ajax({
-      url:'/accounts/login/',
-      success:function(data){
-        div_login.html(data);
-      }
-    });
-    $.ajax({
-      url:'/accounts/register/',
-      success:function(data){
-        div_signup.html(data);
-      }
-    });
-  });
+            // Store hash
+            var hash = this.hash;
 
-  */
-  
+            // Using jQuery's animate() method to add smooth page scroll
+            // The optional number (900) specifies the number of milliseconds it takes to scroll to the specified area
+            $('html, body').animate({
+              scrollTop: $(hash).offset().top
+            }, 900, function(){
+
+              // Add hash (#) to URL when done scrolling (default click behavior)
+              window.location.hash = hash;
+              });
+    });
+
+
+
+    $(window).scroll(function() {
+      $(".slideanim").each(function(){
+        var pos = $(this).offset().top;
+
+        var winTop = $(window).scrollTop();
+        if (pos < winTop + 600) {
+          $(this).addClass("slide");
+        }
+      });
+    });
+
+   //like counting */
+
+      $('.recipe-likes').click(function() {
+          $('.glyphicon').toggle();
+          var id;
+          id = $(this).attr('data-post-id');
+          $.get('/like-recipe/', {
+              recipe_id: id
+          }, function(data) {
+              $('.like_count_blog').html(data);
+          });
+      });
+
+
+
   // PRESS BORRAR
   $(document).on('click',".deletebutton",function(){
 
@@ -30,23 +56,26 @@ $(document).ready(function(){
       method:"GET",
       success: function(data){
         $("#dr-"+recetaid).html(data);
-        $("#dr-"+recetaid).slideToggle('slow');
+        $("#dr-"+recetaid).slideDown('slow');
 
       }
     });
   });
 
-  // PRESS AGREGAR RECETA
+
+// PRESS AGREGAR RECETA
     $("#agregar_receta").click(function (){
 
       if ($("#agregarDiv").is(':hidden')){
         $('#full-container').hide();
         $('footer').hide();
+        $('.perfil').hide();
 
         $('#paginador').hide();
         $("#agregarDiv").slideToggle();
       }else {
         $('#full-container').show();
+        $('.perfil').show();
 
         $('#paginador').show();
         $('footer').show();
@@ -61,6 +90,7 @@ $(document).ready(function(){
   // PRESS CANCELAR EN EL FORM AGREGAR RECETA
   $(document).on('click','#no_agregar',function(){
     $("#agregarDiv").slideToggle();
+    $('.perfil').show();
     $('footer').show();
     $('#full-container').show();
     $('#paginador').show();
@@ -76,13 +106,14 @@ $(document).ready(function(){
       url:form_r.attr('action'),
       data: form_r.serialize(),
       error: function(data){
-        alert('la receta no se guardo CORRECTAMENTE');
-        console.log('la receta no se guardo CORRECTAMENTE');
+        alert('error on receta');
+        console.log('error on receta');
       }
     }).done( function(data){
+      console.log(' receta CORRECTAMENTE');
       var content = $( data ).find( "#recepy-grid" );
 
-      console.log(content);
+
       var pcont = $(data).find(".pagination");
       $( "#full-container" ).empty().append( content );
       $('#paginador').empty().append(pcont);
