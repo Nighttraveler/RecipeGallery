@@ -18,6 +18,16 @@
           {% else %}
           <img  class="img-rounded img-responsive" src="{{receta.Imagen_URL}}"  alt="Imagen no disponible" />
           {% endif %}
+          <button class="btn btn-primary btn-xs recipe-likes" data-recipe-id="{{ receta.id }}">
+            {% if liked %}
+            <i class="glyphicon glyphicon-star" style="display: line-block"></i>
+            <i class="glyphicon glyphicon-star-empty" style="display: none"></i>
+            {% else %}
+            <i class="glyphicon glyphicon-star-empty" style="display: line-block"></i>
+            <i class="glyphicon glyphicon-star" style="display: none" ></i>
+            {% endif %}
+          </button>
+          <div class="like_count_blog" id="heart-counter">{{ receta.likes }}</div>
           <hr>
           <h3><a href="{% url 'menu:tipofood' receta.Tipo.pk %}" >#{{receta.Tipo}}</a></h3>
           <hr>
@@ -31,16 +41,6 @@
           {{receta.Receta|markdown}}
 
 
-             <button class="btn-sm  recipe-likes" data-post-id="{{ receta.id }}">
-             {% if liked %}
-             <i class="glyphicon glyphicon-star" style="display: line-block"></i>
-             <i class="glyphicon glyphicon-star-empty" style="display: none"></i>
-             {% else %}
-             <i class="glyphicon glyphicon-star-empty" style="display: line-block"></i>
-             <i class="glyphicon glyphicon-star" style="display: none" ></i>
-             {% endif %}
-             </button>
-             <div class="like_count_blog" id="heart-counter">{{ receta.likes }}</div>
 
 
         </div>

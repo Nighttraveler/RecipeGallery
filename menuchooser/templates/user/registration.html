@@ -1,5 +1,6 @@
 {% extends "menuchooser/base.html" %}
 {% load bootstrap3 %}
+{% load static %}
 {% block navbar %}
 
 {% endblock %}
@@ -7,7 +8,7 @@
 
 <div class=" jumbotron text-center ">
   <h1 >
-    <a style="color:white" href="{% url 'menu:index' %}"><span class="glyphicon glyphicon-heart"></span>Recipe Gallery</a>
+    <a style="color:white" href="{% url 'menu:index' %}"><img src='{% static "menuchooser/logo.png" %}' style="width:350px;height:300px;"/></a>
   </h1>
 </div>
 <div class="container">
@@ -17,7 +18,7 @@
 
   {% bootstrap_form form %}
 
-    <button type="submit" class="btn btn-success center-block"><span class="glyphicon glyphicon-log-in"></span> Sign In</button>
+    <button type="submit" class="btn btn-success center-block"><span class=" glyphicon glyphicon-expand"></span> Sign In</button>
   </form>
   </div>
 </div>

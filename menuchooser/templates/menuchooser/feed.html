@@ -38,15 +38,17 @@
     <li class="dropdown nav-button" >
         <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{request.user.get_username}} <span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li>  <a href="{% url 'menu:userprofile' request.user.id %}" >Mi perfil </a> </li>
-            <li>  <a href="{% url 'menu:edituserprofile' request.user.id %}" >Ajustes </a> </li>
+            <li>  <a href="{% url 'menu:userprofile' request.user.id %}" > <span class="glyphicon glyphicon-user" ></span> Mi perfil </a> </li>
+            <li>  <a href="{% url 'menu:edituserprofile' request.user.id %}" >  <span class="glyphicon glyphicon-edit" ></span> Editar perfil </a> </li>
             <li class="divider"></li>
-            <li> <a href={% url 'menu:logout' %}  ><span class="glyphicon glyphicon-log-out"></span>Log Out</a> </li>
+            <li> <a href={% url 'password_change' %}  >Cambiar Password</a> </li>
+            <li class="divider"></li>
+            <li> <a href={% url 'logout' %}  ><span class="glyphicon glyphicon-log-out"></span> Log Out</a> </li>
           </ul>
     </li>
         {% else %}
         <li><a href="{% url 'menu:register' %}" ><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-        <li><a href="{% url 'menu:login' %}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+        <li><a href="{% url 'login' %}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
         {% endif %}
 
   </ul>

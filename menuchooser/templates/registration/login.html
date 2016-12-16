@@ -1,5 +1,6 @@
 {% extends "menuchooser/base.html" %}
 {% load bootstrap3 %}
+{% load static %}
 {% block navbar %}
 
 {% endblock %}
@@ -7,18 +8,23 @@
 
 <div class=" jumbotron text-center ">
   <h1 >
-    <a style="color:white" href="{% url 'menu:index' %}"><span class="glyphicon glyphicon-heart"></span>Recipe Gallery</a>
+    <a style="color:white" href="{% url 'menu:index' %}"><img src='{% static "menuchooser/logo.png" %}' style="width:350px;height:300px;"/></a>
   </h1>
 </div>
 <div class="container">
   <div class="center-block" style="width:500px;">
-    <form role="form"  class="white-form  center-block "   action={% url 'menu:login' %} method="post">
+    <form role="form"  class="white-form  center-block "   action={% url 'login' %} method="post">
       {% csrf_token %}
 
         {% bootstrap_form form %}
 
       <button type="submit" class="btn btn-success center-block"><span class="glyphicon glyphicon-off"></span> Login</button>
+      <div class="text-center" style="padding-top:25px;">
+        <a  href="{% url 'password_reset' %}">¿Olvido su contraseña? </a>
+
+      </div>
     </form>
+
 
   </div>
 

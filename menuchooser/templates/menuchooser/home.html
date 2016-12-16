@@ -1,4 +1,5 @@
 {% extends "menuchooser/base.html" %}
+{% load static %}
 
 {% block body_set %}
   <body data-spy="scroll" data-target=".navbar" data-offset="50">
@@ -24,7 +25,7 @@
           <li> <a href= {% url 'menu:logout' %}  ><span class="glyphicon glyphicon-log-out"></span>Log Out</a> </li>
           {% else %}
           <li><a href="{% url 'menu:register' %}" > <span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-          <li></a><a href="{% url 'menu:login' %}"> <span class="glyphicon glyphicon-log-in"></span>Login</a></li>
+          <li></a><a href="{% url 'login' %}"> <span class="glyphicon glyphicon-log-in"></span>Login</a></li>
           {% endif %}
         </ul>
       </div>
@@ -45,9 +46,7 @@
 
 <div >
       <div class=" jumbotron text-center ">
-        <h1 style="color:white">
-          <span class="glyphicon glyphicon-heart"></span>Recipe Gallery
-        </h1>
+          <img src='{% static "menuchooser/logo.png" %}' style="width:350px;height:300px;"/>
       </div>
 
       <div   style="margin:0px!important;">

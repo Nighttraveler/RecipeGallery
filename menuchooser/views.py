@@ -8,8 +8,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 
-from  models import MenuModel,TipoModel
-from forms import MenuForm , UpdateProfile
+from  models import MenuModel,TipoModel,ProfileModel
+from forms import MenuForm , ProfileForm, UserForm
 
 
 
@@ -61,6 +61,8 @@ class IndexFeedView(generic.ListView):
         return recetas
 
     def get(self, request):
+        request.user.profilemodel.bio = "capo user"
+        print(request.user.profilemodel.bio)
 
         recetas = self.get_queryset(request)
 
@@ -207,31 +209,61 @@ class UserProfileView(generic.DetailView, generic.FormView):
 
     def get_context_data(self, **kwargs):
         context = super(UserProfileView, self).get_context_data(**kwargs)
+        context['tipos'] = TipoModel.objects.all().order_by('-pk')
         if (self.request.user==kwargs['object']):
-            context['r'] = MenuModel.objects.filter(owner=kwargs['object']
+            context['recetas'] = MenuModel.objects.filter(owner=kwargs['object']
                             ).order_by('-pub_date')
 
             #print('privadas '+context['r'])
         else:
-            context['r'] = MenuModel.objects.filter(owner=kwargs['object'],
+            context['recetas'] = MenuModel.objects.filter(owner=kwargs['object'],
                                         publica=True).order_by('-pub_date')
             #print('publicas '+context['r'])
 
         return context
 
 
-class UserEditView(generic.UpdateView):
-    model = User
-    form_class = UpdateProfile
+class UserEditView(View):
+
+    user_form = None
+    profile_form = None
     template_name = 'user/editar-usuario.html'
+
+    def get(self, request, pk):
+        self.user_form = UserForm(instance=request.user)
+        self.profile_form = ProfileForm(instance=request.user.profilemodel)
+        context = {
+                'user_form': self.user_form,
+                'profile_form': self.profile_form
+                }
+        return render(request, self.template_name ,context)
+
+    def post(self, request ,pk):
+        self.user_form = UserForm(request.POST, instance=request.user)
+        self.profile_form = ProfileForm(request.POST,request.FILES, instance=request.user.profilemodel)
+
+
+        if self.user_form.is_valid() and self.profile_form.is_valid():
+            self.user_form.save()
+            self.profile_form.save()
+
+            return HttpResponseRedirect(reverse('menu:userprofile',kwargs={'pk':str(request.user.pk)}))
+
+        self.user_form = UserForm(instance=request.user)
+        self.profile_form = ProfileForm(instance=request.user.profilemodel)
+        context = {
+                'user_form': self.user_form,
+                'profile_form': self.profile_form
+                }
+
+        return render(request, self.template_name)
+
 
 
     def get_success_url(self):
         print(str(self.object.pk))
 
         return reverse('menu:userprofile',kwargs={'pk':str(self.object.pk)})
-        #return reverse('menu:feed')
-
 
 class SignUpView(generic.CreateView):
     template_name ='user/registration.html'

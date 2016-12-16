@@ -1,0 +1,25 @@
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Subject: =?utf-8?q?Reinicio_de_contrase=C3=B1a_en_localhost=3A8000?=
+From: webmaster@localhost
+To: sadfasdf@gmail.com
+Date: Wed, 14 Dec 2016 18:40:13 -0000
+Message-ID: <20161214184013.3750.45872@acer-notebook>
+
+
+Le enviamos este email porque Ud. ha solicitado que se reestablezca la contraseña para su cuenta de usuario en localhost:8000.
+
+Por favor visite la página que se muestra a continuación y elija una nueva contraseña:
+
+http://localhost:8000/accounts/reset/MjA/4hu-214f04f9cf4445c32dd5/
+
+Su nombre de usuario, en caso de haberlo olvidado: capo
+
+¡Gracias por usar nuestro sitio!
+
+El equipo de localhost:8000
+
+
+
+-------------------------------------------------------------------------------

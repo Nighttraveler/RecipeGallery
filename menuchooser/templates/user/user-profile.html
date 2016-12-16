@@ -1,4 +1,5 @@
 {% extends "menuchooser/base.html" %}
+{% load static%}
 
 {% block navbar_content %}
 <div class="collapse navbar-collapse" id="navMenu">
@@ -7,15 +8,17 @@
         <li class="dropdown nav-button" >
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{request.user.get_username}} <span class="caret"></span></a>
               <ul class="dropdown-menu">
-                <li>  <a href="{% url 'menu:userprofile' request.user.id %}" >Mi perfil </a> </li>
-                <li>  <a href="{% url 'menu:edituserprofile' request.user.id %}" >Ajustes </a> </li>
+                <li>  <a href="{% url 'menu:userprofile' request.user.id %}" ><span class="glyphicon glyphicon-user" ></span> Mi perfil </a> </li>
+                <li>  <a href="{% url 'menu:edituserprofile' request.user.id %}" > <span class="glyphicon glyphicon-edit" ></span> Editar perfil </a> </li>
                 <li class="divider"></li>
-                <li> <a href={% url 'menu:logout' %}  ><span class="glyphicon glyphicon-log-out"></span>Log Out</a> </li>
+                <li> <a href={% url 'password_change' %}  >Cambiar Password</a> </li>
+                <li class="divider"></li>
+                <li> <a href={% url 'logout' %}  ><span class="glyphicon glyphicon-log-out"></span> Log Out</a> </li>
               </ul>
         </li>
             {% else %}
             <li><a href="{% url 'menu:register' %}" ><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-            <li><a href="{% url 'menu:login' %}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+            <li><a href="{% url 'login' %}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
             {% endif %}
 
       </ul>
@@ -29,76 +32,108 @@
 <div class="container-fluid perfil">
   <div class="row">
 
-      <div class="col-md-3" >
+      <div class="col-md-3" style="min-height:550px" >
+        <div class="text-center">
+        {% if usuario.profilemodel.avatar  %}
+        <img class="img-thumbnail" src="{{MEDIA_URL}}{{usuario.profilemodel.avatar}}"  style="width:250px;height:auto;"/>
+        {% else %}
+        <img class="img-thumbnail" src="{% static "menuchooser/default-avatar.png" %}"  style="width:250px;height:auto;"/>
+        {% endif %}
 
-        <h1>{{usuario.get_username|capfirst}}</h1>
-        <p id="user" usuario="{{usuario.pk}}">Nombre: {{usuario.get_short_name}}</p>
-        <p>Apellido: {{usuario.last_name}}</p>
-        <p>Email: {{usuario.email}}</p>
+          <h1 id"user" usuario="{{usuario.pk}}" >{{usuario.get_username}}</h1>
+
+          <p>  {{usuario.get_full_name}}</p>
+
+          <p>{{usuario.profilemodel.bio}}</p>
+
+          <p>{{usuario.email}}</p>
+
+        </div>
 
       </div>
 
       <div class="col-md-9" >
+        <ul class="nav nav-tabs">
+          {% for tipo in tipos %}
 
+          <li {% if forloop.first %}class="active"{% endif %}> <a data-toggle="tab" href="#{{tipo.Tipo}}">{{tipo.Tipo}}</a></li>
 
+          {% endfor %}
 
+        </ul>
 
-            <div id="recetario" class="row" style="margin-top:10px">
-              {% if request.user == usuario %}
-              {% for receta in r %}
-              <div class="col-sm-3">
-                <div class="panel panel-primary">
-                  <div class="panel-heading text-center">
-                    <a href="{% url 'menu:detailfood' receta.pk %}" >{{receta.Titulo}}</a>
-                    <div  >
-                      <a href=" {% url 'menu:editfood' receta.id %}" role="button" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-edit"></span>Editar</a>
-                      <!-- Trigger the modal with a button -->
-                      <button recepy-id={{receta.id}} type="button" class="btn btn-danger btn-sm deletebutton" data-toggle="modal" data-backdrop="false"  data-target="#myModal{{receta.id }}"><span class="glyphicon glyphicon-remove"></span>Borrar</button>
+        <div class="tab-content">
+          {% for tipo in tipos %}
+          <div style="padding-top:20px" id="{{tipo.Tipo}}" class="tab-pane fade {% if forloop.first %}in active{% endif %}">
 
-                    </div>
-                    <!-- Modal -->
-                    <div id="myModal{{receta.id }}" class="modal fade" role="dialog">
-                      <div class="modal-dialog">
-                        <!-- Modal content-->
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            {% if request.user == usuario %}
+            {% for r in  recetas %}
 
-                          </div>
-                          <div class="modal-body" style="color:black">
-                            <div id="dr-{{receta.id}}" style="display:none" >
-
-                            </div>
-                          </div>
-                          <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                          </div>
-                        </div>
-
-                      </div>
-                    </div>
-
+            {% if r.Tipo.pk == tipo.pk %}
+            <div class="col-sm-3">
+              <div class="panel panel-primary">
+                <div class="panel-heading text-center">
+                  <a href="{% url 'menu:detailfood' r.pk %}" >{{r.Titulo}}</a>
+                  <div  >
+                    <a href=" {% url 'menu:editfood' r.id %}" role="button" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-edit"></span>Editar</a>
+                    <!-- Trigger the modal with a button -->
+                    <button recepy-id={{r.id}} type="button" class="btn btn-danger btn-sm deletebutton" data-toggle="modal" data-backdrop="false"  data-target="#myModal{{r.id }}"><span class="glyphicon glyphicon-remove"></span>Borrar</button>
 
                   </div>
+                  <!-- Modal -->
+                  <div id="myModal{{r.id }}" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
+                      <!-- Modal content-->
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+                        </div>
+                        <div class="modal-body" style="color:black">
+                          <div id="dr-{{r.id}}" style="display:none" >
+
+                          </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+
+
                 </div>
               </div>
-              {% endfor %}
-              {%else%}
-              <h3 class="text-center">Recetas Publicas</h3>
-              {% for receta in r %}
-              {% if receta.publica %}
-              <div class="col-sm-3">
-
-                <div class="panel panel-primary">
-                  <div class="panel-heading"><a href="{% url 'menu:detailfood' receta.pk %}" >{{receta.Titulo}}</a></div>
-
-                </div>
-              </div>
-              {% endif %}
-              {% endfor %}
-              {% endif %}
-
             </div>
+
+            {% endif %}
+
+            {% endfor %}
+
+            {% else %}
+            {% for r in recetas %}
+            {% if r.publica %}
+            {% if r.Tipo.pk == tipo.pk %}
+
+            <div class="col-sm-3">
+
+              <div class="panel panel-primary">
+                <div class="panel-heading"><a href="{% url 'menu:detailfood' r.pk %}" >{{r.Titulo}}</a></div>
+
+              </div>
+            </div>
+            {% endif %}
+            {% endif %}
+          {% endfor %}
+            {% endif %}
+
+          </div>
+          {% endfor %}
+
+        </div>
+
+
 
 
 

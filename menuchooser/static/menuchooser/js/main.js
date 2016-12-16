@@ -1,5 +1,24 @@
 $(document).ready(function(){
 
+
+
+
+      // bind 'myForm' and provide a simple callback function
+      $('#form_r').ajaxForm(function(data) {
+        console.log(' receta CORRECTAMENTE');
+        var content = $( data ).find( "#recepy-grid" );
+
+
+        var pcont = $(data).find(".pagination");
+        $( "#full-container" ).empty().append( content );
+        $('#paginador').empty().append(pcont);
+        salvattore.recreateColumns(document.querySelector('#grid'));
+        $("#agregarDiv").slideToggle();
+        $('#full-container').show();
+        $('#paginador').show();
+
+      });
+
     // Add smooth scrolling to all links in navbar + footer link
     $(".slow_scroll").on('click', function(event) {
             // Prevent default anchor click behavior
@@ -33,11 +52,10 @@ $(document).ready(function(){
     });
 
    //like counting */
-
       $('.recipe-likes').click(function() {
           $('.glyphicon').toggle();
           var id;
-          id = $(this).attr('data-post-id');
+          id = $(this).attr('data-recipe-id');
           $.get('/like-recipe/', {
               recipe_id: id
           }, function(data) {
@@ -84,9 +102,6 @@ $(document).ready(function(){
       }
     });
 
-
-
-
   // PRESS CANCELAR EN EL FORM AGREGAR RECETA
   $(document).on('click','#no_agregar',function(){
     $("#agregarDiv").slideToggle();
@@ -96,32 +111,4 @@ $(document).ready(function(){
     $('#paginador').show();
   });
 
-  // SUBMIT EL FORM DE AGREGAR RECETAS
-  var form_r= $('#form_r');
-  form_r.submit(function(e) {
-    e.preventDefault();
-
-    $.ajax({
-      type:form_r.attr('method'),
-      url:form_r.attr('action'),
-      data: form_r.serialize(),
-      error: function(data){
-        alert('error on receta');
-        console.log('error on receta');
-      }
-    }).done( function(data){
-      console.log(' receta CORRECTAMENTE');
-      var content = $( data ).find( "#recepy-grid" );
-
-
-      var pcont = $(data).find(".pagination");
-      $( "#full-container" ).empty().append( content );
-      $('#paginador').empty().append(pcont);
-      salvattore.recreateColumns(document.querySelector('#grid'));
-      $("#agregarDiv").slideToggle();
-      $('#full-container').show();
-      $('#paginador').show();
-
-      });
-    });
 });

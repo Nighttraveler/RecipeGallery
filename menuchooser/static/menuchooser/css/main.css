@@ -71,16 +71,13 @@ body{
  #tops {padding-top:50px;height:600px; background-color: white;}
  #section3 {padding-top:50px;height:600px;color: #fff; background-color: #ff9800;}
 
-
-
-
 .navbar{
   width: 100%;
   border: 0px;
   border-radius: 0px;
   margin-bottom: 0px;
-  letter-spacing: 2px;
   box-shadow: none;
+  letter-spacing: 2px;
 
 
 }
@@ -99,7 +96,7 @@ body{
 .jumbotron{
   background-color: #e95420;
   margin-bottom: 0px;
-  padding-bottom: 150px;
+
 
 }
 

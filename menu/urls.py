@@ -17,10 +17,25 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from django.conf.urls.static import static
 from menu import settings
+from django.contrib.auth import views as auth_views
+from django.core.urlresolvers import reverse_lazy
+
 
 urlpatterns = [
+
     url(r'^admin/', admin.site.urls),
-    url(r'^', include('menuchooser.urls')),
+
+
     
+    url (r'^accounts/logout/$', auth_views.logout,
+        {'next_page':reverse_lazy('menu:index')},
+        name='logout' ),
+
+
+    url(r'^accounts/', include('django.contrib.auth.urls')),
+
+
+    url(r'^', include('menuchooser.urls')),
+
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

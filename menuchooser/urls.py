@@ -13,15 +13,8 @@ urlpatterns = [
 
     url(r'^like-recipe/$', views.like_count_recipe, name='like_count_recipe'),
     ###USER ADMINISTRATION
-    url(r'^accounts/register/$', views.SignUpView.as_view(),name="register"),
+    url(r'^accounts/register/$', views.SignUpView.as_view(), name="register"),
 
-    #url (r'^accounts/login/$', auth_views.login,
-    #    {'template_name':'user/login.html'},
-    #    name='login' ),
-
-    url (r'^accounts/logout/$', auth_views.logout,
-        {'next_page':reverse_lazy('menu:index')},
-        name='logout' ),
 
     url(r'^accounts/profile/(?P<pk>\d+)/$',
         login_required(views.UserProfileView.as_view()),
@@ -32,11 +25,10 @@ urlpatterns = [
         name='edituserprofile'),
 
 
-
     url(r'^dashboard/$',views.IndexFeedView.as_view(), name='feed' ),
 
-    #por alguna razon va despues de lo login,logout etc
-    url('^accounts/', include('django.contrib.auth.urls')),
+    #por alguna razon va despues de lo logout etc
+    #rl(r'^accounts/', include('django.contrib.auth.urls')),
 
     # HOME
     url(r'^$', views.HomePageView.as_view(), name='index'),

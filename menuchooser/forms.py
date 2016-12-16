@@ -1,6 +1,6 @@
 from django import forms
 from pagedown.widgets import PagedownWidget
-from models import MenuModel
+from models import MenuModel, ProfileModel
 from django.contrib.auth.models import User
 
 
@@ -20,28 +20,16 @@ class MenuForm(forms.ModelForm):
 
 
 
-class UpdateProfile(forms.ModelForm):
 
-
-
+class UserForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ('email', 'first_name', 'last_name')
+        fields = ('first_name', 'last_name', 'email')
 
-"""    def clean_email(self):
-        username = self.cleaned_data.get('username')
-        email = self.cleaned_data.get('email')
 
-        if email and User.objects.filter(email=email).exclude(username=username).count():
-            raise forms.ValidationError('This email address is already in use. Please supply a different email address.')
-        return email
 
-    def save(self, commit=True):
-        user = super(RegistrationForm, self).save(commit=False)
-        user.email = self.cleaned_data['email']
+class ProfileForm(forms.ModelForm):
 
-        if commit:
-            user.save()
-
-        return user
-"""
+    class Meta:
+        model = ProfileModel
+        fields = ['avatar','bio','fecha_nacimiento']

@@ -5,12 +5,15 @@
 {% block contenido %}
 
 <div class="container center-block">
-  <form role="form" class="white-form "     action="" method="post">
+  <form role="form" class="white-form" enctype='multipart/form-data'     action="" method="post">
     {% csrf_token %}
-    <div class="form_group">
-        {% bootstrap_form form %}
-    </div>
-    <button type="submit" class="btn btn-success "><span class="glyphicon glyphicon-save"></span> Guardar Cambios</button>
+
+        {% bootstrap_form user_form %}
+        {% bootstrap_form profile_form %}
+        <div class="center-buttons">
+          <button type="submit" class="btn btn-success "><span class="glyphicon glyphicon-save"></span> Guardar Cambios</button>
+
+        </div>
   </form>
 
 </div>

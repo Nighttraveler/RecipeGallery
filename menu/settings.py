@@ -31,16 +31,18 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+
+    #my app
+    'menuchooser.apps.MenuchooserConfig',
+
+
+    #django
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
-    #my app
-    'menuchooser.apps.MenuchooserConfig',
-
     #third-party
     'pagedown',
     'markdown_deux',
@@ -70,9 +72,9 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
+                'django.contrib.auth.context_processors.auth',
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'django.template.context_processors.media'
             ],
@@ -134,3 +136,8 @@ USE_TZ = True
 STATIC_URL = '/static/'
 MEDIA_URL = "/images/"
 MEDIA_ROOT= BASE_DIR+'/users/'
+
+
+## EMAIL BACKEND
+EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
+EMAIL_FILE_PATH = os.path.join(BASE_DIR,'sent_emails')
