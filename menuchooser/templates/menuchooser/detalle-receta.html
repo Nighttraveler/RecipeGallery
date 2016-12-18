@@ -9,9 +9,9 @@
 
 
     {% block contenido %}
-    <div  class="container text-center white-form"  >
+    <div  class="container   white-form"  >
       <div class="row">
-        <div class="col-md-8 text-center">
+        <div class="col-md-8">
           <h1>{{receta.Titulo|capfirst}}</h1>
           {% if receta.Imagen %}
           <img class="img-rounded img-responsive" src="{{MEDIA_URL}}{{receta.Imagen}}"  alt="Imagen no disponible" />

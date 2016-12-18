@@ -61,8 +61,7 @@ class IndexFeedView(generic.ListView):
         return recetas
 
     def get(self, request):
-        request.user.profilemodel.bio = "capo user"
-        print(request.user.profilemodel.bio)
+
 
         recetas = self.get_queryset(request)
 
@@ -136,7 +135,7 @@ class AddFoodView(View):
     def post(self,request):
         f = self.form_class(request.POST, request.FILES)
         f.owner = request.user.id
-        print(f.is_valid())
+
         if f.is_valid():
             f.clean()
             f.save()
@@ -151,6 +150,14 @@ class EditFoodView(generic.UpdateView):
     model = MenuModel
     form_class = MenuForm
     success_url = reverse_lazy('menu:feed')
+
+    def get_context_data(self, **kwargs):
+        context = super(EditFoodView, self).get_context_data(**kwargs)
+        if (context['object'].owner == self.request.user):
+            print('el usuario logueado es el dueno')
+            context['owner'] = True
+
+        return context
 
 
 class DeleteFoodView(generic.DeleteView):
@@ -261,7 +268,8 @@ class UserEditView(View):
 
 
     def get_success_url(self):
-        print(str(self.object.pk))
+
+
 
         return reverse('menu:userprofile',kwargs={'pk':str(self.object.pk)})
 

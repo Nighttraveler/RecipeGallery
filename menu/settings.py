@@ -24,9 +24,9 @@ SECRET_KEY = 'ak$t4(#e#4put5a3#@#m^z_#5@^_1-gsxjjskz86r(5peyg09s'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
+#DEBUG = False
 ALLOWED_HOSTS = []
-
+#ALLOWED_HOSTS = ["nighttraveler.pythonanywhere.com"]
 
 # Application definition
 
@@ -133,10 +133,12 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
-STATIC_URL = '/static/'
-MEDIA_URL = "/images/"
-MEDIA_ROOT= BASE_DIR+'/users/'
 
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
+
+MEDIA_URL = '/images/'
+MEDIA_ROOT= os.path.join(BASE_DIR,'users')
 
 ## EMAIL BACKEND
 EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"

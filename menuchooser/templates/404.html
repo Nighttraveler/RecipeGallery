@@ -1,0 +1,14 @@
+{% extends "menuchooser/base.html" %}
+
+{% block contenido %}
+  <h1>ERROR 404</h1>
+
+  <p>
+    {{request_path}}
+
+  </p>
+  <p>
+    {{exceptionE}}
+
+  </p>
+{% endblock %}

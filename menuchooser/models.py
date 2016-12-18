@@ -32,7 +32,7 @@ class ProfileModel(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     bio = models.TextField(max_length=200, blank=True)
 
-    fecha_nacimiento = models.DateField(null=True, blank=True)
+    
     avatar = models.ImageField(upload_to=get_user_folder, blank=True)
 
 

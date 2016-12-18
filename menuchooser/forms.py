@@ -32,4 +32,4 @@ class ProfileForm(forms.ModelForm):
 
     class Meta:
         model = ProfileModel
-        fields = ['avatar','bio','fecha_nacimiento']
+        fields = ['avatar','bio']

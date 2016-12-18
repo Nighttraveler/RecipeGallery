@@ -7,7 +7,9 @@
 
 {% block contenido %}
 
+{% if owner %}
       <div class="container" >
+
         {% if form.errors %}
         <p>
           {{form.errors}}
@@ -24,4 +26,12 @@
           </div>
         </form>
       </div>
+        {% else %}
+        <div class="container-fluid" style="min-height:700px">
+          <p>
+            Usted no posee los privilegios para editar esta Receta ;)
+          </p>
+
+        </div>
+      {% endif %}
 {% endblock %}

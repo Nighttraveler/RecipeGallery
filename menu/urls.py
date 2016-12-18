@@ -26,7 +26,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
 
 
-    
+
     url (r'^accounts/logout/$', auth_views.logout,
         {'next_page':reverse_lazy('menu:index')},
         name='logout' ),
