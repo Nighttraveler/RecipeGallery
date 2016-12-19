@@ -1,9 +1,32 @@
 {% extends "menuchooser/base.html" %}
 {% load bootstrap3 %}
 {% load static %}
-{% block navbar %}
 
+{% block navbar_content %}
+<div class="collapse navbar-collapse" id="navMenu">
+      <ul class="nav navbar-nav navbar-right">
+        {% if request.user.is_authenticated %}
+        <li class="dropdown nav-button" >
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{request.user.get_username}} <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li>  <a href="{% url 'menu:userprofile' request.user.id %}" ><span class="glyphicon glyphicon-user" ></span> Mi perfil </a> </li>
+                <li>  <a href="{% url 'menu:edituserprofile' request.user.id %}" > <span class="glyphicon glyphicon-edit" ></span> Editar perfil </a> </li>
+                <li class="divider"></li>
+                <li> <a href={% url 'password_change' %}  >Cambiar Password</a> </li>
+                <li class="divider"></li>
+                <li> <a href={% url 'logout' %}  ><span class="glyphicon glyphicon-log-out"></span> Log Out</a> </li>
+              </ul>
+        </li>
+            {% else %}
+            <li><a href="{% url 'menu:register' %}" > <span class="glyphicon glyphicon-user"></span> Registrarse</a></li>
+            <li></a><a href="{% url 'login' %}"> <span class="glyphicon glyphicon-log-in"></span> Ingresar</a></li>
+            {% endif %}
+
+      </ul>
+</div>
 {% endblock %}
+
+
 {% block contenido %}
 
 <div class=" jumbotron text-center ">
@@ -12,8 +35,8 @@
   </h1>
 </div>
 <div class="container">
-  <div class="center-block" style="width:800px;">
-  <form role="form"  class="white-form "   action={% url 'menu:register' %} method="post">
+  <div class="center-block" >
+  <form role="form"  class="white-form"   action={% url 'menu:register' %} method="post">
     {% csrf_token %}
 
   {% bootstrap_form form %}

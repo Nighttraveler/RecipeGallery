@@ -27,6 +27,14 @@
 {% block body_set %}
     <body>
 {% endblock %}
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v2.8";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
         <!--[if lt IE 8]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
@@ -35,6 +43,7 @@
 {% block nav_header %}
 <nav class="navbar navbar-default">
 {% endblock %}
+
 
 
           <div class="container-fluid">
@@ -71,7 +80,7 @@
 
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
         <script src="http://malsup.github.com/jquery.form.js"></script>
-         
+
         <script src= {% static "menuchooser/js/salvattore.min.js" %} ></script>
         <script src= {% static "menuchooser/js/vendor/bootstrap.min.js" %} ></script>
 

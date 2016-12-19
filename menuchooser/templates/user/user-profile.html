@@ -17,8 +17,8 @@
               </ul>
         </li>
             {% else %}
-            <li><a href="{% url 'menu:register' %}" ><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-            <li><a href="{% url 'login' %}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+            <li><a href="{% url 'menu:register' %}" > <span class="glyphicon glyphicon-user"></span> Registrarse</a></li>
+            <li></a><a href="{% url 'login' %}"> <span class="glyphicon glyphicon-log-in"></span> Ingresar</a></li>
             {% endif %}
 
       </ul>
@@ -26,13 +26,18 @@
 {% endblock %}
 
 {% block contenido %}
-<div id="agregarDiv" class="container" style="display:none;width: 100%;">
-  {% include "menuchooser/agregar-receta.html"  %}
+
+{% if not usuario.email %}
+<div class="alert alert-danger text-center">
+  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+  <strong>Email  !!!</strong> En caso de que olvides tu contraseña necesitas tu Email para recuperarla, <a href="{% url 'menu:edituserprofile' usuario.id %}" > Completa tu perfil </a>!
 </div>
-<div class="container-fluid perfil">
+
+{% endif %}
+<div id="perfil" class="container-fluid ">
   <div class="row">
 
-      <div class="col-md-3" style="min-height:550px" >
+      <div class="col-md-3"  >
         <div class="text-center">
         {% if usuario.profilemodel.avatar  %}
         <img class="img-thumbnail" src="{{MEDIA_URL}}{{usuario.profilemodel.avatar}}"  style="width:250px;height:auto;"/>
@@ -40,7 +45,7 @@
         <img class="img-thumbnail" src="{% static "menuchooser/default-avatar.png" %}"  style="width:250px;height:auto;"/>
         {% endif %}
 
-          <h1 id"user" usuario="{{usuario.pk}}" >{{usuario.get_username}}</h1>
+          <h1 id="user" usuario="{{usuario.pk}}" >{{usuario.get_username}}</h1>
 
           <p>  {{usuario.get_full_name}}</p>
 
@@ -73,7 +78,7 @@
             <div class="col-sm-3">
               <div class="panel panel-primary">
                 <div class="panel-heading text-center">
-                  <a href="{% url 'menu:detailfood' r.pk %}" >{{r.Titulo}}</a>
+                  <a style="color:white;" href="{% url 'menu:detailfood' r.pk %}" >{{r.Titulo}}</a>
                   <div  >
                     <a href=" {% url 'menu:editfood' r.id %}" role="button" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-edit"></span>Editar</a>
                     <!-- Trigger the modal with a button -->

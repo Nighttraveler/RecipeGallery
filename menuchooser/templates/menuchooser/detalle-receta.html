@@ -3,9 +3,29 @@
 {% load markdown_deux_tags %}
 
 
-    {% block navbar %}
+{% block navbar_content %}
+<div class="collapse navbar-collapse" id="navMenu">
+      <ul class="nav navbar-nav navbar-right">
+        {% if request.user.is_authenticated %}
+        <li class="dropdown nav-button" >
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{request.user.get_username}} <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li>  <a href="{% url 'menu:userprofile' request.user.id %}" ><span class="glyphicon glyphicon-user" ></span> Mi perfil </a> </li>
+                <li>  <a href="{% url 'menu:edituserprofile' request.user.id %}" > <span class="glyphicon glyphicon-edit" ></span> Editar perfil </a> </li>
+                <li class="divider"></li>
+                <li> <a href={% url 'password_change' %}  >Cambiar Password</a> </li>
+                <li class="divider"></li>
+                <li> <a href={% url 'logout' %}  ><span class="glyphicon glyphicon-log-out"></span> Log Out</a> </li>
+              </ul>
+        </li>
+            {% else %}
+            <li><a href="{% url 'menu:register' %}" > <span class="glyphicon glyphicon-user"></span> Registrarse</a></li>
+            <li></a><a href="{% url 'login' %}"> <span class="glyphicon glyphicon-log-in"></span> Ingresar</a></li>
+            {% endif %}
 
-    {% endblock %}
+      </ul>
+</div>
+{% endblock %}
 
 
     {% block contenido %}
@@ -18,7 +38,9 @@
           {% else %}
           <img  class="img-rounded img-responsive" src="{{receta.Imagen_URL}}"  alt="Imagen no disponible" />
           {% endif %}
-          <button class="btn btn-primary btn-xs recipe-likes" data-recipe-id="{{ receta.id }}">
+          <hr>
+          <button  class="btn btn-primary btn-xs recipe-likes" data-recipe-id="{{ receta.id }}">
+            <div class="like_count_blog" id="heart-counter">{{ receta.likes }}</div>
             {% if liked %}
             <i class="glyphicon glyphicon-star" style="display: line-block"></i>
             <i class="glyphicon glyphicon-star-empty" style="display: none"></i>
@@ -27,9 +49,10 @@
             <i class="glyphicon glyphicon-star" style="display: none" ></i>
             {% endif %}
           </button>
-          <div class="like_count_blog" id="heart-counter">{{ receta.likes }}</div>
+
+          <div class="fb-like" data-href="{{ request.get_full_path }}" data-layout="standard" data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>
           <hr>
-          <h3><a href="{% url 'menu:tipofood' receta.Tipo.pk %}" >#{{receta.Tipo}}</a></h3>
+          <h3><a href="{% url 'menu:tipofood' receta.Tipo.pk %}" >{{receta.Tipo}}</a></h3>
           <hr>
           <h3>Ingredientes:</h3>
 

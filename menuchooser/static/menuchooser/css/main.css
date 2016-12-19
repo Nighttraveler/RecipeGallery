@@ -76,7 +76,7 @@ body{
   width: 100%;
   border: 0px;
   border-radius: 0px;
- 
+  margin: 0;
   box-shadow: none;
   letter-spacing: 2px;
 
@@ -138,8 +138,12 @@ body{
 
   #grid[data-columns]::before {
     content: '4 .column.size-1of4';
+
   }
 
+  #perfil{
+    min-height: 700px;
+  }
 
 }
 
