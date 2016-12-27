@@ -1,6 +1,10 @@
 {% extends "menuchooser/base.html" %}
 {% load static%}
 
+{% block title %}
+{{usuario.username}} |
+{% endblock %}
+
 {% block navbar_content %}
 <div class="collapse navbar-collapse" id="navMenu">
       <ul class="nav navbar-nav navbar-right">
@@ -34,8 +38,8 @@
 </div>
 
 {% endif %}
-<div id="perfil" class="container-fluid ">
-  <div class="row">
+<div id="perfil" class="container-fluid" >
+  <div class="row ">
 
       <div class="col-md-3"  >
         <div class="text-center">
@@ -57,7 +61,7 @@
 
       </div>
 
-      <div class="col-md-9" >
+      <div class="col-md-7" >
         <ul class="nav nav-tabs">
           {% for tipo in tipos %}
 
@@ -146,6 +150,44 @@
 
       </div>
 
+      <div class="col-md-2">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Publicas</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for receta in recetas  %}
+              {% if receta.publica %}
+              <tr>
+                <td> <a href="{% url 'menu:detailfood' receta.pk %}" >{{receta.Titulo}}</a></td>
+              </tr>
+              {% endif %}
+              {% endfor %}
+            </tbody>
+          </table>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Privadas</th>
+              </tr>
+            </thead>
+            <tbody>
+
+              {% for receta in recetas  %}
+              {% if not receta.publica %}
+              <tr>
+                <td> <a href="{% url 'menu:detailfood' receta.pk %}" >{{receta.Titulo}}</a></td>
+              </tr>
+              {% endif %}
+              {% endfor %}
+
+            </tbody>
+          </table>
+
+
+      </div>
   </div>
 </div>
 {% endblock %}

@@ -19,14 +19,14 @@ from forms import MenuForm , ProfileForm, UserForm
 
 
 class HomePageView(generic.TemplateView):
-    recetas_recientes = MenuModel.objects.filter(publica=True).order_by('-pub_date')[:5]
     template_name = 'menuchooser/home.html'
-    tipos= TipoModel.objects.all().exclude(pk=1)
+    tipos = TipoModel.objects.all().exclude(pk=1)
 
     def get(self,request):
         if request.user.is_authenticated():
             return HttpResponseRedirect(reverse_lazy('menu:feed'))
-        context={'recetas_recientes':self.recetas_recientes,
+        recetas_recientes = MenuModel.objects.filter(publica=True).order_by('-pub_date')[:5]
+        context={'recetas_recientes':recetas_recientes,
                  'tipos':self.tipos}
         return render(request, self.template_name, context)
 
@@ -60,14 +60,10 @@ class IndexFeedView(generic.ListView):
 
         return recetas
 
-    def get(self, request):
-
-
-        recetas = self.get_queryset(request)
-
-        per_page = 24
+    def paginate(self,recetas):
+        per_page = 20
         paginator = Paginator(recetas.filter(publica=True).order_by('-pub_date'), per_page)
-        page= request.GET.get('page')
+        page= self.request.GET.get('page')
         try:
             receta_pag = paginator.page(page)
 
@@ -77,24 +73,26 @@ class IndexFeedView(generic.ListView):
         except EmptyPage:
             receta_pag = paginator.page(paginator.num_pages)
 
+        return receta_pag
+
+
+    def get(self, request):
+
+        recetas = self.get_queryset(request)
+
+        receta_pag = self.paginate(recetas)
+
         context = {'recetas':receta_pag,'tipos':self.tipos,
                     'query':self.query,'form':self.form_class}
 
         return render(request, self.template_name, context)
 
 
-class TipoView(View):
+class TipoView(IndexFeedView):
 
-    tipos = TipoModel.objects.all()
     recetas = None
     template_name = 'menuchooser/feed.html'
     form_class = MenuForm
-
-    def buscar(self, qs, q ):
-        return qs.filter(
-            Q(Titulo__icontains=q) |
-            Q(Ingredientes__icontains=q) |
-            Q(Receta__icontains=q))
 
 
     def get(self,request,pk):
@@ -105,17 +103,7 @@ class TipoView(View):
         if query:
             self.recetas = self.buscar(self.recetas, query)
 
-        per_page =28
-        paginator = Paginator(self.recetas.order_by('-pub_date'), per_page)
-        page = request.GET.get('page')
-        try:
-            receta_pag = paginator.page(page)
-
-        except PageNotAnInteger:
-            receta_pag = paginator.page(1)
-
-        except EmptyPage:
-            receta_pag = paginator.page(paginator.num_pages)
+        receta_pag = super(TipoView,self).paginate( self.recetas)
 
         context =  {'recetas':receta_pag, 'tipos':self.tipos,'form':self.form_class}
 
@@ -276,4 +264,4 @@ class UserEditView(View):
 class SignUpView(generic.CreateView):
     template_name ='user/registration.html'
     form_class = UserCreationForm
-    success_url = reverse_lazy('menu:login')
+    success_url = reverse_lazy('login')

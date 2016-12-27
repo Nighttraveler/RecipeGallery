@@ -2,6 +2,10 @@
 {% load static %}
 {% load markdown_deux_tags %}
 
+{% block title %}
+  {{receta.Titulo }}|
+{% endblock %}
+
 
 {% block navbar_content %}
 <div class="collapse navbar-collapse" id="navMenu">
@@ -74,6 +78,7 @@
         </div>
 
       </div>
+      <div class="fb-comments" data-href="{{ request.get_full_path }}" data-numposts="5"></div>
     </div>
 
     {% endblock %}
