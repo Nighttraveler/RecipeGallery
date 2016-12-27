@@ -3,7 +3,7 @@
 {% load markdown_deux_tags %}
 
 {% block title %}
-  {{receta.Titulo }}|
+  {{receta.Titulo }} |
 {% endblock %}
 
 
@@ -54,7 +54,7 @@
             {% endif %}
           </button>
 
-          <div class="fb-like" data-href="{{ request.get_full_path }}" data-layout="standard" data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>
+          <div class="fb-like" data-href="{{ request.build_absolute_uri }}" data-layout="standard" data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>
           <hr>
           <h3><a href="{% url 'menu:tipofood' receta.Tipo.pk %}" >{{receta.Tipo}}</a></h3>
           <hr>
@@ -78,7 +78,8 @@
         </div>
 
       </div>
-      <div class="fb-comments" data-href="{{ request.get_full_path }}" data-numposts="5"></div>
+      <div class="fb-comments" data-href="{{ request.build_absolute_uri }}" data-numposts="5"></div>
+
     </div>
 
     {% endblock %}

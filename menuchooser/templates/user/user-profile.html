@@ -128,7 +128,7 @@
             <div class="col-sm-3">
 
               <div class="panel panel-primary">
-                <div class="panel-heading"><a href="{% url 'menu:detailfood' r.pk %}" >{{r.Titulo}}</a></div>
+                <div class="panel-heading"><a style="color:white;" href="{% url 'menu:detailfood' r.pk %}" >{{r.Titulo}}</a></div>
 
               </div>
             </div>
@@ -150,44 +150,66 @@
 
       </div>
 
+      {% if request.user == usuario %}
       <div class="col-md-2">
-          <table class="table table-striped">
-            <thead>
-              <tr>
-                <th>Publicas</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for receta in recetas  %}
-              {% if receta.publica %}
-              <tr>
-                <td> <a href="{% url 'menu:detailfood' receta.pk %}" >{{receta.Titulo}}</a></td>
-              </tr>
-              {% endif %}
-              {% endfor %}
-            </tbody>
-          </table>
-          <table class="table table-striped">
-            <thead>
-              <tr>
-                <th>Privadas</th>
-              </tr>
-            </thead>
-            <tbody>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Publicas</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for receta in recetas  %}
+            {% if receta.publica %}
+            <tr>
+              <td> <a href="{% url 'menu:detailfood' receta.pk %}" >{{receta.Titulo}}</a></td>
+            </tr>
+            {% endif %}
+            {% endfor %}
+          </tbody>
+        </table>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Privadas</th>
+            </tr>
+          </thead>
+          <tbody>
 
-              {% for receta in recetas  %}
-              {% if not receta.publica %}
-              <tr>
-                <td> <a href="{% url 'menu:detailfood' receta.pk %}" >{{receta.Titulo}}</a></td>
-              </tr>
-              {% endif %}
-              {% endfor %}
+            {% for receta in recetas  %}
+            {% if not receta.publica %}
+            <tr>
+              <td> <a href="{% url 'menu:detailfood' receta.pk %}" >{{receta.Titulo}}</a></td>
+            </tr>
+            {% endif %}
+            {% endfor %}
 
-            </tbody>
-          </table>
+          </tbody>
+        </table>
+      </div>
 
+      {%else%}
+      <div class="col-md-2">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Recetas</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for receta in recetas  %}
+            {% if receta.publica %}
+            <tr>
+              <td> <a href="{% url 'menu:detailfood' receta.pk %}" >{{receta.Titulo}}</a></td>
+            </tr>
+            {% endif %}
+            {% endfor %}
+          </tbody>
+        </table>
 
       </div>
+
+      {% endif %}
   </div>
 </div>
 {% endblock %}
