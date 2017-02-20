@@ -24,9 +24,10 @@ SECRET_KEY = 'ak$t4(#e#4put5a3#@#m^z_#5@^_1-gsxjjskz86r(5peyg09s'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-#DEBUG = False
+
 ALLOWED_HOSTS = []
-#ALLOWED_HOSTS = ["nighttraveler.pythonanywhere.com"]
+if not DEBUG:
+    ALLOWED_HOSTS = ["nighttraveler.pythonanywhere.com"]
 
 # Application definition
 
@@ -68,7 +69,7 @@ ROOT_URLCONF = 'menu.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates'),],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -129,11 +130,8 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
-
-
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
@@ -141,12 +139,16 @@ MEDIA_URL = '/images/'
 MEDIA_ROOT= os.path.join(BASE_DIR,'users')
 
 ## EMAIL BACKEND
+
+# development config
 EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
 EMAIL_FILE_PATH = os.path.join(BASE_DIR,'sent_emails')
 
-#EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
-#EMAIL_HOST='smtp.gmail.com'
-#EMAIL_PORT=587
-#EMAIL_HOST_USER='ferrmail08@gmail.com'
-#EMAIL_HOST_PASSWORD='hsdaqekrgusxnkdg'
-#EMAIL_USE_TLS=True
+# production config
+if not DEBUG:
+    EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
+    EMAIL_HOST='smtp.gmail.com'
+    EMAIL_PORT=587
+    EMAIL_HOST_USER='ferrmail08@gmail.com'
+    EMAIL_HOST_PASSWORD='hsdaqekrgusxnkdg'
+    EMAIL_USE_TLS=True

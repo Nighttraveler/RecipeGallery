@@ -9,7 +9,7 @@
 
   <div class="center-buttons">
   <button type="submit" class="btn btn-success" >Si </button>
-  <a  role="button" class="btn btn-danger no_borrar" >No</a>
+  <a  role="button" class="btn btn-danger no_borrar" data-dismiss="modal" >No</a>
   </div>
 </form>
 
@@ -21,7 +21,6 @@
     borrar_form.submit(function(e) {
           e.preventDefault();
           p= $('#user').attr('usuario');
-          console.log(p);
 
           $.ajax({
               type:"POST",
@@ -30,20 +29,23 @@
                 csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
               }
           }).done(function( data ) {
-
+              if (!p){
+                salvattore.recreateColumns(document.querySelector('#grid'));
                 var content = $( data ).find( "#recepy-grid" );
                 var pcont = $(data).find(".pagination");
                 $( "#full-container" ).empty().append( content );
                 $('#paginador').empty().append(pcont);
+              };
 
-                salvattore.recreateColumns(document.querySelector('#grid'));
-                $("body").removeAttr("class");
-                $("body").removeAttr("style");
+              $("body").removeAttr("class");
+              $("body").removeAttr("style");
 
+              if (p){
                 $.get( "/accounts/profile/"+p, function( data ) {
-                   var c= $(data).find('.col-md-9');
-                   $('.col-md-9').replaceWith(c);
+                   var c= $(data).find('.col-md-7');
+                   $('.col-md-7').replaceWith(c);
                 });
+              }
 
             });
       });

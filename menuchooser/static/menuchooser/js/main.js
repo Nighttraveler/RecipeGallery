@@ -5,17 +5,32 @@ $(document).ready(function(){
 
       // bind 'myForm' and provide a simple callback function
       $('#form_r').ajaxForm(function(data) {
-        console.log(' receta CORRECTAMENTE');
-        var content = $( data ).find( "#recepy-grid" );
+        p= $('#user').attr('usuario');
+
+        if (!p) {
+          var content = $( data ).find( "#recepy-grid" );
 
 
-        var pcont = $(data).find(".pagination");
-        $( "#full-container" ).empty().append( content );
-        $('#paginador').empty().append(pcont);
-        salvattore.recreateColumns(document.querySelector('#grid'));
-        $("#agregarDiv").slideToggle();
-        $('#full-container').show();
-        $('#paginador').show();
+          var pcont = $(data).find(".pagination");
+          $( "#full-container" ).empty().append( content );
+          $('#paginador').empty().append(pcont);
+          salvattore.recreateColumns(document.querySelector('#grid'));
+          $("#agregarDiv").slideToggle();
+          $('#full-container').show();
+          $('#paginador').show();
+        }
+        if (p) {
+
+          $("#agregarDiv").slideToggle();
+          $('#perfil').show();
+
+          $.get( "/accounts/profile/"+p, function( data ) {
+             var c= $(data).find('.col-md-7');
+             $('.col-md-7').replaceWith(c);
+          });
+
+        }
+
 
       });
 
@@ -87,13 +102,13 @@ $(document).ready(function(){
       if ($("#agregarDiv").is(':hidden')){
         $('#full-container').hide();
         $('footer').hide();
-        $('.perfil').hide();
+        $('#perfil').hide();
 
         $('#paginador').hide();
         $("#agregarDiv").slideToggle();
       }else {
         $('#full-container').show();
-        $('.perfil').show();
+        $('#perfil').show();
 
         $('#paginador').show();
         $('footer').show();
@@ -105,7 +120,7 @@ $(document).ready(function(){
   // PRESS CANCELAR EN EL FORM AGREGAR RECETA
   $(document).on('click','#no_agregar',function(){
     $("#agregarDiv").slideToggle();
-    $('.perfil').show();
+    $('#perfil').show();
     $('footer').show();
     $('#full-container').show();
     $('#paginador').show();

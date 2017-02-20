@@ -12,9 +12,9 @@ app_name ='menu'
 urlpatterns = [
 
     url(r'^like-recipe/$', views.like_count_recipe, name='like_count_recipe'),
+
     ###USER ADMINISTRATION
     url(r'^accounts/register/$', views.SignUpView.as_view(), name="register"),
-
 
     url(r'^accounts/profile/(?P<pk>\d+)/$',
         login_required(views.UserProfileView.as_view()),
@@ -27,8 +27,7 @@ urlpatterns = [
 
     url(r'^dashboard/$',views.IndexFeedView.as_view(), name='feed' ),
 
-    #por alguna razon va despues de lo logout etc
-    #rl(r'^accounts/', include('django.contrib.auth.urls')),
+
 
     # HOME
     url(r'^$', views.HomePageView.as_view(), name='index'),
@@ -53,7 +52,5 @@ urlpatterns = [
     url(r'^delete/(?P<pk>\d+)/$',
         views.DeleteFoodView.as_view() ,
         name='deletefood'),
-
-
 
 ]

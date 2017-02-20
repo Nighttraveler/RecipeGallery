@@ -138,7 +138,10 @@ Home |
                             <hr>
                             <h3>Procedimiento:</h3>
 
-                            {{receta.Receta|markdown}}
+                            {{receta.Receta|truncatewords:100|markdown}}
+                            <p>
+                              <a href='{% url 'menu:detailfood' receta.pk %}' >Ver receta completa!</a
+                            </p>
 
                           </div>
                           <div class="modal-footer">

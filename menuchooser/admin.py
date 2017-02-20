@@ -1,5 +1,5 @@
 from django.contrib import admin
-from models import MenuModel,TipoModel
+from models import MenuModel, TipoModel
 # Register your models here.
 
 admin.site.register(MenuModel)

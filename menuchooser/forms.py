@@ -9,13 +9,11 @@ class MenuForm(forms.ModelForm):
     Ingredientes = forms.CharField(widget=PagedownWidget())
     Receta = forms.CharField(widget=PagedownWidget())
 
-
     class Meta:
         model   = MenuModel
         fields  = [ 'Titulo','Tipo','publica','Imagen','Imagen_URL', 'Ingredientes', 'Receta','owner'  ]
         widgets = {
-            'owner'     : forms.TextInput(attrs={'type':'hidden',
-                                                })
+            'owner'     : forms.TextInput(attrs={'type':'hidden'})
         }
 
 

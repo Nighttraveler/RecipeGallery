@@ -92,8 +92,6 @@ class TipoView(IndexFeedView):
 
     recetas = None
     template_name = 'menuchooser/feed.html'
-    form_class = MenuForm
-
 
     def get(self,request,pk):
         tipo = get_object_or_404(TipoModel,pk=pk)
@@ -105,7 +103,9 @@ class TipoView(IndexFeedView):
 
         receta_pag = super(TipoView,self).paginate( self.recetas)
 
-        context =  {'recetas':receta_pag, 'tipos':self.tipos,'form':self.form_class}
+        context =  {'recetas':receta_pag,
+                    'tipos':self.tipos,
+                    'form':self.form_class}
 
         return render(request, self.template_name, context)
 
@@ -142,7 +142,7 @@ class EditFoodView(generic.UpdateView):
     def get_context_data(self, **kwargs):
         context = super(EditFoodView, self).get_context_data(**kwargs)
         if (context['object'].owner == self.request.user):
-            print('el usuario logueado es el dueno')
+            #print('el usuario logueado es el dueno')
             context['owner'] = True
 
         return context
@@ -256,9 +256,6 @@ class UserEditView(View):
 
 
     def get_success_url(self):
-
-
-
         return reverse('menu:userprofile',kwargs={'pk':str(self.object.pk)})
 
 class SignUpView(generic.CreateView):
