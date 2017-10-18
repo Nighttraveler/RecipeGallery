@@ -25,23 +25,23 @@
         <script src= {% static "menuchooser/js/vendor/modernizr-2.8.3-respond-1.4.2.min.js" %} ></script>
     </head>
 {% block body_set %}
-    <body>
+<body>
 {% endblock %}
-<div id="fb-root"></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v2.8";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v2.8";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
         <!--[if lt IE 8]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
 
 
 {% block nav_header %}
-<nav class="navbar navbar-default">
+  <nav class="navbar navbar-default">
 {% endblock %}
 
 
@@ -69,11 +69,12 @@
 {% endblock %}
 
 {% block footer %}
-      <footer class="footer" style="align-self: flex-end;" >
 
-        <span>All rights reserved | <a href="https://about.me/ferr_velazquez" target="_blank">Fernando Velazquez</a> | 2016 </span>
+    <footer class="col-md-12 col-lg-12 text-center" style="bottom: 0; " >
+      <span>All rights reserved | <a href="https://about.me/ferr_velazquez" target="_blank">Fernando Velazquez</a> | 2016 </span>
 
-      </footer>
+    </footer>
+
 {% endblock %}
 
 

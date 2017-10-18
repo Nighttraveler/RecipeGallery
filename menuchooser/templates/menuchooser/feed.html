@@ -6,9 +6,7 @@
 Home |
 {% endblock %}
 
-{% block body_set %}
-<body style="display: flex;flex-wrap: wrap;" >
-{% endblock %}
+
 
 {% block navbar_content %}
 <div class="collapse navbar-collapse" id="navMenu">
@@ -66,11 +64,12 @@ Home |
 </div>
 
 <div class="container-fluid" id="full-container">
-{% if query and not recetas %}
-  <div class="white-form">
+{% if  not recetas %}
+  <div >
     <h2 style="text-align:center;" >No se encontraron recetas con el termino de busqueda {{query}}</h2>
 
   </div>
+
 {% else %}
   <div id="recepy-grid">
 
@@ -82,7 +81,7 @@ Home |
 
                       <div class="receta panel  panel-primary">
 
-                      <div class="panel-body panel-feed" data-toggle="modal" data-backdrop="false" data-target="#modal_{{receta.pk}}">
+                      <div class="panel-body panel-feed" data-toggle="modal" data-backdrop="true" data-target="#modal_{{receta.pk}}">
                         {% if receta.Imagen %}
                         <img class="img-rounded" src="{{MEDIA_URL}}{{receta.Imagen}}"   alt="Imagen no disponible" />
                         {% else %}
@@ -139,8 +138,8 @@ Home |
                             <h3>Procedimiento:</h3>
 
                             {{receta.Receta|truncatewords:100|markdown}}
-                            <p>
-                              <a href='{% url 'menu:detailfood' receta.pk %}' >Ver receta completa!</a
+                            <p class="text-center">
+                              <a  href='{% url 'menu:detailfood' receta.pk %}' >Ver receta completa!</a
                             </p>
 
                           </div>
@@ -157,7 +156,7 @@ Home |
 
                             </div>
                             <div class="text-left">
-                              <a   href="{% url 'menu:userprofile' receta.owner.id %}" >{{receta.owner.username}}</a>
+                              Chef: <a   href="{% url 'menu:userprofile' receta.owner.id %}" >{{receta.owner.username}}</a>
                             </div>
                             <button id="cerrar_modal" type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
 
@@ -173,6 +172,9 @@ Home |
 
   </div>
 
+  <div id="paginador" class=" col-md-12 col-lg-12 text-center">
+    {% bootstrap_paginate recetas show_first_last="true" first_label="<<" last_label=">>"  range=5 %}
+  </div>
 {% endif %}
 
 
@@ -182,9 +184,6 @@ Home |
 </div>
 
 
-<div id="paginador" class="container-fluid text-center">
-{% bootstrap_paginate recetas show_first_last="true" first_label="<<" last_label=">>"  range=5 %}
-</div>
 
 
 

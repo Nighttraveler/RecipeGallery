@@ -9,7 +9,7 @@ for i in range(1,15):
     Receta= "Para el amasijo, hacer una corona con la harina y salar por el borde externo, En en centro, colocar la levadura, la miel, el azúcar, esencia y la leche de a poco a la vez que comenzamos a tomar la masa. Amasar por unos minutos y leudar al doble, tapada a temperatura ambiente.Para el empaste, mezclar la manteca con la harina.Para el armado, estirar el amasijo de manera rectangular y untar con el empaste. Cerrar y dar 3 vueltas simples (ver video) con 45 minutos de frío entre vuelta y vuelta.Para el armado, estirar y cortar triángulos de 15 cm de base. Enrollar estirando desde la punta y doblar los extremos sobre placa enmantecada.Pintar con la doradura (mezclar la leche con las yemas).Para la cocción, llevar al horno a 210 grados por 15 minutos y pintar con almíbar en caliente.Abrir al medio y rellenar con los fiambres y quesos a gusto. Gratinar.",
     Imagen_URL="http://www.cocinerosargentinos.com/images/3_Medialunas-de-manteca-rellenas-con-quesos-y-fiambres.jpg",
     Tipo=TipoModel.objects.get(Tipo="Panaderia"),
-    owner=User.objects.get(username='capo')
+    owner=User.objects.get(username='fernando')
     )
     if i%2==0:
         m.publica=True

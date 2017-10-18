@@ -40,10 +40,10 @@
   {% include "menuchooser/agregar-receta.html"  %}
 </div>
 
-{% if not usuario.email %}
+{% if not usuario.email and request.user == usuario %}
 <div class="alert alert-danger text-center">
   <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-  <strong>Email  !!!</strong> En caso de que olvides tu contraseña necesitas tu Email para recuperarla, <a href="{% url 'menu:edituserprofile' usuario.id %}" > Completa tu perfil </a>!
+  <strong>Email!!!</strong> En caso de que olvides tu contraseña necesitas tu Email para recuperarla, <a href="{% url 'menu:edituserprofile' usuario.id %}" > Completa tu perfil </a>!
 </div>
 
 {% endif %}
@@ -70,83 +70,105 @@
       </div>
 
       <div class="col-md-7" >
-        <ul class="nav nav-tabs">
-          {% for tipo in tipos %}
 
-          <li {% if forloop.first %}class="active"{% endif %}> <a data-toggle="tab" href="#{{tipo.Tipo}}">{{tipo.Tipo}}</a></li>
-
-          {% endfor %}
-
-        </ul>
-
-        <div class="tab-content">
-          {% for tipo in tipos %}
-          <div style="padding-top:20px" id="{{tipo.Tipo}}" class="tab-pane fade {% if forloop.first %}in active{% endif %}">
-
-            {% if request.user == usuario %}
-            {% for r in  recetas %}
-
-            {% if r.Tipo.pk == tipo.pk %}
-            <div class="col-sm-3">
-              <div class="panel panel-primary">
-                <div class="panel-heading text-center">
-                  <a style="color:white;" href="{% url 'menu:detailfood' r.pk %}" >{{r.Titulo}}</a>
-                  <div  >
-                    {% if receta.Imagen %}
-                    <img class="img-rounded img-responsive" src="{{MEDIA_URL}}{{r.Imagen}}"  alt="Imagen no disponible" />
-                    {% else %}
-                    <img  class="img-rounded img-responsive" src="{{r.Imagen_URL}}"  alt="Imagen no disponible" />
-                    {% endif %}
-                    <a href=" {% url 'menu:editfood' r.id %}" role="button" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-edit"></span>Editar</a>
-                    <!-- Trigger the modal with a button -->
-                    <button recepy-id={{r.id}} type="button" class="btn btn-danger btn-sm deletebutton" data-toggle="modal" data-backdrop="false"  data-target="#myModal{{r.id }}"><span class="glyphicon glyphicon-remove"></span>Borrar</button>
-
-                  </div>
-                  <!-- Modal -->
-                  <div id="myModal{{r.id }}" class="modal fade" role="dialog">
-                    <div class="modal-dialog">
-                      <!-- Modal content-->
-                      <div class="modal-content">
-
-                        <div class="modal-body" style="color:black">
-                          <div id="dr-{{r.id}}" style="display:none" >
-
-                          </div>
-                        </div>
-
-                      </div>
-
-                    </div>
-                  </div>
+      {% if not tipos  %}
+        <div  >
+            <h2 class="text-center">El Usuario no a creado ninguna receta aún!</h2>
+        </div>
+      {% endif %}
 
 
-                </div>
+      {% for tipo in tipos %}
+        <div class="panel-group" id="accordion">
+
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion" href="#{{tipo.Tipo|slugify}}">{{tipo.Tipo}} ({{tipo.cant_recetas}})</a>
+              </h4>
+            </div>
+            <div id="{{tipo.Tipo|slugify}}" class="panel-collapse collapse ">
+              <div class="panel-body">
+                {% if request.user == usuario %}
+                      {% for r in  recetas %}
+
+                            {% if r.Tipo.pk == tipo.pk %}
+                            <div class="col-sm-3 recipe-profile-list" >
+                              <div class="panel panel-primary">
+                                <div class="panel-heading text-center">
+                                  <a style="color:white;" href="{% url 'menu:detailfood' r.pk %}" >{{r.Titulo}}</a>
+                                  <div>
+                                    {% if receta.Imagen %}
+                                    <img class="img-rounded img-responsive" src="{{MEDIA_URL}}{{r.Imagen}}"  alt="Imagen no disponible" />
+                                    {% else %}
+                                    <img  class="img-rounded img-responsive" src="{{r.Imagen_URL}}"  alt="Imagen no disponible" />
+                                    {% endif %}
+
+                                    <a href=" {% url 'menu:editfood' r.id %}" role="button" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-edit"></span>Editar</a>
+
+                                    <button recepy-id={{r.id}} type="button" class="btn btn-danger btn-sm deletebutton" data-toggle="modal" data-backdrop="false"  data-target="#myModal{{r.id }}"><span class="glyphicon glyphicon-remove"></span>Borrar</button>
+
+                                  </div>
+
+                                  <div id="myModal{{r.id }}" class="modal fade" role="dialog">
+                                    <div class="modal-dialog">
+
+                                      <div class="modal-content">
+
+                                        <div class="modal-body" style="color:black">
+                                          <div id="dr-{{r.id}}" style="display:none" >
+
+                                          </div>
+                                        </div>
+
+                                      </div>
+
+                                    </div>
+                                  </div>
+
+
+                                </div>
+                              </div>
+                            </div>
+
+                            {% endif %}
+
+                      {% endfor %}
+
+                {% else %}
+                    {% for r in recetas %}
+                        {% if r.publica %}
+                            {% if r.Tipo.pk == tipo.pk %}
+
+                            <div class="col-sm-3 recipe-profile-list" >
+
+                              <div class="panel panel-primary">
+
+                                <div class="panel-heading">
+                                  {% if receta.Imagen %}
+                                  <img class="img-rounded img-responsive" src="{{MEDIA_URL}}{{r.Imagen}}"  alt="Imagen no disponible" />
+                                  {% else %}
+                                  <img  class="img-rounded img-responsive" src="{{r.Imagen_URL}}"  alt="Imagen no disponible" />
+                                  {% endif %}
+                                  <a style="color:white;" href="{% url 'menu:detailfood' r.pk %}" >{{r.Titulo}}</a>
+
+                                </div>
+
+                              </div>
+                            </div>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
               </div>
             </div>
-
-            {% endif %}
-
-            {% endfor %}
-
-            {% else %}
-            {% for r in recetas %}
-            {% if r.publica %}
-            {% if r.Tipo.pk == tipo.pk %}
-
-            <div class="col-sm-3">
-
-              <div class="panel panel-primary">
-                <div class="panel-heading"><a style="color:white;" href="{% url 'menu:detailfood' r.pk %}" >{{r.Titulo}}</a></div>
-
-              </div>
-            </div>
-            {% endif %}
-            {% endif %}
-          {% endfor %}
-            {% endif %}
-
           </div>
-          {% endfor %}
+
+
+
+
+        </div>
+      {% endfor %}
 
         </div>
 
@@ -156,10 +178,10 @@
 
 
 
-      </div>
+
 
       {% if request.user == usuario %}
-      <div class="col-md-2">
+          <div class="col-md-2">
         <table class="table table-striped">
           <thead>
             <tr>

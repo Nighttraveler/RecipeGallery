@@ -7,10 +7,11 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
+from django.db.models import Count, Min, Sum, Avg
 
 from  models import MenuModel,TipoModel,ProfileModel
 from forms import MenuForm , ProfileForm, UserForm
-
+from django.contrib.auth.models import User
 
 
 ##################################################################################################################
@@ -61,7 +62,7 @@ class IndexFeedView(generic.ListView):
         return recetas
 
     def paginate(self,recetas):
-        per_page = 20
+        per_page = 12
         paginator = Paginator(recetas.filter(publica=True).order_by('-pub_date'), per_page)
         page= self.request.GET.get('page')
         try:
@@ -122,7 +123,7 @@ class AddFoodView(View):
 
     def post(self,request):
         f = self.form_class(request.POST, request.FILES)
-        f.owner = request.user.id
+
 
         if f.is_valid():
             f.clean()
@@ -204,16 +205,26 @@ class UserProfileView(generic.DetailView, generic.FormView):
 
     def get_context_data(self, **kwargs):
         context = super(UserProfileView, self).get_context_data(**kwargs)
-        context['tipos'] = TipoModel.objects.all().order_by('-pk')
-        if (self.request.user==kwargs['object']):
-            context['recetas'] = MenuModel.objects.filter(owner=kwargs['object']
-                            ).order_by('-pub_date')
+        #context['tipos'] = TipoModel.objects.all().order_by('-pk')
+        context['tipos'] = TipoModel.objects.filter(
+                                    menumodel__owner=kwargs['object']
+                                    ).annotate(
+                                    cant_recetas=Count('menumodel__Tipo')
+                                    ).order_by('-pk')
+        if context['tipos']:
+            if (self.request.user==kwargs['object']):
+                context['recetas'] = MenuModel.objects.filter(
+                                        owner=kwargs['object']
+                                        ).order_by('-pub_date')
 
-            #print('privadas '+context['r'])
-        else:
-            context['recetas'] = MenuModel.objects.filter(owner=kwargs['object'],
-                                        publica=True).order_by('-pub_date')
-            #print('publicas '+context['r'])
+                #print('privadas '+context['r'])
+            else:
+                context['recetas'] = MenuModel.objects.filter(
+                                        owner=kwargs['object'],
+                                        publica=True
+                                        ).order_by('-pub_date')
+                #print('publicas '+context['r'])
+
 
         return context
 

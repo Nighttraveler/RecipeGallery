@@ -6,12 +6,15 @@
 
    background-color: rgb(30 ,136,229);
    ========================================================================== */
+.recipe-profile-list{
+  margin-bottom: 1%;
 
-body{
+}
+html, body{
   font-family: 'Oswald', sans-serif;
   margin: 0;
   padding: 0;
-  min-height: 100vh;
+  height: 100%;
 
 }
 
@@ -168,7 +171,7 @@ margin: 15px;
 }
 
 #full-container{
-  min-height: 450px;
+  min-height: 100%;
   width: 100%;
 }
 
@@ -178,13 +181,11 @@ margin: 15px;
 
 }
 
-.footer {
-  width: 100%;
-
+footer {
   background-color: #e95420;
-  text-align: center;
   color: white;
   padding: 1rem;
+
 }
 footer a {
   color : white;
@@ -248,6 +249,10 @@ footer a {
 
 
 /* Modal CSS style */
+
+.modal-backdrop{
+  z-index: 0;
+}
 
 .modal img{
   margin: auto;
